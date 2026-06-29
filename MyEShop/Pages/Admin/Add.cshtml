@@ -1,0 +1,136 @@
+﻿@page
+@model MyEShop.Pages.Admin.AddModel
+@{
+    ViewData["Title"] = "افزودن محصول";
+}
+
+<h1 class="text-purple">@ViewData["Title"]</h1>
+<hr />
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container rounded-3 shadow-sm py-4">
+    <div class="row">
+        <div class="col bg-light p-4 m-2 rounded border">
+            <h4 class="text-purple mb-3">
+                <i class="bi bi-box-seam-fill me-2"></i>
+                اطلاعات محصول
+            </h4>
+            <hr />
+
+            <form method="post" id="createForm" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>  <!-- ✅ تغییر به All برای نمایش همه خطاها -->
+                
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Name Field -->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" asp-for="Product.Name" placeholder=" ">
+                            <label asp-for="Product.Name">نام محصول</label>
+                            <span asp-validation-for="Product.Name" class="text-danger small"></span>
+                        </div>
+                        
+                        <!-- Description Field -->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" asp-for="Product.Description" placeholder=" " style="height: 100px"></textarea>
+                            <label asp-for="Product.Description">توضیحات</label>
+                            <span asp-validation-for="Product.Description" class="text-danger small"></span>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Price Field -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="Product.Price" placeholder=" ">
+                                    <label asp-for="Product.Price">قیمت (تومان)</label>
+                                    <span asp-validation-for="Product.Price" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Quantity Field -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="Product.QuntityInStack" placeholder=" ">
+                                    <label asp-for="Product.QuntityInStack">تعداد موجود</label>
+                                    <span asp-validation-for="Product.QuntityInStack" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Field -->
+                        <div class="my-4">
+                            <label class="fw-bold mb-2"><i class="bi bi-tags"></i> دسته‌بندی‌ها</label>
+                            <div class="row">
+                                @foreach (var item in Model.Product.Categories)
+                                {
+                                    <div class="col-md-3 col-sm-4 col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="selectedGroups" value="@item.Id" class="form-check-input" id="group_@item.Id" />
+                                            <label class="form-check-label ms-2" for="group_@item.Id">@item.Name</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <span asp-validation-for="Product.Categories" class="text-danger small"></span>
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <!-- Picture Field with Preview -->
+                        <div class="card">
+                            <div class="card-header bg-purple text-white">
+                                <i class="bi bi-camera-fill me-1"></i> تصویر محصول
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="preview-wrapper" id="previewWrapper" style="display: none;">
+                                    <img id="imagePreview" src="#" alt="پیش‌نمایش" 
+                                         class="img-fluid rounded shadow-sm" 
+                                         style="max-width: 100%; max-height: 180px; object-fit: cover;" />
+                                    <button type="button" class="btn btn-sm btn-danger p-2 mt-2" id="removeImage">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="preview-placeholder" id="previewPlaceholder">
+                                    <i class="bi bi-image fs-1 text-muted"></i>
+                                    <p class="text-muted small mt-2 mb-0">پیش‌نمایش عکس</p>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <input asp-for="Product.Picture" type="file" class="form-control" accept="image/*" 
+                                       onchange="previewImage(this)" />
+                                <span asp-validation-for="Product.Picture" class="text-danger small d-block mt-1"></span>
+                                <div class="alert alert-info small mt-2 mb-0">
+                                    <i class="bi bi-info-circle"></i>
+                                    JPG, PNG, GIF (حداکثر 2MB)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr />
+
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-golden px-4">
+                        <i class="bi bi-check2-circle me-2"></i>
+                        ثبت محصول
+                    </button>
+                    <a asp-page="Index" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-bar-left me-2"></i>
+                        بازگشت
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

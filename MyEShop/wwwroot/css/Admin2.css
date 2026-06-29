@@ -1,0 +1,234 @@
+﻿
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Sahel, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fb;
+}
+
+/* استایل Navbar */
+.navbar-admin {
+    background: linear-gradient(135deg, #6f42c1 0%, #8a2be2 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 12px 24px;
+}
+
+    .navbar-admin .navbar-brand {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white !important;
+    }
+
+    .navbar-admin .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+        transition: all 0.3s;
+    }
+
+        .navbar-admin .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-top: 10px;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s;
+}
+
+    .dropdown-item:hover {
+        background: linear-gradient(135deg, #6f42c1 0%, #8a2be2 100%);
+        color: white;
+    }
+
+/* دکمه منوی موبایل */
+.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: none;
+}
+
+/* سایدبار */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 68px;
+    width: 280px;
+    height: calc(100vh - 68px);
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    transition: all 0.3s;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+    .sidebar.collapsed {
+        right: -280px;
+    }
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+}
+
+    .sidebar-menu li {
+        margin: 8px 0;
+    }
+
+    .sidebar-menu .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 24px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s;
+        border-right: 3px solid transparent;
+    }
+
+        .sidebar-menu .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffd700;
+            border-right-color: #ffd700;
+        }
+
+        .sidebar-menu .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffd700;
+            border-right-color: #ffd700;
+        }
+
+        .sidebar-menu .menu-item i {
+            width: 30px;
+            font-size: 1rem;
+        }
+
+/* محتوای اصلی */
+.main-content {
+    margin-right: 280px;
+    padding: 30px;
+    margin-top: 10vh;
+    transition: all 0.3s;
+    min-height: calc(100vh - 70px);
+}
+
+    .main-content.full {
+        margin-right: 0;
+    }
+
+/* کارت‌های آماری */
+.stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .sidebar {
+        right: -280px;
+    }
+
+        .sidebar.show {
+            right: 0;
+        }
+
+    .main-content {
+        margin-right: 0;
+    }
+}
+
+/* اسکرول بار سفارشی */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8a2be2;
+    border-radius: 10px;
+}
+
+
+.preview-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+    .preview-wrapper img {
+        border: 2px solid #e0e0e0;
+        transition: transform 0.2s;
+    }
+
+        .preview-wrapper img:hover {
+            transform: scale(1.02);
+        }
+
+.preview-placeholder {
+    border: 2px dashed #dee2e6;
+    border-radius: 12px;
+    padding: 30px 20px;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+}
+
+    .preview-placeholder i {
+        font-size: 3rem;
+        color: #adb5bd;
+    }
+
+#removeImage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.btn-golden:hover {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: #333;
+    transform: translateY(-2px);
+}
+

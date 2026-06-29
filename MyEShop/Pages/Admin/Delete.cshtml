@@ -1,0 +1,112 @@
+﻿@page
+@model MyEShop.Pages.Admin.DeleteModel
+@{
+    ViewData["Title"] = "حذف محصول";
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+<h1 class="text-danger">حذف محصول</h1>
+<hr />
+
+<div class="container rounded-3 shadow-sm py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 bg-light p-4 m-2 rounded border">
+            <h4 class="text-purple mb-3">
+                <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
+                آیا از حذف این محصول اطمینان دارید؟
+            </h4>
+            <hr />
+
+            <div class="row d-flex justify-content-center mb-3">
+                <div class="col-md-3 bg-silver p-3 pb-0 fw-bold">
+                    <label class="form-label">
+                        <i class="bi bi-person-fill text-purple me-1"></i>
+                        نام محصول
+                    </label>
+                </div>
+                <div class="col-md-8 bg-silver-light p-3 pb-0 ms-sm-2">
+                    <p class="fw-bold">@Model.Product?.Name</p>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center mb-3">
+                <div class="col-md-3 bg-silver p-3 pb-0 fw-bold">
+                    <label class="form-label">
+                        <i class="bi bi-tag-fill text-purple me-1"></i>
+                        قیمت
+                    </label>
+                </div>
+                <div class="col-md-8 bg-silver-light p-3 pb-0 ms-sm-2">
+                    <p>@(Model.Product?.Item?.Price.ToString("N0") ?? "0") تومان</p>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center mb-3">
+                <div class="col-md-3 bg-silver p-3 pb-0 fw-bold">
+                    <label class="form-label">
+                        <i class="bi bi-box-seam-fill text-purple me-1"></i>
+                        موجودی
+                    </label>
+                </div>
+                <div class="col-md-8 bg-silver-light p-3 pb-0 ms-sm-2">
+                    <p>@(Model.Product?.Item?.QuantityInStock ?? 0) عدد</p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Product?.ImagePath))
+            {
+                <div class="row d-flex justify-content-center mb-3">
+                    <div class="col-md-3 bg-silver p-3 pb-0 fw-bold">
+                        <label class="form-label">
+                            <i class="bi bi-image-fill text-purple me-1"></i>
+                            تصویر محصول
+                        </label>
+                    </div>
+                    <div class="col-md-8 bg-silver-light p-3 pb-0 ms-sm-2">
+                        <img src="@Model.Product.ImagePath" style="max-width: 150px; max-height: 150px;" class="img-thumbnail" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar Info -->
+        <div class="col-md-3 bg-light p-4 m-2 rounded border">
+            <div class="text-center mb-3">
+                <div class="avatar-circle-sm bg-danger text-white mx-auto mb-2">
+                    <i class="bi bi-trash-fill"></i>
+                </div>
+                <h6 class="text-danger">حذف محصول</h6>
+                <p class="text-muted small">این عملیات غیرقابل بازگشت است!</p>
+            </div>
+
+            <div class="info-box bg-danger-subtle p-3 rounded">
+                <i class="bi bi-exclamation-triangle-fill text-danger fs-4 me-2"></i>
+                <div>
+                    <small class="text-muted d-block">هشدار!</small>
+                    <span class="small">با حذف محصول، تمام اطلاعات مرتبط حذف می‌شود.</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="d-grid gap-2">
+                <form method="post">
+                    <input type="hidden" asp-for="Product.Id" />
+                    <button type="submit" class="btn btn-danger w-100 mb-2">
+                        <i class="bi bi-check2-circle me-2"></i>
+                        بله، حذف شود
+                    </button>
+                    <a asp-page="./Index" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-bar-left me-2"></i>
+                        بازگشت به لیست
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

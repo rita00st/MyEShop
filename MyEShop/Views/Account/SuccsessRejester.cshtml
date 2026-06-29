@@ -1,0 +1,16 @@
+﻿@using MyEShop.Models.ViewModel
+@model RejesterViewModel
+@{
+    ViewData["Title"] = "SuccsessRejester";
+}
+
+<h1>ثبت نام شما انجام شد</h1>
+<hr />
+<div class="">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">شما عضو سایت هستی!</h4>
+        <p>کاربر عزیز با ایمیل @Model.Email ممنون از ثبت نام شما از طریق دکمه زیر میتوانید وارد سایت شوید</p>
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-success">ورود به سایت</a>
+    </div>
+</div>
+

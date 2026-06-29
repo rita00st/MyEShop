@@ -1,0 +1,13 @@
+﻿@using MyEShop.Models.Entities
+@model Product
+@{
+}
+<div class="col-md-3">
+    <div class="card">
+        <img src=~/images/@(Model.Id).jpg" height="160" width="160" class="card-img-top img-thumbnail" />
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <a class="btn btn-primary w-100" asp-action="Details" asp-controller="Home" asp-route-id="@Model.Id">جزئیات بیشتر</a>
+        </div>
+    </div>
+</div>

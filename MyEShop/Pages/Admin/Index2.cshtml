@@ -1,0 +1,217 @@
+﻿@page
+@model MyEShop.Pages.Admin.Index2Model
+@{
+    ViewData["Title"] = "داشبورد";
+    Layout = "_AdminLayout";
+}
+
+<!-- کارت‌های آماری -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted mb-1">تعداد محصولات</p>
+                    <h2 class="mb-0 fw-bold text-purple">@Model.ProductCount</h2>
+                    <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> +  محصولات جدید این هفته
+                    </small>
+                </div>
+                <div class="stat-icon bg-gradient-purple text-white">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted mb-1">سفارشات جدید</p>
+                    <h2 class="mb-0 fw-bold text-teal">سفارش های جدید</h2>
+                    <small class="text-warning">
+                        <i class="bi bi-clock"></i> نیاز به بررسی
+                    </small>
+                </div>
+                <div class="stat-icon bg-gradient-teal text-white">
+                    <i class="bi bi-cart-check"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted mb-1">کاربران فعال</p>
+                    <h2 class="mb-0 fw-bold text-golden">@Model.ActiveUsers</h2>
+                    <small class="text-muted">از @Model.TotalUsers کاربر</small>
+                </div>
+                <div class="stat-icon bg-gradient-golden">
+                    <i class="bi bi-people"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="text-muted mb-1">فروش امروز</p>
+                    @* <h2 class="mb-0 fw-bold text-pink">@Model.TodaySales.ToString("N0")</h2> *@
+                    <small class="text-muted">تومان</small>
+                </div>
+                <div class="stat-icon bg-gradient-pink text-white">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- نمودار فروش (ساده) -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-4">
+                <h5 class="mb-0 fw-bold text-purple">
+                    <i class="bi bi-graph-up"></i> آمار فروش ماهانه
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="salesChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- آخرین محصولات و سفارشات -->
+<div class="row g-4">
+    <!-- آخرین محصولات -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold text-purple">
+                        <i class="bi bi-box-seam"></i> آخرین محصولات
+                    </h5>
+                    <a href="/Admin/Products" class="btn btn-sm btn-outline-purple">مشاهده همه</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>تصویر</th>
+                                <th>نام محصول</th>
+                                <th>قیمت</th>
+                                <th>موجودی</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.RecentProducts)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@product.ImagePath" style="width: 40px; height: 40px; object-fit: cover;" class="rounded" onerror="this.src='/images/no-image.jpg'" />
+                                    </td>
+                                    <td>@product.Name…                                         <td class="text-golden fw-bold">@product.Price.ToString("N0")</td>
+                                    <td>@product.Stock عدد</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- آخرین سفارشات -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-0 pt-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold text-purple">
+                        <i class="bi bi-cart-check"></i> آخرین سفارشات
+                    </h5>
+                    <a href="/Admin/Orders" class="btn btn-sm btn-outline-purple">مشاهده همه</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>شماره</th>
+                                <th>مشتری</th>
+                                <th>مبلغ</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.RecentOrders)
+                            {
+                                <tr>
+                                    <td><span>@order.Id</span></td>
+                                    <td><span>@order.CustomerName</span></td>
+                                    <td><span>@order.Total.ToString("N0") تومان</span></td>
+                                    <td>
+                                        @if (order.Status == "پرداخت شده")
+                                        {
+                                            <span class="badge bg-success">پرداخت شده</span>
+                                        }
+                                        else if (order.Status == "در حال پردازش")
+                                        {
+                                            <span class="badge bg-warning">در حال پردازش</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">در انتظار</span>
+                                        }
+                                     </td>
+                                </tr>
+                                    
+                                
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // نمودار فروش
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+                datasets: [{
+                    label: 'فروش (تومان)',
+                    data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.MonthlySales)),
+                    borderColor: '#8a2be2',
+                    backgroundColor: 'rgba(138, 43, 226, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+}

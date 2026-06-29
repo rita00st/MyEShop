@@ -1,0 +1,69 @@
+﻿@model MyEShop.Models.Entities.Order
+
+@{
+    ViewData["Title"] = "پرداخت موفق";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white text-center">
+                    <i class="bi bi-check-circle-fill fs-1"></i>
+                    <h2 class="mt-2">پرداخت با موفقیت انجام شد</h2>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="text-muted">سفارش شما ثبت شد</h5>
+                        <h3 class="text-purple">شماره سفارش: #@Model.OrderId</h3>
+                        <hr />
+                        <p class="text-muted">تاریخ ثبت: @Model.PaymentDate?.ToString("yyyy/MM/dd HH:mm")</p>
+                        <p class="text-muted">کد پیگیری: 
+                            @* @Model.TransactionCode *@
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5>جزئیات سفارش:</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>محصول</th>
+                                        <th>تعداد</th>
+                                        <th>قیمت واحد</th>
+                                        <th>قیمت کل</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderDetails)
+                                    {
+                                        <tr>
+                                            <td>@item.Product?.Name</td>
+                                            <td>@item.Count</td>
+                                            <td>@item.Price.ToString("N0") تومان</td>
+                                            <td>@((item.Count * item.Price).ToString("N0")) تومان</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end fw-bold">مبلغ کل:</td>
+                                        <td class="text-golden fw-bold">
+                                            @Model.OrderDetails.Sum(o => o.Count * o.Price).ToString("N0") تومان
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-golden">
+                        <i class="bi bi-shop"></i> بازگشت به فروشگاه
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

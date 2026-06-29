@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/bootstrap/bootstrap-icons-1.13.1/bootstrap-icons.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/admin.css" rel="stylesheet" asp-append-version="true" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <header href="/">Admin</header>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-3">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/Admin" class="nav-item">خانه</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Add" class="nav-item">افزودن کالا</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-9">
+                <main>
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

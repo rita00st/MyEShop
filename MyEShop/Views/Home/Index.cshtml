@@ -1,0 +1,15 @@
+﻿@using MyEShop.Models.Entities
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-3">به فروشگاه ما خوش آمدید</h1>
+    <div class="row justify-content-center">
+        @foreach (var item in Model)
+        {
+           <partial name="Partials/_boxProduct" model="@item" />
+        }
+    </div>
+</div>

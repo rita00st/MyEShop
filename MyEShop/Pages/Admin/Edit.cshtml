@@ -1,0 +1,282 @@
+﻿@page
+@model MyEShop.Pages.Admin.EditModel
+
+@{
+    ViewData["Title"] = "ویرایش محصول";
+}
+
+<h1 class="text-purple">@ViewData["Title"]</h1>
+<hr />
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container rounded-3 shadow-sm py-4">
+    <div class="row">
+        <div class="col bg-light p-4 m-2 rounded border">
+            <h4 class="text-purple mb-3">
+                <i class="bi bi-pencil-fill me-2"></i>
+                اطلاعات محصول
+            </h4>
+            <hr />
+
+            <form method="post" id="editForm" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="Product.Id" />
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Name Field -->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" asp-for="Product.Name" placeholder=" ">
+                            <label asp-for="Product.Name">نام محصول</label>
+                            <span asp-validation-for="Product.Name" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" asp-for="Product.Description" placeholder=" " style="height: 100px"></textarea>
+                            <label asp-for="Product.Description">توضیحات</label>
+                            <span asp-validation-for="Product.Description" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Price Field -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="Product.Price" placeholder=" ">
+                                    <label asp-for="Product.Price">قیمت (تومان)</label>
+                                    <span asp-validation-for="Product.Price" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Quantity Field -->
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="Product.QuntityInStack" placeholder=" ">
+                                    <label asp-for="Product.QuntityInStack">تعداد موجود</label>
+                                    <span asp-validation-for="Product.QuntityInStack" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Field -->
+                        <div class="my-4">
+                            <label class="fw-bold mb-2"><i class="bi bi-tags"></i> دسته‌بندی‌ها</label>
+                            <div class="row">
+                                @foreach (var item in Model.Product.Categories)
+                                {
+                                    <div class="col-md-3 col-sm-4 col-6">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="selectedGroups" value="@item.Id" 
+                                                   class="form-check-input" id="group_@item.Id"
+                                                   @(Model.GroupsProduct != null && Model.GroupsProduct.Any(c => c == item.Id) ? "checked" : "") />
+                                            <label class="form-check-label ms-2" for="group_@item.Id">@item.Name</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <!-- Picture Field with Preview -->
+                        <div class="card">
+                            <div class="card-header bg-purple text-white">
+                                <i class="bi bi-camera-fill me-1"></i> تصویر محصول
+                            </div>
+                            <div class="card-body text-center">
+                                @{
+                                    string currentImagePath = GetCurrentImagePath(Model.Product.Id);
+                                }
+                                <div class="preview-wrapper" id="previewWrapper" style="display: block;">
+                                    <img id="imagePreview" src="@currentImagePath" alt="تصویر محصول" 
+                                         class="img-fluid rounded shadow-sm" 
+                                         style="max-width: 100%; max-height: 180px; object-fit: cover;"
+                                         onerror="this.src='/images/no-image.jpg'" />
+                                    <button type="button" class="btn btn-sm btn-danger p-2 mt-2" id="removeImage">
+                                        <i class="bi bi-trash"></i> حذف عکس
+                                    </button>
+                                </div>
+                                <div class="preview-placeholder" id="previewPlaceholder" style="display: none;">
+                                    <i class="bi bi-image fs-1 text-muted"></i>
+                                    <p class="text-muted small mt-2 mb-0">پیش‌نمایش عکس</p>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <label class="form-label fw-bold">تغییر عکس</label>
+                                <input asp-for="Product.Picture" type="file" class="form-control" accept="image/*" 
+                                       onchange="previewImage(this)" />
+                                <span asp-validation-for="Product.Picture" class="text-danger small d-block mt-1"></span>
+                                <div class="alert alert-info small mt-2 mb-0">
+                                    <i class="bi bi-info-circle"></i>
+                                    JPG, PNG, GIF (حداکثر 2MB) - برای تغییر عکس، فایل جدید را انتخاب کنید
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="submit" class="btn btn-golden px-4">
+                        <i class="bi bi-check2-circle me-2"></i>
+                        ذخیره تغییرات
+                    </button>
+                    <a asp-page="Index" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-bar-left me-2"></i>
+                        بازگشت
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@functions {
+    // تابع کمکی برای دریافت مسیر عکس فعلی
+    public string GetCurrentImagePath(int productId)
+    {
+        string[] extensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+        
+        foreach (var ext in extensions)
+        {
+            // روش 1: استفاده از Path.Combine (نیاز به using System.IO)
+            string physicalPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", $"{productId}{ext}");
+            
+            // روش 2: استفاده از مسیر نسبی (بدون نیاز به Path)
+            // string physicalPath = Directory.GetCurrentDirectory() + $"/wwwroot/images/{productId}{ext}";
+            
+            if (System.IO.File.Exists(physicalPath))
+            {
+                return $"/images/{productId}{ext}";
+            }
+        }
+        return "/images/no-image.jpg";
+    }
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <style>
+        .preview-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .preview-wrapper img {
+            border: 2px solid #e0e0e0;
+            transition: transform 0.2s;
+        }
+        
+        .preview-wrapper img:hover {
+            transform: scale(1.02);
+        }
+        
+        .preview-placeholder {
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 30px 20px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .preview-placeholder i {
+            font-size: 3rem;
+            color: #adb5bd;
+        }
+        
+        #removeImage {
+            width: auto;
+            min-width: 80px;
+            height: 32px;
+            border-radius: 8px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .bg-purple {
+            background: linear-gradient(135deg, #6f42c1 0%, #8a2be2 100%);
+        }
+        
+        .btn-golden {
+            background: linear-gradient(135deg, #ffd700 0%, #ffc107 100%);
+            color: #333;
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-golden:hover {
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+            color: #333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-secondary {
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-secondary:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <script>
+        function previewImage(input) {
+            const wrapper = document.getElementById('previewWrapper');
+            const placeholder = document.getElementById('previewPlaceholder');
+            const preview = document.getElementById('imagePreview');
+            const removeBtn = document.getElementById('removeImage');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    wrapper.style.display = 'inline-block';
+                    placeholder.style.display = 'none';
+                    if (removeBtn) {
+                        removeBtn.style.display = 'inline-flex';
+                    }
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // دکمه حذف عکس
+        const removeBtn = document.getElementById('removeImage');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function() {
+                const fileInput = document.querySelector('input[type="file"]');
+                if (fileInput) {
+                    fileInput.value = '';
+                }
+                
+                // برگرداندن به عکس پیش‌فرض
+                const preview = document.getElementById('imagePreview');
+                preview.src = '/images/no-image.jpg';
+            });
+        }
+    </script>
+}

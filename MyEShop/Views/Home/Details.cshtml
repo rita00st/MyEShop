@@ -1,0 +1,63 @@
+﻿@model MyEShop.Models.ViewModel.ListProduct.DetailsViewModel
+
+@* @{
+    ViewData["Title"] = "جزئیات محصول";
+} *@
+
+<div class="container py-4">
+    <div class="row">
+            <h1 class="text-purple mb-3">@Model.Product.Name</h1>
+        <div class="col-md-8">
+            <img src="@($"/images/{Model.Product.Id}.jpg")" alt="@Model.Product.Name" class="img-thumbnail" />
+            <hr />
+
+            <div class="">
+                <h4>توضیحات محصول:</h4>
+                <p>@Model.Product?.Description</p>
+
+                <dl>
+                    @foreach (var item in Model.Categories)
+                    {
+                        <dt ><a>@item.Name</a></dt>
+                        <dd class="ps-2">@item.Description</dd>
+                    }
+                </dl>
+
+                @if (Model.Categories != null && Model.Categories.Any())
+                {
+                    <div class=" mt-3">
+                        <h5>دسته‌بندی‌ها:</h5>
+                        <ul class="list-inline">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <li class="list-inline-item">
+                                    <span class="badge bg-purple">@category.Name</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class=" bg-light p-3 rounded my-3">
+                <h3 class="text-golden">قیمت: @Model.Price.ToString("N0") تومان</h3>
+                <h5>موجودی: @Model.QuantityInStock عدد</h5>
+            </div>
+            <br />
+
+            <div class=" mt-4">
+                <a asp-action="AddToCard" asp-route-itemId="@Model.Product.ItemId" class="btn btn-golden btn-lg">
+                    <i class="bi bi-cart-plus"></i> افزودن به سبد خرید
+                </a>
+                <a asp-action="Index" class="btn btn-outline-purple btn-lg">
+                    <i class="bi bi-arrow-right"></i> بازگشت
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+

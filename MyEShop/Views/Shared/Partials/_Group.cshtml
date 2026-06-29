@@ -1,0 +1,18 @@
+﻿@using MyEShop.Models.Services.Interface
+@inject IGroupProductService _GroupProductService
+@{
+}
+<div class="dropdown">
+    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownRightMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        گروه ها
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownRightMenuButton" style="">
+        <li><h6 class="dropdown-header">Category</h6></li>
+        @foreach (var item in _GroupProductService.ShowCategory())
+        {
+            <li><a class="dropdown-item" href="/Group/@item.GroupId/@item.Name">@item.Name</a></li>
+        }
+        
+
+    </ul>
+</div>

@@ -1,0 +1,148 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'sahel';
+    
+}
+
+@font-face {
+    font-family: 'sahel';
+    src: url('../fonts/sahel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'sahel-black';
+    src: url('../fonts/sahel-black.woff') format('woff');
+}
+@font-face {
+    font-family: 'vazir-regular';
+    src: url('../fonts/vazir-regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'dirooz';
+    src: url('../fonts/dirooz.woff') format('woff');
+}
+@font-face {
+    font-family: 'danstevis';
+    src: url('../fonts/danstevis.otf') format('opentype');
+}
+
+
+.btn-golden {
+    background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+    color: white;
+    border: none;
+}
+
+.btn-IncreaseDecrease {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4px;
+}
+
+.bg-purple {
+    background: linear-gradient(135deg, #6f42c1 0%, #8a2be2 100%);
+}
+
+
+
+.btn-golden {
+    background: linear-gradient(135deg, #ffd700 0%, #ffc107 100%);
+    color: #333;
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+    .btn-golden:hover {
+        background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+        color: #333;
+        transform: translateY(-2px);
+    }
+
+.table tbody tr:hover {
+    background-color: rgba(138, 43, 226, 0.05);
+}
+
+.btn-outline-warning, .btn-outline-success {
+    transition: all 0.2s;
+}
+
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #333;
+        transform: scale(1.05);
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+        transform: scale(1.05);
+    }
+
+.btn-danger {
+    transition: all 0.2s;
+}
+
+    .btn-danger:hover {
+        transform: scale(1.02);
+    }
+
+/* کلاس‌های کمکی برای ریسپانسیو */
+.w-md-auto {
+    width: auto;
+}
+
+.order-md-1 {
+    order: 1;
+}
+
+@media (min-width: 768px) {
+    .w-md-auto {
+        width: auto !important;
+    }
+
+    .order-md-1 {
+        order: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-golden.btn-lg {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .fs-6 {
+        font-size: 0.9rem !important;
+    }
+}

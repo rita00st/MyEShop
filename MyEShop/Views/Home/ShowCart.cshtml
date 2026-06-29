@@ -1,0 +1,182 @@
+﻿@model MyEShop.Models.Entities.Order
+@{
+    ViewData["Title"] = "سبد خرید";
+}
+
+<div class="container py-4">
+    <h1 class="text-purple mb-4">سبد خرید</h1>
+    <hr />
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (Model != null && Model.OrderDetails != null && Model.OrderDetails.Any())
+    {
+        <!-- نسخه دسکتاپ - نمایش جدول -->
+        <div class="d-none d-md-block">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="bg-purple text-white">
+                        <tr class="text-center">
+                            <th style="width: 80px">تصویر</th>
+                            <th>نام کالا</th>
+                            <th style="width: 120px">قیمت واحد</th>
+                            <th style="width: 150px">تعداد</th>
+                            <th style="width: 130px">قیمت کل</th>
+                            <th style="width: 130px">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr class="text-center">
+                                <td>
+                                    <img src="@(item.Product?.ImagePath ?? $"/images/{item.ProductId}.jpg")"
+                                         style="width: 50px; height: 50px; object-fit: cover;"
+                                         class="img-thumbnail"
+                                         onerror="this.src='/images/no-image.jpg'" />
+                                </td>
+                                <td class="text-end">@item.Product?.Name</td>
+                                <td class="text-golden fw-bold">@item.Price.ToString("N0") تومان</td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <a asp-action="DecreaseFromCart" asp-route-detailId="@item.DetailId"
+                                           class="btn btn-sm btn-outline-warning rounded-circle btn-IncreaseDecrease"
+                                           title="کاهش تعداد">
+                                            <i class="bi bi-dash-lg"></i>
+                                        </a>
+                                        <span class="fw-bold mx-2" style="min-width: 40px;">@item.Count</span>
+                                        <a asp-action="IncreaseFromCart" asp-route-detailId="@item.DetailId"
+                                           class="btn btn-sm btn-outline-success rounded-circle btn-IncreaseDecrease"
+                                           title="افزایش تعداد">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="text-golden fw-bold">
+                                    @((item.Count * item.Price).ToString("N0")) تومان
+                                </td>
+                                <td>
+                                    <a asp-action="RemoveFromCart" asp-route-detailId="@item.DetailId"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('آیا از حذف این محصول از سبد خرید مطمئن هستید؟')">
+                                        <i class="bi bi-trash-fill"></i> حذف
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-light">
+                            <td colspan="4" class="text-end fw-bold">جمع کل: </td>
+                            <td colspan="2" class="text-golden fw-bold fs-5 text-start">
+                                @Model.OrderDetails.Sum(od => od.Count * od.Price).ToString("N0") تومان
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- نسخه موبایل - نمایش کارتی -->
+        <div class="d-md-none">
+            @foreach (var item in Model.OrderDetails)
+            {
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="@(item.Product?.ImagePath ?? $"/images/{item.ProductId}.jpg")"
+                                     style="width: 80px; height: 80px; object-fit: cover;"
+                                     class="img-fluid rounded"
+                                     onerror="this.src='/images/no-image.jpg'" />
+                            </div>
+                            <div class="col-8">
+                                <h5 class="card-title text-purple fw-bold mb-2">@item.Product?.Name</h5>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted">قیمت واحد:</span>
+                                    <span class="text-golden fw-bold">@item.Price.ToString("N0") تومان</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted">تعداد:</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <a asp-action="DecreaseFromCart" asp-route-detailId="@item.DetailId"
+                                           class="btn btn-sm btn-outline-warning rounded-circle"
+                                           style="width: 30px; height: 30px; padding: 0; display: inline-flex; align-items: center; justify-content: center;"
+                                           title="کاهش تعداد">
+                                            <i class="bi bi-dash-lg"></i>
+                                        </a>
+                                        <span class="fw-bold mx-1" style="min-width: 35px; text-align: center;">@item.Count</span>
+                                        <a asp-action="IncreaseFromCart" asp-route-detailId="@item.DetailId"
+                                           class="btn btn-sm btn-outline-success rounded-circle"
+                                           style="width: 30px; height: 30px; padding: 0; display: inline-flex; align-items: center; justify-content: center;"
+                                           title="افزایش تعداد">
+                                            <i class="bi bi-plus-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-muted">قیمت کل:</span>
+                                    <span class="text-golden fw-bold fs-6">@((item.Count * item.Price).ToString("N0")) تومان</span>
+                                </div>
+                                <div class="d-grid">
+                                    <a asp-action="RemoveFromCart" asp-route-detailId="@item.DetailId"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('آیا از حذف این محصول از سبد خرید مطمئن هستید؟')">
+                                        <i class="bi bi-trash-fill me-1"></i> حذف از سبد خرید
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- جمع کل در موبایل -->
+            <div class="card bg-light mt-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold fs-5">جمع کل:</span>
+                        <span class="text-golden fw-bold fs-4">
+                            @Model.OrderDetails.Sum(od => od.Count * od.Price).ToString("N0") تومان
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- دکمه‌های پایین صفحه (ریسپانسیو) -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mt-4">
+            <a asp-action="Checkout" class="btn btn-golden btn-lg w-100 w-md-auto">
+                <i class="bi bi-credit-card"></i> ادامه فرآیند خرید
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary w-100 w-md-auto order-md-1">
+                <i class="bi bi-arrow-left"></i> ادامه خرید
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center py-5" role="alert">
+            <i class="bi bi-cart-x fs-1 d-block mb-3"></i>
+            <h4>سبد خرید شما خالی است!</h4>
+            <p class="mb-3">برای افزودن محصول به سبد خرید، به صفحه محصولات مراجعه کنید.</p>
+            <a asp-action="Index" class="btn btn-golden">
+                <i class="bi bi-shop"></i> مشاهده محصولات
+            </a>
+        </div>
+    }
+</div>

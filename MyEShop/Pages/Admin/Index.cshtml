@@ -1,0 +1,68 @@
+﻿@page
+@model MyEShop.Pages.Admin.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+<h1>لیست محصولات</h1>
+<hr />
+
+<p>
+    <a class="btn btn-bronze-dark" asp-page="./Add">اضافه کردن محصول جدید</a>
+</p>
+
+<table class="table align-middle text-center">
+    <thead>
+        <tr>
+            <th>تصویر</th>
+            <th>نام</th>
+            <th>قیمت</th>
+            <th>دستورات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    <img src="@item.ImagePath" style="max-width:150px" class="img-thumbnail"  />
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("N0") تومان</td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-golden btn-sm" title="ویرایش">
+                            <i class="bi bi-pencil-fill"></i>
+                            <span class="d-none d-sm-inline ms-1">ویرایش</span>
+                        </a>
+
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm" title="جزئیات">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <span class="d-none d-sm-inline ms-1">جزئیات</span>
+                        </a>
+
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-pink btn-sm" title="حذف">
+                            <i class="bi bi-trash-fill"></i>
+                            <span class="d-none d-sm-inline ms-1">حذف</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
