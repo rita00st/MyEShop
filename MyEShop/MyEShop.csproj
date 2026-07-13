@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <None Include=".github\workflows\deploy.yml" />
+    <None Include="wwwroot\404.html" />
+    <None Include="wwwroot\index.html" />
   </ItemGroup>
 
 
