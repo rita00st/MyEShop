@@ -56,3 +56,37 @@ if (removeBtn) {
         preview.src = '#';
     });
 }
+
+
+
+
+// dropdrown product
+// تابع باز و بسته کردن زیرگزینه‌ها
+function toggleSubMenu(element) {
+    const subMenu = element.nextElementSibling;
+    const arrow = element.querySelector('.arrow');
+
+    if (subMenu) {
+        subMenu.classList.toggle('open');
+        if (arrow) {
+            arrow.classList.toggle('open');
+        }
+    }
+}
+
+// باز نگه داشتن زیرگزینه فعال (وقتی صفحه لود می‌شود)
+document.addEventListener('DOMContentLoaded', function () {
+    const activeSubItem = document.querySelector('.sub-menu a.active');
+    if (activeSubItem) {
+        const subMenu = activeSubItem.closest('.sub-menu');
+        const parentItem = subMenu.previousElementSibling;
+
+        if (subMenu && parentItem) {
+            subMenu.classList.add('open');
+            const arrow = parentItem.querySelector('.arrow');
+            if (arrow) {
+                arrow.classList.add('open');
+            }
+        }
+    }
+});

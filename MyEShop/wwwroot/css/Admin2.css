@@ -232,3 +232,71 @@ body {
     transform: translateY(-2px);
 }
 
+
+/*زیرگزینه محصولات dropdown*/
+/* استایل زیرگزینه‌ها */
+.menu-item-dropdown {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-right: 3px solid transparent;
+}
+
+.menu-item-dropdown:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffd700;
+    border-right-color: #ffd700;
+}
+
+.menu-item-dropdown .arrow {
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+}
+
+    .menu-item-dropdown .arrow.open {
+        transform: rotate(180deg);
+    }
+
+.sub-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sub-menu.open {
+    max-height: 500px;
+}
+
+.sub-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 24px 10px 50px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.sub-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffd700;
+}
+
+.sub-menu li a i {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.sub-menu li a.active {
+    color: #ffd700;
+    background-color: rgba(255, 215, 0, 0.1);
+}
