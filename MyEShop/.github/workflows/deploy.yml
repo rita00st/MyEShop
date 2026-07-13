@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ "master" ]  # یا "main" اگر branch شما main است
+    branches: [ "gh-pages" ]  # یا "main" اگر branch شما main است
 
 jobs:
   deploy:
