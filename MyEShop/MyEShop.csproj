@@ -26,5 +26,9 @@
 	 <PackageReference Include="Zarinpal" Version="3.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\deploy.yml" />
+  </ItemGroup>
+
 
 </Project>
