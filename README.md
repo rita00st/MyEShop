@@ -81,7 +81,7 @@
 | **Bootstrap 5.3** | طراحی واکنش‌گرا و کامپوننت‌ها |
 | **Bootstrap Icons** | مجموعه آیکون‌های زیبا |
 | **JavaScript (Vanilla)** | اعتبارسنجی، پیش‌نمایش تصاویر، مدیریت سبد خرید |
-| **SweetAlert2** | پیام‌های هشدار جذاب (اختیاری) |
+| **SweetAlert2** | پیام‌های هشدار جذاب  |
 </details>
 
 ---
@@ -120,14 +120,6 @@ dotnet run
 ```
 سپس به آدرس **`https://localhost:7030`** بروید.  
 (پورت ممکن است متفاوت باشد، در خروجی ترمینال آن را ببینید.)
-
-#### ۵. اجرای فرانت‌اند (اختیاری)
-اگر فرانت‌اند را جداگانه کلون کرده‌اید:
-```bash
-git clone https://github.com/rita00st/MyEShop-Front.git
-cd MyEShop-Front
-```
-سپس فایل `login.html` یا `register.html` را در مرورگر باز کنید.
 
 ---
 
@@ -179,11 +171,6 @@ MyEShop/                         # 📁 بک‌اند (ASP.NET Core)
 ├── Program.cs                   # نقطه شروع برنامه
 └── MyEShop.csproj               # فایل پروژه
 
-MyEShop-Front/                   # 📁 فرانت‌اند (صفحات لاگین/ثبت‌نام)
-├── login.html                   # صفحه ورود
-├── register.html                # صفحه ثبت‌نام
-├── style.css                    # استایل‌های اختصاصی
-└── assets/                      # منابع اضافی (عکس، فونت و...)
 ```
 
 ---
@@ -224,14 +211,14 @@ MyEShop-Front/                   # 📁 فرانت‌اند (صفحات لاگی
 
 <div align="center">
   <a href="https://github.com/rita00st">
-    <img src="https://avatars.githubusercontent.com/rita00st" width="120" height="120" style="border-radius: 50%;" alt="Rita Asadi">
+    <img src="https://avatars.githubusercontent.com/rita00st" width="120" height="120" style="border-radius: 50%;" alt="mahbobeh sadat tabatabaein">
   </a>
   <br>
   <h3>🌟 محبوبه سادات طباطبائیان</h3>
   
   [![GitHub](https://img.shields.io/badge/GitHub-rita00st-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/rita00st)
   [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rita%20Asadi-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/rita-asadi)
-  [![Email](https://img.shields.io/badge/Email-rita00st%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:rita00st@gmail.com)
+  [![Email](https://img.shields.io/badge/Email-rita00st%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:mahbobeh1383@gmail.com)
 </div>
 
 ---
@@ -242,8 +229,7 @@ MyEShop-Front/                   # 📁 فرانت‌اند (صفحات لاگی
 
 | مخزن | لینک | وضعیت |
 |------|------|--------|
-| **بک‌اند (MyEShop)** | [https://github.com/rita00st/MyEShop](https://github.com/rita00st/MyEShop) | [![GitHub stars](https://img.shields.io/github/stars/rita00st/MyEShop?style=social)](https://github.com/rita00st/MyEShop) |
-| **فرانت‌اند (MyEShop-Front)** | [https://github.com/rita00st/MyEShop-Front](https://github.com/rita00st/MyEShop-Front) | [![GitHub stars](https://img.shields.io/github/stars/rita00st/MyEShop-Front?style=social)](https://github.com/rita00st/MyEShop-Front) |
+| **بک‌اند (MyEShop)** | [https://github.com/rita00st/MyEShop](https://github.com/rita00st/MyEShop) | [![GitHub stars](https://img.shields.io/github/stars/rita00st/MyEShop?style=social)](https://github.com/rita00st/MyEShop) | https://img.shields.io/github/stars/rita00st/MyEShop-Front?style=social)](https://github.com/rita00st/MyEShop-Front) |
 | **دموی زنده** | [https://rita00st.github.io/MyEShop/](https://rita00st.github.io/MyEShop/) | [![GitHub Pages](https://img.shields.io/badge/Deployed-✓-brightgreen)](https://rita00st.github.io/MyEShop/) |
 
 ---
