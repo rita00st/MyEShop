@@ -1,5 +1,4 @@
 
-```markdown
 <div align="center">
   <img src="https://via.placeholder.com/800x200/6a11cb/ffffff?text=MyEShop" alt="MyEShop Banner" width="100%">
   
