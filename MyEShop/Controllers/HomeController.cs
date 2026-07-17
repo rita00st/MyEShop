@@ -219,6 +219,8 @@ namespace MyEShop.Controllers
         [Authorize]
         public async Task<IActionResult> ShowCart()
         {
+            
+
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userIdClaim))
             {
@@ -240,7 +242,6 @@ namespace MyEShop.Controllers
             }
 
             ViewBag.TotalPrice = order.OrderDetails.Sum(od => od.Count * od.Price);
-
             return View(order);
         }
 

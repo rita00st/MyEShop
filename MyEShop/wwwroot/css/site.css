@@ -146,3 +146,275 @@ body {
         font-size: 0.9rem !important;
     }
 }
+
+/* ============================================
+           استایل‌های هدر
+============================================ */
+
+/* گرادیانت پس‌زمینه */
+.bg-gradient-purple {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* لوگو */
+.navbar-brand {
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease;
+}
+
+    .navbar-brand:hover {
+        transform: scale(1.03);
+    }
+
+.text-golden {
+    color: #ffd700;
+}
+
+/* لینک‌های منو */
+.nav-link-custom {
+    color: rgba(255, 255, 255, 0.85) !important;
+    padding: 8px 16px !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+    .nav-link-custom:hover {
+        color: #fff !important;
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .nav-link-custom i {
+        margin-left: 6px;
+        font-size: 1.1rem;
+    }
+
+/* دراپ‌داون منو */
+.dropdown-menu {
+    background: #fff;
+    min-width: 200px;
+    padding: 8px 0;
+    margin-top: 8px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+    .dropdown-menu .dropdown-item {
+        padding: 10px 20px;
+        transition: all 0.2s ease;
+        font-weight: 500;
+    }
+
+        .dropdown-menu .dropdown-item:hover {
+            background: linear-gradient(135deg, #f5f0ff 0%, #e8e0ff 100%);
+            color: #6a11cb;
+        }
+
+        .dropdown-menu .dropdown-item i {
+            color: #6a11cb;
+            width: 20px;
+        }
+
+/* جستجو */
+.search-input {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    backdrop-filter: blur(5px);
+    min-width: 220px;
+    padding-right: 45px !important;
+    height: 40px;
+}
+
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .search-input:focus {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
+.btn-search {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    border: none;
+    padding: 0 12px;
+}
+
+    .btn-search:hover {
+        color: #fff;
+    }
+
+/* سبد خرید */
+.cart-link {
+    position: relative;
+    padding: 6px 10px !important;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+    .cart-link:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.1);
+    }
+
+    .cart-link i {
+        color: #fff;
+        font-size: 1.6rem;
+    }
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 0.65rem;
+    padding: 3px 7px;
+    border-radius: 50%;
+    background: #ff4757;
+    color: #fff;
+    font-weight: 700;
+    min-width: 22px;
+    text-align: center;
+    border: 2px solid #6a11cb;
+}
+
+/* آواتار کاربر */
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+    .user-avatar i {
+        font-size: 1.4rem;
+    }
+
+/* دکمه طلایی */
+.btn-golden {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+    color: #333;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-golden:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        color: #333;
+    }
+
+/* دکمه‌های ورود/ثبت‌نام */
+.btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-light:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #fff;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+/* ============================================
+           ریسپانسیو
+           ============================================ */
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        padding-top: 10px;
+    }
+
+    .search-input {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .navbar .btn-golden,
+    .navbar .btn-outline-light {
+        width: 100%;
+        margin: 4px 0;
+    }
+
+    .cart-link {
+        padding: 8px 12px !important;
+    }
+
+    .dropdown-menu {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+        .dropdown-menu .dropdown-item {
+            color: rgba(255, 255, 255, 0.85) !important;
+            padding: 8px 20px;
+        }
+
+            .dropdown-menu .dropdown-item:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff !important;
+            }
+
+            .dropdown-menu .dropdown-item i {
+                color: #ffd700;
+            }
+
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .cart-badge {
+        font-size: 0.55rem;
+        min-width: 18px;
+        padding: 2px 5px;
+    }
+
+    .btn-golden,
+    .btn-outline-light {
+        font-size: 0.85rem;
+        padding: 6px 16px;
+    }
+}
+
+/* اسکرول نرم */
+.fixed-top {
+    animation: fadeDown 0.5s ease;
+}
+
+@keyframes fadeDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
