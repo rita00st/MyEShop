@@ -1,15 +1,255 @@
-﻿@using MyEShop.Models.Entities
-@model IEnumerable<Product>
+﻿﻿@using MyEShop.Models.Entities
+@using MyEShop.Models.ViewModel
+@model IEnumerable<ProductViewModel>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "صفحه اصلی";
 }
 
-<div class="text-center">
-    <h1 class="display-4 mb-3">به فروشگاه ما خوش آمدید</h1>
-    <div class="row justify-content-center">
-        @foreach (var item in Model)
+<!-- ============================================
+     بنر اصلی (Hero Section)
+     ============================================ -->
+<section class="hero-section py-5 mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-lg-end text-center mb-4 mb-lg-0">
+                <span class="badge bg-golden text-dark px-3 py-2 mb-3">🔥 تخفیف ویژه</span>
+                <h1 class="hero-title">
+                    به <span class="text-golden">MyEShop</span> خوش آمدید
+                </h1>
+                <p class="hero-subtitle mt-3">
+                    بهترین و باکیفیت‌ترین محصولات را با قیمت‌های استثنایی از ما تهیه کنید.
+                    فروشگاهی برای همه سلیقه‌ها!
+                </p>
+                <div class="d-flex gap-3 justify-content-lg-start justify-content-center mt-4 flex-wrap">
+                    <a href="#products" class="btn btn-golden btn-lg px-5">
+                        <i class="bi bi-arrow-down"></i> مشاهده محصولات
+                    </a>
+                    <a asp-controller="Home" asp-action="ContactUs" class="btn btn-outline-purple btn-lg px-5">
+                        <i class="bi bi-headset"></i> تماس با ما
+                    </a>
+                </div>
+                <div class="hero-stats mt-5 d-flex gap-5 justify-content-lg-start justify-content-center">
+                    <div>
+                        <h3 class="text-golden fw-bold mb-0">+۱۰۰۰</h3>
+                        <small class="text-muted">محصول</small>
+                    </div>
+                    <div>
+                        <h3 class="text-golden fw-bold mb-0">+۵۰۰</h3>
+                        <small class="text-muted">مشتری</small>
+                    </div>
+                    <div>
+                        <h3 class="text-golden fw-bold mb-0">۹۸٪</h3>
+                        <small class="text-muted">رضایت</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-image-wrapper">
+                    <img src="~/images/Image_HomePage.webp"
+                         alt="MyEShop" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     بخش دسته‌بندی‌ها
+     ============================================ -->
+<section class="categories-section py-4 mb-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="section-title">
+                <i class="bi bi-grid-3x3-gap-fill text-purple"></i>
+                دسته‌بندی‌های ویژه
+            </h2>
+            <a href="#" class="text-purple text-decoration-none">
+                مشاهده همه <i class="bi bi-chevron-left"></i>
+            </a>
+        </div>
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <div class="category-card text-center p-3">
+                    <i class="bi bi-laptop fs-1 text-purple"></i>
+                    <h6 class="mt-2">الکترونیک</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="category-card text-center p-3">
+                    <i class="bi bi-bag fs-1 text-purple"></i>
+                    <h6 class="mt-2">مد و پوشاک</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="category-card text-center p-3">
+                    <i class="bi bi-book fs-1 text-purple"></i>
+                    <h6 class="mt-2">کتاب و محصولات فرهنگی</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="category-card text-center p-3">
+                    <i class="bi bi-house fs-1 text-purple"></i>
+                    <h6 class="mt-2">خانه و آشپزخانه</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================
+     بخش محصولات
+     ============================================ -->
+<section id="products" class="products-section py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h2 class="section-title">
+                <i class="bi bi-box-seam-fill text-purple"></i>
+                محصولات ما
+            </h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-purple btn-sm active-filter" data-filter="all">همه</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="new">جدید</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="popular">محبوب</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="sale">تخفیف‌دار</button>
+            </div>
+        </div>
+
+        @if (Model != null && Model.Any())
         {
-           <partial name="Partials/_boxProduct" model="@item" />
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="product-card">
+                            <!-- دکمه‌های سمت چپ کارت -->
+                            <div class="product-actions">
+                                <button class="action-btn" title="افزودن به علاقه‌مندی">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                <button class="action-btn" title="مقایسه">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                </button>
+                            </div>
+
+                            <!-- نشان تخفیف -->
+                            @* <span class="product-badge">🔥 تخفیف</span> *@
+
+                            <!-- تصویر محصول -->
+                            <div class="product-image-wrapper">
+                                <img src="@(item.ImagePath ?? "/images/no-image.jpg")"
+                                     alt="@item.Name"
+                                     class="product-image">
+                            </div>
+
+                            <!-- اطلاعات محصول -->
+                            <div class="product-body">
+                                <h6 class="product-name">
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id"
+                                       class="text-decoration-none text-dark">
+                                        @item.Name
+                                    </a>
+                                </h6>
+
+                                <!-- رتبه‌بندی ستاره‌ای -->
+                                <div class="product-rating">
+                                    <i class="bi bi-star-fill text-golden"></i>
+                                    <i class="bi bi-star-fill text-golden"></i>
+                                    <i class="bi bi-star-fill text-golden"></i>
+                                    <i class="bi bi-star-fill text-golden"></i>
+                                    <i class="bi bi-star-half text-golden"></i>
+                                    <span class="text-muted ms-1">(۱۲)</span>
+                                </div>
+
+                                <!-- قیمت -->
+                                <div class="product-price-wrapper">
+                                    @if (item.Price > 0)
+                                    {
+                                        <span class="product-price">@item.Price.ToString("N0") تومان</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="product-price text-muted">نامشخص</span>
+                                    }
+                                </div>
+
+                                <!-- دکمه‌های پایین -->
+                                <div class="product-footer d-flex gap-2 mt-3">
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id"
+                                       class="btn btn-purple w-50 btn-sm">
+                                        <i class="bi bi-eye"></i> مشاهده
+                                    </a>
+                                    <a asp-controller="Home" asp-action="AddToCard" asp-route-itemId="@item.ItemId"
+                                       class="btn btn-golden w-50 btn-sm">
+                                        <i class="bi bi-cart-plus"></i> خرید
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- دکمه نمایش بیشتر -->
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-purple btn-lg px-5">
+                    نمایش بیشتر <i class="bi bi-chevron-left"></i>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                <h4>محصولی برای نمایش وجود ندارد!</h4>
+                <p class="text-muted">به زودی محصولات جدید به فروشگاه اضافه خواهند شد.</p>
+            </div>
         }
     </div>
-</div>
+</section>
+
+<!-- ============================================
+     بخش ویژگی‌ها (Features)
+     ============================================ -->
+<section class="features-section py-5 mt-4">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <div class="feature-item text-center">
+                    <div class="feature-icon">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h6>ارسال رایگان</h6>
+                    <small class="text-muted">برای سفارش‌های بالای ۲۰۰ هزار تومان</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="feature-item text-center">
+                    <div class="feature-icon">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                    <h6>بازگشت کالا</h6>
+                    <small class="text-muted">ضمانت بازگشت تا ۷ روز</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="feature-item text-center">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h6>پرداخت امن</h6>
+                    <small class="text-muted">اتصال به درگاه زرین‌پال</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="feature-item text-center">
+                    <div class="feature-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h6>پشتیبانی ۲۴/۷</h6>
+                    <small class="text-muted">پاسخگویی در تمام ساعات</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

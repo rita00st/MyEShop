@@ -1,22 +1,25 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Dto.Payment;           
+using Dto.Response.Payment;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using MyEShop.Models;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.DTO;
 using MyEShop.Models.Entities;
 using MyEShop.Models.ViewModel.Cart;
 using MyEShop.Models.ViewModel.ListProduct;
+using MyEShop.Pages.Admin;
 using MyEShop.Services;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ZarinPal.Class;
-using Dto.Payment;           
-using Dto.Response.Payment;
 
 namespace MyEShop.Controllers
 {
@@ -26,20 +29,40 @@ namespace MyEShop.Controllers
         private readonly MyEshopContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-
-        public HomeController(ILogger<HomeController> logger, MyEshopContext context, IMapper mapper, IConfiguration configuration)
+        public HomeController(ILogger<HomeController> logger, MyEshopContext context, IMapper mapper, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
         {
             var products = await _context.products.ToListAsync();
+
+            //var Products = new List<ProductViewModel>();
+
+
+            //Products = await _context.products
+            //    .Include(p => p.Item)
+            //    .Select(p => new ProductViewModel
+            //{
+            //    Id = p.Id,
+            //    Name = p.Name,
+            //    Description = p.Description,
+            //    Price = p.Item.Price ,
+            //    QuntityInStack = p.Item.QuantityInStock,
+            //    ImagePath = GetImagePath(p.Id,_webHostEnvironment),
+            //    ItemId = p.ItemId
+        //}).ToListAsync();
+
+       
+
             return View(products);
         }
 
@@ -251,6 +274,7 @@ namespace MyEShop.Controllers
             return View();
         }
 
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -310,5 +334,23 @@ namespace MyEShop.Controllers
             return RedirectToAction(nameof(ShowCart));
         }
 
+
+
+
+        private static string GetImagePath(int productId, IWebHostEnvironment webHostEnvironment)
+        {
+            string imagesFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+
+            foreach (var ext in supportedExtensions)
+            {
+                string filePath = Path.Combine(imagesFolder, productId + ext);
+                if (System.IO.File.Exists(filePath))
+                {
+                    return $"/images/{productId}{ext}";
+                }
+            }
+            return "/images/no-image.jpg";
+        }
     }
 }
