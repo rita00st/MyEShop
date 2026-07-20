@@ -43,7 +43,7 @@ namespace MyEShop.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _context.products.ToListAsync();
+            var products = await _context.products.Include(x=>x.Item).ToListAsync();
 
             //var Products = new List<ProductViewModel>();
 
@@ -59,9 +59,12 @@ namespace MyEShop.Controllers
             //    QuntityInStack = p.Item.QuantityInStock,
             //    ImagePath = GetImagePath(p.Id,_webHostEnvironment),
             //    ItemId = p.ItemId
-        //}).ToListAsync();
+            //}).ToListAsync();
 
-       
+            foreach (var product in products)
+            {
+                product.ImagePath = GetImagePath(product.Id);
+            }
 
             return View(products);
         }
@@ -337,9 +340,9 @@ namespace MyEShop.Controllers
 
 
 
-        private static string GetImagePath(int productId, IWebHostEnvironment webHostEnvironment)
+        private string GetImagePath(int productId)
         {
-            string imagesFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
             string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
 
             foreach (var ext in supportedExtensions)
