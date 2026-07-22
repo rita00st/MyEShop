@@ -26,8 +26,9 @@
 </div>
 
 ## 📖 درباره پروژه
-
-> **MyEShop** یک فروشگاه اینترنتی کامل و حرفه‌ای است که با **ASP.NET Core 8** و **Entity Framework Core** ساخته شده است. این پروژه شامل یک **بک‌اند قدرتمند** با مدیریت محصولات، سبد خرید، پرداخت آنلاین و پنل مدیریت است و یک **فرانت‌اند مدرن** با صفحات ورود و ثبت‌نام واکنش‌گرا دارد.
+<div dir="rtl" align="right">
+**MyEShop** یک فروشگاه اینترنتی کامل و حرفه‌ای است که با **ASP.NET Core 8** و **Entity Framework Core** ساخته شده است. این پروژه شامل یک **بک‌اند قدرتمند** با مدیریت محصولات، سبد خرید، پرداخت آنلاین و پنل مدیریت است و یک **فرانت‌اند مدرن** با صفحات ورود و ثبت‌نام واکنش‌گرا دارد.
+</div>
 
 ### 🎯 چرا این پروژه را ساختم؟
 - 🚀 برای یادگیری عمیق **ASP.NET Core MVC** و **Razor Pages**
@@ -153,24 +154,61 @@ dotnet run
 ## 📂 ساختار پروژه
 
 ```
-MyEShop/                         # 📁 بک‌اند (ASP.NET Core)
-├── Controllers/                 # کنترلرهای MVC
-├── Pages/                       # Razor Pages (پنل ادمین)
-│   └── Admin/                   # صفحات مدیریت
-├── Models/                      # مدل‌ها و ViewModel‌ها
-│   ├── Entities/                # موجودیت‌های دیتابیس
-│   └── ViewModel/               # مدل‌های نمایشی
-├── Services/                    # سرویس‌ها (IoC)
-├── Migrations/                  # مایگریشن‌های EF Core
-├── wwwroot/                     # فایل‌های استاتیک
-│   ├── css/                     # استایل‌های سفارشی
-│   ├── js/                      # اسکریپت‌ها
-│   ├── images/                  # تصاویر محصولات
-│   └── lib/                     # کتابخانه‌های جانبی
-├── appsettings.json             # تنظیمات پروژه
-├── Program.cs                   # نقطه شروع برنامه
-└── MyEShop.csproj               # فایل پروژه
-
+MyEShop/                         # 📁 ریشه پروژه (ASP.NET Core 8)
+├── Controllers/                 # 🎮 کنترلرهای MVC (مدیریت درخواست‌ها)
+│   ├── AccountController.cs     # مدیریت ثبت‌نام، ورود و خروج کاربران
+│   ├── HomeController.cs        # صفحه اصلی و صفحات عمومی
+│   └── ProductController.cs     # مدیریت نمایش محصولات و جزئیات
+│
+├── Pages/                       # 📄 صفحات Razor Pages (پنل ادمین)
+│   ├── Admin/                   # 🛠️ صفحات مدیریتی (ویژه ادمین)
+│   │   ├── Dashboard.cshtml     # داشبورد مدیریت
+│   │   ├── Products.cshtml      # مدیریت محصولات (افزودن، ویرایش، حذف)
+│   │   ├── Categories.cshtml    # مدیریت دسته‌بندی‌ها
+│   │   └── Orders.cshtml        # مدیریت سفارشات
+│   ├── Shared/                  # 🧩 صفحات اشتراکی (Layout، Partial View)
+│   │   ├── _Layout.cshtml       # قالب اصلی صفحات
+│   │   └── _ValidationScriptsPartial.cshtml
+│   └── _ValidationScriptsPartial.cshtml
+│
+├── Models/                      # 🗄️ مدل‌های داده و ViewModel
+│   ├── Entities/                # 🏷️ موجودیت‌های دیتابیس (EF Core)
+│   │   ├── Product.cs           # مدل محصول
+│   │   ├── Category.cs          # مدل دسته‌بندی
+│   │   ├── Order.cs             # مدل سفارش
+│   │   └── User.cs              # مدل کاربر (Identity)
+│   ├── DTO/                     # 📦 مدل‌های انتقال داده (Data Transfer Objects)
+│   │   ├── ProductDTO.cs        # داده‌های مورد نیاز برای نمایش محصول
+│   │   └── OrderDTO.cs          # داده‌های مورد نیاز برای نمایش سفارش
+│   └── DatabaseContext/         # 🗃️ کلاس Context و تنظیمات EF Core
+│       └── MyEShopContext.cs    # DbContext اصلی برنامه
+│
+├── Views/                       # 🖼️ Viewهای MVC (رابط کاربری)
+│   ├── Account/                 # صفحات احراز هویت (Login, Register)
+│   ├── Home/                    # صفحات اصلی (Index, About, Contact)
+│   └── Product/                 # صفحات مربوط به محصولات (Details, List)
+│
+├── wwwroot/                     # 🌐 فایل‌های استاتیک (دسترسی عمومی)
+│   ├── css/                     # 🎨 استایل‌های سفارشی (CSS)
+│   ├── js/                      # ⚡ اسکریپت‌های سمت کاربر (JavaScript)
+│   ├── Icon/                    # 🖼️ آیکون‌ها و تصاویر
+│   └── 404.html                 # 📄 صفحه خطای 404 سفارشی
+│
+├── Migrations/                  # 📜 تاریخچه تغییرات دیتابیس (EF Core)
+│   ├── 20260421125732_AddTableCategory.cs
+│   ├── 20260421125732_AddTableCategory.Designer.cs
+│   ├── 20260423125743_Addprop.cs
+│   └── ...                      # سایر فایل‌های Migration
+│
+├── .config/                     # ⚙️ تنظیمات پیکربندی پروژه
+├── .github/                     # 🤖 تنظیمات GitHub (Actions, Issue Templates)
+├── appsettings.json             # 🔧 تنظیمات اصلی برنامه (اتصال به دیتابیس، کلیدها)
+├── appsettings.Development.json # 🧪 تنظیمات محیط توسعه
+├── Program.cs                   # 🚀 نقطه ورود و راه‌اندازی برنامه
+├── MyEShop.csproj               # 📦 فایل پروژه (مدیریت وابستگی‌ها)
+├── MyEShop.sln                  # 🗂️ فایل Solution (مدیریت پروژه در VS)
+├── .gitattributes               # 🏷️ تنظیمات Git برای مدیریت خطوط
+└── .gitignore                   # 🙈 لیست فایل‌های نادیده‌گرفته شده توسط Git
 ```
 
 ---
@@ -217,7 +255,7 @@ MyEShop/                         # 📁 بک‌اند (ASP.NET Core)
   <h3>🌟 محبوبه سادات طباطبائیان</h3>
   
   [![GitHub](https://img.shields.io/badge/GitHub-rita00st-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/rita00st)
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rita%20Asadi-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/rita-asadi)
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rita%20Asadi-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/mahbobehTabatabaein)
   [![Email](https://img.shields.io/badge/Email-rita00st%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:mahbobeh1383@gmail.com)
 </div>
 
@@ -242,6 +280,5 @@ MyEShop/                         # 📁 بک‌اند (ASP.NET Core)
     <i>«کد بنویسید، زیبا زندگی کنید، و به دیگران کمک کنید.»</i>
   </p>
 </div>
-```
 
 ---
