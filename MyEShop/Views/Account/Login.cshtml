@@ -7,10 +7,9 @@
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         شما دسترسی ندارید
-        @* <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> *@
     </div>
 }
-<h4>ورود</h4>
+@* <h4>ورود</h4>
 <hr />
 <div class="row">
     <div class="col-md-8">
@@ -39,8 +38,11 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
+<!-- login Start -->
+@await Html.PartialAsync("Partials/__Login")
+<!-- login Start -->
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
