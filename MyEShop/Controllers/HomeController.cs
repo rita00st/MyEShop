@@ -68,6 +68,10 @@ namespace MyEShop.Controllers
 
             return View(products);
         }
+        public IActionResult Index1()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> Details(int id)
         {
