@@ -9,6 +9,39 @@ body {
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, #f8f9ff 0%, #f0ecff 100%);
+    margin-bottom: 60px;
+    font-family: 'sahel';
+}
+@font-face {
+    font-family: 'sahel';
+    src: url('../fonts/sahel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sahel-black';
+    src: url('../fonts/sahel-black.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'vazir-regular';
+    src: url('../fonts/vazir-regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'dirooz';
+    src: url('../fonts/dirooz.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'danstevis';
+    src: url('../fonts/danstevis.otf') format('opentype');
+}
+
+
+a {
+    text-decoration: none;
 }
 
 .login-card {
@@ -20,27 +53,27 @@ body {
     background: rgba(255, 255, 255, 0.9);
 }
 
-    .login-card .card-side {
-        background: linear-gradient(165deg, rgba(90, 24, 154, 0.75) 0%, rgba(90, 24, 154, 0.5) 48%, #000000 100%);
-        color: #fff;
-        padding: 2.5rem 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
+.login-card .card-side {
+    background: linear-gradient(165deg, rgba(90, 24, 154, 0.75) 0%, rgba(90, 24, 154, 0.5) 48%, #000000 100%);
+    color: #fff;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+}
 
-        .login-card .card-side::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            opacity: 0.07;
-            background-image: radial-gradient(circle, #fff 1px, transparent 1px);
-            background-size: 20px 20px;
-            pointer-events: none;
-        }
+.login-card .card-side::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
 
 .icon-box {
     margin: 0 auto;
@@ -58,10 +91,10 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-    .login-card .card-side .icon-box i {
-        font-size: 2rem;
-        color: #fff;
-    }
+.login-card .card-side .icon-box i {
+    font-size: 2rem;
+    color: #fff;
+}
 
 .login-card .card-side .side-title {
     font-size: 1.75rem;
@@ -82,23 +115,25 @@ body {
     margin: 1.5rem 0 0;
 }
 
-    .login-card .card-side .feature-list li {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
-        font-size: 0.9rem;
-        opacity: 0.9;
-    }
+.login-card .card-side .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
 
-        .login-card .card-side .feature-list li .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--brand-400);
-            box-shadow: 0 0 0 4px rgba(181, 126, 220, 0.3);
-            flex-shrink: 0;
-        }
+.login-card .card-side .feature-list li .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brand-400);
+    box-shadow: 0 0 0 4px rgba(181, 126, 220, 0.3);
+    flex-shrink: 0;
+}
+
+
 /* فرم و تب‌ها */
 .tab-radio {
     position: absolute;
@@ -120,17 +155,17 @@ body {
     margin-bottom: 1.5rem;
 }
 
-    .tab-nav label {
-        flex: 1;
-        padding: 0.6rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        font-size: 0.9rem;
-        text-align: center;
-        color: #78716c;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
+.tab-nav label {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #78716c;
+    cursor: pointer;
+    transition: all 0.2s;
+}
 
 #tab-login:checked ~ .tab-nav label[for="tab-login"],
 #tab-register:checked ~ .tab-nav label[for="tab-register"] {
@@ -164,11 +199,11 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-primary-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(138, 43, 226, 0.3);
-        color: #fff;
-    }
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.3);
+    color: #fff;
+}
 
 .switch-link {
     color: var(--brand-dark);
@@ -178,9 +213,9 @@ body {
     border: none;
 }
 
-    .switch-link:hover {
-        text-decoration: underline;
-    }
+.switch-link:hover {
+    text-decoration: underline;
+}
 
 .text-muted-light {
     color: #78716c;
@@ -193,11 +228,11 @@ body {
         border-radius: 1.5rem 1.5rem 0 0;
     }
 
-        .login-card .card-side .side-title {
-            font-size: 1.4rem;
-        }
+    .login-card .card-side .side-title {
+        font-size: 1.4rem;
+    }
 
-        .login-card .card-side .feature-list li {
-            font-size: 0.8rem;
-        }
+    .login-card .card-side .feature-list li {
+        font-size: 0.8rem;
+    }
 }

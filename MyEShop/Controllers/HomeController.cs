@@ -289,6 +289,13 @@ namespace MyEShop.Controllers
         }
 
 
+        [Route("/Home/Error404")]
+        public IActionResult Error404(int statusCode)
+        {
+            ViewBag.StatusCode = statusCode;
+            return View("Error404");
+        }
+
         [Authorize]
         public async Task<IActionResult> Pay()
         {

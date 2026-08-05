@@ -15,7 +15,6 @@
 @await Html.PartialAsync("Partials/__Login", Model)
 <!-- login Start -->
 
- @* @await RenderSectionAsync("Scripts", required: false)  *@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

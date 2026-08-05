@@ -22,7 +22,9 @@ body {
     font-family: 'sahel';
     
 }
-
+a {
+    text-decoration: none;
+}
 @font-face {
     font-family: 'sahel';
     src: url('../fonts/sahel.woff') format('woff');

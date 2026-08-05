@@ -44,6 +44,8 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+app.UseStatusCodePagesWithReExecute("/Home/Error404", "?statusCode={0}");
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
