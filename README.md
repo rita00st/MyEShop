@@ -257,7 +257,7 @@ MyEShop/                         # 📁 ریشه پروژه (ASP.NET Core 8)
   <h3>🌟 محبوبه سادات طباطبائیان</h3>
   
   [![GitHub](https://img.shields.io/badge/GitHub-rita00st-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/rita00st)
-  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rita%20Asadi-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/mahbobehTabatabaein)
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-mahbobeh%20tabatabaeian-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/mahbobehTabatabaeian)
   [![Email](https://img.shields.io/badge/Email-rita00st%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:mahbobeh1383@gmail.com)
 </div>
 
