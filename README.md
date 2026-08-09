@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://via.placeholder.com/800x200/6a11cb/ffffff?text=MyEShop" alt="MyEShop Banner" width="100%">
+  <div align="center">
+  <img src="screenshots/banner.png" alt="MyEShop Banner" width="100%">
+</div>
   
   <h1>🛍️ MyEShop</h1>
   
