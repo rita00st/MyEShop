@@ -39,6 +39,7 @@ namespace MyEShop.Controllers
 
                 User user = new User()
                 {
+                    Name= rejesterVM.Name,
                     Email = rejesterVM.Email,
                     IsAdmin = false,
                     RejesterDate = DateTime.Now,

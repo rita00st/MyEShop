@@ -4,7 +4,7 @@
     ViewData["Title"] = "Rejester";
 }
 
-<h4>ثبت نام</h4>
+@* <h4>ثبت نام</h4>
 <hr />
 <div class="row">
     <div class="col-md-10">
@@ -30,9 +30,11 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
-
+<!-- login Start -->
+@await Html.PartialAsync("Partials/__Rejester", Model)
+<!-- login Start -->
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

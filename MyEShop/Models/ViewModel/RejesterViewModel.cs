@@ -6,6 +6,10 @@ namespace MyEShop.Models.ViewModel
 {
     public class RejesterViewModel
     {
+        [Display(Name = "نام و نام خانوادگی")]
+        [MaxLength(50)]
+        public string? Name { get; set; }
+
         // UserView model
         [Required(ErrorMessage ="لطفا {0} را وارد کنید")]
         [Display(Name ="ایمیل")]
@@ -13,6 +17,8 @@ namespace MyEShop.Models.ViewModel
         [MaxLength(255)]
         [Remote("VerifyEmail", "Account")]
         public required string Email { get; set; }
+        
+
 
         [Display(Name = "کلمه عبور")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -26,6 +32,11 @@ namespace MyEShop.Models.ViewModel
         [DataType(DataType.Password)]
         [Compare("Password")]
         public required string RePassword { get; set; }
+
+        [Required(ErrorMessage = "تایید  قوانین و مقررات اجباری است")]
+        public required bool AcceptLaw { get; set; }
+
+
 
 
     }

@@ -155,7 +155,7 @@ a {
     margin-bottom: 1.5rem;
 }
 
-.tab-nav label {
+.tab-nav a  {
     flex: 1;
     padding: 0.6rem 1rem;
     border-radius: 0.5rem;
@@ -167,10 +167,10 @@ a {
     transition: all 0.2s;
 }
 
-#tab-login:checked ~ .tab-nav label[for="tab-login"],
-#tab-register:checked ~ .tab-nav label[for="tab-register"] {
+#tab-login:checked ~ .tab-nav [for="tab-login"],
+#tab-register:checked ~ .tab-nav [for="tab-register"] {
     background: #fff;
-    color: #1c1917;
+    color: var(--brand);
     box-shadow: 0 1px 3px rgba(28, 25, 23, 0.08);
 }
 

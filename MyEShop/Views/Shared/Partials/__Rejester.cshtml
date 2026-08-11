@@ -1,4 +1,4 @@
-﻿@model MyEShop.Models.ViewModel.LoginViewModel
+﻿@model MyEShop.Models.ViewModel.RejesterViewModel
 
 
 <div class="container">
@@ -34,54 +34,59 @@
                     <div class="col-md-7">
                         <div class="card-body p-4 ">
                             <!-- رادیوهای مخفی برای کنترل تب -->
-                            <input type="radio" name="tab" id="tab-login" class="tab-radio" checked />
-                            <input type="radio" name="tab" id="tab-register" class="tab-radio" />
+                            <input type="radio" name="tab" id="tab-login" class="tab-radio"  />
+                            <input type="radio" name="tab" id="tab-register" class="tab-radio" checked />
 
                             <!-- نوار تب‌ها -->
                             <div class="tab-nav" role="tablist">
                                 <a asp-action="Login" asp-controller="Account" for="tab-login" class="tab-btn">ورود به حساب</a>
                                 <a asp-action="Rejester" asp-controller="Account" for="tab-register" class="tab-btn">ثبت نام</a>
+                                @* <label for="tab-register" class="tab-btn" role="tab">ثبت‌نام</label> *@
                             </div>
 
-                            <!-- فرم ورود -->
-                            <div class="form-panel login-panel" id="form-login">
-                                <h3 class="h4 fw-bold mb-1 text-center">خوش آمدید 👋</h3>
-                                <p class="text-muted-light small mb-4 mt-3 text-center">برای ورود، ایمیل و رمز عبور خود را وارد کنید.</p>
-                                <form asp-action="Login" >
+                            <!-- فرم ثبت‌نام -->
+                            <div class="" >
+                                <h3 class="h4 fw-bold mb-1 text-center">ایجاد حساب کاربری 🚀</h3>
+                                <p class="text-muted-light small mb-4 mt-3 text-center">با ثبت‌نام، از تخفیف‌های ویژه و امکانات بیشتر بهره‌مند شوید.</p>
+                                <form asp-action="Rejester">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                     
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="Email" name="email" placeholder="name@example.com" autocomplete="email" inputmode="email">
-                                        <label for="Email">آدرس ایمیل</label>
-                                         <span asp-validation-for="Email" class="text-danger mt-2"></span>
-                                    </div>
+                                        <input type="text" class="form-control" id="Name" name="Name" placeholder="نام و نام خانوادگی" autocomplete="name">
+                                        <label for="Name">نام و نام خانوادگی</label>
+                                        <span asp-validation-for="Name" class="text-danger mt-2"></span>
 
+                                    </div>
                                     <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="Password" name="password" placeholder="رمز عبور" autocomplete="current-password">
-                                        <label asp-for="Password">رمز عبور</label>
+                                        <input type="text" class="form-control" id="Email" name="Email" placeholder="name@example.com" autocomplete="email" inputmode="email">
+                                        <label for="Email">آدرس ایمیل</label>
+                                        <span asp-validation-for="Email" class="text-danger mt-2"></span>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="Password" name="Password" placeholder="حداقل ۸ کاراکتر" autocomplete="new-password">
+                                        <label for="Password">رمز عبور</label>
                                         <span asp-validation-for="Password" class="text-danger mt-2"></span>
                                     </div>
-
-                                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
-                                        <div class="form-check" >
-                                            <input class="form-check-input m-0 border-purple" type="checkbox" asp-for="RememberMe" id="RememberMe" />
-                                            <label class="form-check-label m-0" asp-for="RememberMe">
-                                                مرا به یاد داشته باش
-                                            </label>
-                                        </div>
-                                        <a href="#" class="text-purple small text-decoration-none">رمز عبور را فراموش کرده‌اید؟</a>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="RePassword" name="RePassword" placeholder="رمز را دوباره وارد کنید" autocomplete="new-password">
+                                        <label for="RePassword">تکرار رمز عبور</label>
+                                        <span asp-validation-for="RePassword" class="text-danger mt-2"></span>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" name="terms" id="termsCheck">
+                                        <label class="form-check-label small" for="termsCheck">
+                                            با <a class="text-purple" href="#">قوانین و مقررات</a> و <a class="text-purple" href="#">حریم خصوصی</a> فروشگاه موافقم
+                                        </label>
+                                        <span asp-validation-for="AcceptLaw" class="text-danger mt-2"></span>
                                     </div>
                                     <button type="submit" class="btn btn-primary-custom w-100">
-                                        <i class="bi bi-box-arrow-in-left me-2"></i>ورود به فروشگاه
+                                        <i class="bi bi-person-plus me-2"></i>ثبت‌نام در فروشگاه
                                     </button>
-                                    <p class="text-center text-muted-light small mt-3">با ورود، با <a href="#" class="text-purple text-decoration-none">قوانین و حریم خصوصی</a> موافقت می‌کنید.</p>
+                                    <p class="text-center text-muted-light small mt-3">با ثبت‌نام، اولین تخفیف خود را دریافت کنید!</p>
                                 </form>
                                 <p class="text-center mt-3">
-                                    حساب ندارید؟ <a class="text-purple" asp-action="Rejester" asp-controller="Account">همین حالا ثبت‌نام کنید</a>
+                                    قبلاً ثبت‌نام کرده‌اید؟ <a class="text-purple" asp-action="Login" asp-controller="Account">وارد شوید</a>
                                 </p>
                             </div>
-
-                          
 
                         </div>
                     </div>
