@@ -139,21 +139,20 @@ Then navigate to **`https://localhost:7030`** (port may vary).
       <td align="center"><b>📋 Admin Panel</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/6a11cb/ffffff?text=Home+Page" alt="Home"></td>
-      <td><img src="https://via.placeholder.com/400x250/2575fc/ffffff?text=Admin+Panel" alt="Admin"></td>
+      <td><img src="screenshots/HomePage.png" alt="Home Page"></td>
+      <td><img src="screenshots/AdminPage.png" alt="Admin Page"></td>
     </tr>
     <tr>
       <td align="center"><b>🔐 Login Page</b></td>
       <td align="center"><b>📝 Register Page</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/6a11cb/ffffff?text=Login+Page" alt="Login"></td>
-      <td><img src="https://via.placeholder.com/400x250/2575fc/ffffff?text=Register+Page" alt="Register"></td>
+      <td><img src="screenshots/LoginPage.png" alt="Login"></td>
+      <td><img src="screenshots/SigninPage.png" alt="Register"></td>
     </tr>
   </table>
 </div>
 
-> 💡 **Note:** Images above are placeholders. Real screenshots will be added soon.
 
 ---
 
@@ -370,16 +369,16 @@ dotnet run
       <td align="center"><b>📋 پنل مدیریت</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/6a11cb/ffffff?text=Home+Page" alt="Home"></td>
-      <td><img src="https://via.placeholder.com/400x250/2575fc/ffffff?text=Admin+Panel" alt="Admin"></td>
+      <td><img src="screenshots/HomePage.png" alt="Home Page"></td>
+      <td><img src="screenshots/AdminPage.png" alt="Admin Page"></td>
     </tr>
     <tr>
       <td align="center"><b>🔐 صفحه ورود</b></td>
       <td align="center"><b>📝 صفحه ثبت‌نام</b></td>
     </tr>
     <tr>
-      <td><img src="https://via.placeholder.com/400x250/6a11cb/ffffff?text=Login+Page" alt="Login"></td>
-      <td><img src="https://via.placeholder.com/400x250/2575fc/ffffff?text=Register+Page" alt="Register"></td>
+      <td><img src="screenshots/LoginPage.png" alt="Login"></td>
+      <td><img src="screenshots/SigninPage.png" alt="Register"></td>
     </tr>
   </table>
 </div>
