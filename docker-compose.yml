@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: myeshop_db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/var/opt/mssql
+    restart: always
+
+  web:
+    build: .
+    container_name: myeshop_web
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=MyEShopDb;User=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=true;
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  sqlvolume:
