@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+<footer class="footer mt-auto py-5" style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b69 50%, #1a0a2e 100%);">
+    <div class="container">
+        <div class="row g-4">
+            <!-- بخش اول: درباره فروشگاه و شبکه‌های اجتماعی -->
+            <div class="col-lg-4 col-md-6">
+                <div class="mb-3">
+                    <a href="/" class="text-decoration-none">
+                        <span class="fw-bold fs-3" style="color: #ffd700;">
+                            <i class="bi bi-shop"></i> My<span style="color: #fff;">EShop</span>
+                        </span>
+                    </a>
+                </div>
+                <p class="text-white-50 small lh-base" style="max-width: 300px;">
+                    فروشگاهی مدرن برای ارائه بهترین و باکیفیت‌ترین محصولات با قیمت‌های استثنایی. همراه با تجربه‌ای لذت‌بخش از خرید آنلاین.
+                </p>
+                <div class="mt-3 d-flex gap-3 fs-5">
+                    <a href="#" class="text-white-50" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'" aria-label="اینستاگرام"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white-50" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'" aria-label="تلگرام"><i class="bi bi-telegram"></i></a>
+                    <a href="#" class="text-white-50" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'" aria-label="واتساپ"><i class="bi bi-whatsapp"></i></a>
+                    <a href="#" class="text-white-50" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'" aria-label="توییتر"><i class="bi bi-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- بخش دوم: لینک‌های سریع -->
+            <div class="col-lg-2 col-md-6">
+                <h6 class="text-white fw-bold mb-3" style="border-right: 3px solid #ffd700; padding-right: 10px;">لینک‌های سریع</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">صفحه اصلی</a></li>
+                    <li class="mb-2"><a href="/Home/Index#products" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">محصولات</a></li>
+                    <li class="mb-2"><a href="/Home/ContactUs" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">تماس با ما</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">درباره ما</a></li>
+                </ul>
+            </div>
+
+            <!-- بخش سوم: دسته‌بندی‌ها -->
+            <div class="col-lg-2 col-md-6">
+                <h6 class="text-white fw-bold mb-3" style="border-right: 3px solid #ffd700; padding-right: 10px;">دسته‌بندی‌ها</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">الکترونیک</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">مد و پوشاک</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">کتاب و محصولات فرهنگی</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">خانه و آشپزخانه</a></li>
+                </ul>
+            </div>
+
+            <!-- بخش چهارم: اطلاعات تماس -->
+            <div class="col-lg-4 col-md-6">
+                <h6 class="text-white fw-bold mb-3" style="border-right: 3px solid #ffd700; padding-right: 10px;">اطلاعات تماس</h6>
+                <ul class="list-unstyled text-white-50 small">
+                    <li class="mb-2 d-flex align-items-start gap-2">
+                        <i class="bi bi-geo-alt text-golden mt-1"></i>
+                        <span>تهران، خیابان آزادی، پلاک ۱۲۳</span>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center gap-2">
+                        <i class="bi bi-envelope text-golden"></i>
+                        <a href="mailto:info@myeshop.com" class="text-white-50 text-decoration-none" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">info@myeshop.com</a>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center gap-2">
+                        <i class="bi bi-telephone text-golden"></i>
+                        <span>۰۲۱-۱۲۳۴۵۶۷۸</span>
+                    </li>
+                    <li class="d-flex align-items-center gap-2">
+                        <i class="bi bi-clock text-golden"></i>
+                        <span>شنبه تا چهارشنبه ۹ صبح تا ۶ عصر</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- خط جداکننده و کپی‌رایت -->
+        <hr class="border-light opacity-25 my-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start">
+            <p class="text-white-50 small mb-2 mb-md-0">
+                &copy; @DateTime.Now.Year کلیه حقوق مادی و معنوی این سایت متعلق به <span class="text-golden">MyEShop</span> می‌باشد.
+            </p>
+            <div class="d-flex gap-3">
+                <a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">حریم خصوصی</a>
+                <a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">شرایط استفاده</a>
+                <a href="#" class="text-white-50 text-decoration-none small" style="transition: all 0.3s;" onmouseover="this.style.color='#ffd700'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">پشتیبانی</a>
+            </div>
+        </div>
+    </div>
+</footer>
