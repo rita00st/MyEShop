@@ -5,87 +5,20 @@
     ViewData["Title"] = "صفحه اصلی";
 }
 
-<!-- ============================================
-     بنر اصلی (Hero Section)
-     ============================================ -->
-<section class="hero-section px-3 py-5 mb-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 text-lg-end text-center mb-4 mb-lg-0">
-                <h1 class="hero-title">
-                    به <span class="text-golden">MyEShop</span> خوش آمدید
-                </h1>
-                <p class="hero-subtitle mt-3">
-                    بهترین و باکیفیت‌ترین محصولات را با قیمت‌های استثنایی از ما تهیه کنید.
-                    فروشگاهی برای همه سلیقه‌ها!
-                </p>
-                <div class="d-flex gap-3 justify-content-lg-start justify-content-center mt-4 flex-wrap">
-                    <a href="#products" class="btn btn-golden btn-lg px-5">
-                        <i class="bi bi-arrow-down"></i> مشاهده محصولات
-                    </a>
-                    <a asp-controller="Home" asp-action="ContactUs" class="btn btn-outline-purple btn-lg px-5">
-                        <i class="bi bi-headset"></i> تماس با ما
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center">
-                <div class="hero-image-wrapper">
-                    <img src="~/images/Image_HomePage.webp"
-                         alt="MyEShop" class="img-fluid hero-image">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Hero Section Start -->
+@await Html.PartialAsync("Partials/__HeroSection")
+<!-- Hero Section end -->
+
 
 <!-- Facts Start -->
 @await Html.PartialAsync("Partials/__FactCounter")
-<!-- Facts Start -->
+<!-- Facts end -->
 
 
+<!-- Category Section Start -->
+@await Html.PartialAsync("Partials/__CategorysSection")
+<!-- Category Section end -->
 
-<!-- ============================================
-     بخش دسته‌بندی‌ها
-============================================ -->
-<section class="categories-section py-4 mb-5">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="section-title">
-                <i class="bi bi-grid-3x3-gap-fill text-purple"></i>
-                دسته‌بندی‌های ویژه
-            </h2>
-            <a href="#" class="text-purple text-decoration-none">
-                مشاهده همه <i class="bi bi-chevron-left"></i>
-            </a>
-        </div>
-        <div class="row g-3">
-            <div class="col-6 col-md-3">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-laptop fs-1 text-purple"></i>
-                    <h6 class="mt-2">الکترونیک</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-bag fs-1 text-purple"></i>
-                    <h6 class="mt-2">مد و پوشاک</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-book fs-1 text-purple"></i>
-                    <h6 class="mt-2">کتاب و محصولات فرهنگی</h6>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="category-card text-center p-3">
-                    <i class="bi bi-house fs-1 text-purple"></i>
-                    <h6 class="mt-2">خانه و آشپزخانه</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ============================================
      بخش محصولات
