@@ -1,0 +1,72 @@
+﻿@* @using MyEShop.Models.Entities
+@model IEnumerable<Product> *@
+@model MyEShop.Models.Entities.Product
+
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+            <div class="product-card">
+                <!-- دکمه‌های سمت چپ کارت -->
+                <div class="product-actions">
+                    <button class="action-btn" title="افزودن به علاقه‌مندی">
+                        <i class="bi bi-heart"></i>
+                    </button>
+                    <button class="action-btn" title="مقایسه">
+                        <i class="bi bi-arrow-left-right"></i>
+                    </button>
+                </div>
+
+                <!-- نشان تخفیف -->
+                @* <span class="product-badge">🔥 تخفیف</span> *@
+
+                <!-- تصویر محصول -->
+                <div class="product-image-wrapper">
+                    <img src="@(Model.ImagePath ?? "/images/no-image.jpg")"
+                         alt="@Model.Name" 
+                         class="product-image">
+                </div>
+
+                <!-- اطلاعات محصول -->
+                <div class="product-body">
+                    <h6 class="product-name">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id"
+                           class="text-decoration-none text-dark">
+                            @Model.Name
+                        </a>
+                    </h6>
+
+                    <!-- رتبه‌بندی ستاره‌ای -->
+                    <div class="product-rating">
+                        <i class="bi bi-star-fill text-golden"></i>
+                        <i class="bi bi-star-fill text-golden"></i>
+                        <i class="bi bi-star-fill text-golden"></i>
+                        <i class="bi bi-star-fill text-golden"></i>
+                        <i class="bi bi-star-half text-golden"></i>
+                        <span class="text-muted ms-1">(۱۲)</span>
+                    </div>
+
+                    <!-- price قیمت -->
+                    <div class="product-price-wrapper">
+                        @if (Model.Item.Price > 0)
+                        {
+                            <span class="product-price">@Model.Item.Price.ToString("N0") تومان</span>
+                        }
+                        else
+                        {
+                            <span class="product-price text-muted">نامشخص</span>
+                        }
+                    </div>
+
+                    <!-- دکمه‌های پایین -->
+                    <div class="product-footer d-flex gap-2 mt-3">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id"
+                           class="btn btn-purple w-50 btn-sm">
+                            <i class="bi bi-eye"></i> مشاهده
+                        </a>
+                        <a asp-controller="Home" asp-action="AddToCard" asp-route-itemId="@Model.ItemId"
+                           class="btn btn-golden w-50 btn-sm">
+                            <i class="bi bi-cart-plus"></i> خرید
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+

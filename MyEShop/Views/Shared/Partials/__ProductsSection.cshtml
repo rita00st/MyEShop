@@ -1,0 +1,50 @@
+﻿@using MyEShop.Models.Entities
+@model IEnumerable<Product>
+
+<!-- ============================================
+     بخش محصولات
+     ============================================ -->
+<section id="products" class="products-section py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h2 class="section-title">
+                <i class="bi bi-box-seam-fill text-purple"></i>
+                محصولات ما
+            </h2>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-purple btn-sm active-filter" data-filter="all">همه</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="new">جدید</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="popular">محبوب</button>
+                <button class="btn btn-outline-purple btn-sm" data-filter="sale">تخفیف‌دار</button>
+            </div>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+           <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    <!-- Features Section Start -->
+                    @await Html.PartialAsync("Partials/__ItemCardSection",item)
+                    @* <partial name="Partials/__ItemCardSection" model="@item" /> *@
+                    <!-- Features Section end -->
+                }
+            </div>
+
+            <!-- دکمه نمایش بیشتر -->
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-purple btn-lg px-5">
+                    نمایش بیشتر <i class="bi bi-chevron-left"></i>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                <h4>محصولی برای نمایش وجود ندارد!</h4>
+                <p class="text-muted">به زودی محصولات جدید به فروشگاه اضافه خواهند شد.</p>
+            </div>
+        }
+    </div>
+</section>
