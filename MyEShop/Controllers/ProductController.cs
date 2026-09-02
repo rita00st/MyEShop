@@ -137,7 +137,7 @@ namespace MyEShop.Controllers
                 MinPrice = filter.MinPrice,
                 MaxPrice = filter.MaxPrice,
                 CategoryId = filter.CategoryId,
-                SearchTerm = filter.SearchTerm
+                SearchTerm = filter.SearchTerm,
                 // ❌ این خط حذف شد: ImagePath = GetImagePath(product.Id)
             };
 
