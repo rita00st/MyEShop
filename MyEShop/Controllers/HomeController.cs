@@ -291,6 +291,12 @@ namespace MyEShop.Controllers
             ViewBag.StatusCode = statusCode;
             return View("Error404");
         }
+        
+        [Route("AboutUs")]
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
 
         [Authorize]
         public async Task<IActionResult> Pay()

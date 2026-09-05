@@ -1,0 +1,855 @@
+﻿@{
+    ViewData["Title"] = "درباره ما | MyEShop";
+    Layout = "_Layout";
+}
+
+<style>
+    /* ============================================
+           هدر صفحه با انیمیشن و افکت‌های بیشتر
+           ============================================ */
+    .page-header-about {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #6a11cb 100%);
+        background-size: 200% 200%;
+        animation: gradientMove 6s ease-in-out infinite alternate;
+        padding: 4rem 0 4.5rem;
+        border-radius: 0 0 50px 50px;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
+    }
+    @keyframes gradientMove {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+
+    }
+
+    .page-header-about .floating-shapes {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+        .page-header-about .floating-shapes span {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            animation: floatShape 12s ease-in-out infinite alternate;
+        }
+
+            .page-header-about .floating-shapes span:nth-child(1) {
+                width: 180px;
+                height: 180px;
+                top: -60px;
+                right: -40px;
+                animation-delay: 0s;
+            }
+
+            .page-header-about .floating-shapes span:nth-child(2) {
+                width: 120px;
+                height: 120px;
+                bottom: -40px;
+                left: -30px;
+                animation-delay: 4s;
+                background: rgba(255, 215, 0, 0.05);
+            }
+
+            .page-header-about .floating-shapes span:nth-child(3) {
+                width: 80px;
+                height: 80px;
+                top: 20%;
+                left: 15%;
+                animation-delay: 2s;
+                background: rgba(255, 215, 0, 0.06);
+            }
+
+            .page-header-about .floating-shapes span:nth-child(4) {
+                width: 100px;
+                height: 100px;
+                bottom: 20%;
+                right: 10%;
+                animation-delay: 6s;
+                background: rgba(255, 255, 255, 0.03);
+            }
+    @keyframes floatShape {
+        0%
+
+    {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translate(-30px, -40px) scale(1.3) rotate(180deg);
+        opacity: 0.8;
+    }
+
+    }
+
+    .page-header-about .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .page-header-about h1 {
+        color: #fff;
+        text-shadow: 0 2px 30px rgba(0,0,0,0.15);
+        font-weight: 800;
+        animation: fadeInUp 1s ease;
+    }
+
+    .page-header-about p {
+        color: rgba(255,255,255,0.9);
+        animation: fadeInUp 1s ease 0.2s both;
+        font-weight: 300;
+    }
+
+    .page-header-about .header-badge {
+        display: inline-block;
+        background: rgba(255, 215, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+        padding: 0.3rem 1.5rem;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        animation: fadeInUp 1s ease 0.3s both;
+    }
+    @keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* ============================================
+           کارت داستان با افکت شیشه‌ای
+           ============================================ */
+    .about-story {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 32px;
+        padding: 3rem 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(106, 17, 203, 0.06);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .about-story::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(106, 17, 203, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: all 0.8s ease;
+        }
+
+        .about-story:hover::before {
+            transform: scale(1.5) translate(-20px, 20px);
+        }
+
+        .about-story:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.2);
+            border-color: rgba(106, 17, 203, 0.1);
+        }
+
+        .about-story .story-icon {
+            font-size: 3.5rem;
+            color: #fff;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(106, 17, 203, 0.25);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-story:hover .story-icon {
+            transform: rotate(-10deg) scale(1.05);
+            box-shadow: 0 12px 48px rgba(106, 17, 203, 0.35);
+        }
+
+        .about-story h3 {
+            color: #1a1a2e;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+        }
+
+            .about-story h3::after {
+                content: '';
+                display: block;
+                width: 60px;
+                height: 4px;
+                background: linear-gradient(90deg, #ffd700, #6a11cb);
+                border-radius: 4px;
+                margin-top: 8px;
+            }
+
+        .about-story p {
+            color: var(--text-muted);
+            line-height: 2;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+        }
+
+    /* ============================================
+           کارت‌های آمار با افکت شمارش و براق
+           ============================================ */
+    .stat-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 2rem 1.2rem;
+        text-align: center;
+        border: 1px solid rgba(106, 17, 203, 0.04);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6a11cb, #ffd700, #2575fc);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.15);
+            border-color: rgba(106, 17, 203, 0.06);
+        }
+
+    .stat-number {
+        font-size: 3.2rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #6a11cb, #2575fc, #6a11cb);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        animation: shimmerText 4s ease-in-out infinite alternate;
+        display: inline-block;
+    }
+    @keyframes shimmerText {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+
+    }
+
+    .stat-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0;
+        margin-top: 0.2rem;
+    }
+
+    .stat-icon {
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, rgba(106, 17, 203, 0.06), rgba(37, 117, 252, 0.06));
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.8rem;
+        color: #6a11cb;
+        transition: all 0.5s ease;
+    }
+
+    .stat-card:hover .stat-icon {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        transform: scale(1.05) rotate(-5deg);
+    }
+
+    /* ============================================
+           مأموریت و چشم‌انداز با هدر رنگی
+           ============================================ */
+    .mission-card {
+        background: #fff;
+        border-radius: 28px;
+        padding: 2rem 2rem 2.2rem;
+        border: 1px solid rgba(106, 17, 203, 0.04);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        transition: all 0.5s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .mission-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px -12px rgba(106, 17, 203, 0.12);
+        }
+
+        .mission-card .mission-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+            .mission-card .mission-header .icon-box {
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+                color: #fff;
+                flex-shrink: 0;
+            }
+
+                .mission-card .mission-header .icon-box.purple {
+                    background: linear-gradient(135deg, #6a11cb, #2575fc);
+                    box-shadow: 0 4px 16px rgba(106, 17, 203, 0.25);
+                }
+
+                .mission-card .mission-header .icon-box.golden {
+                    background: linear-gradient(135deg, #ffd700, #f5a623);
+                    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+                }
+
+            .mission-card .mission-header h4 {
+                font-weight: 700;
+                color: #1a1a2e;
+                margin-bottom: 0;
+            }
+
+        .mission-card p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+    /* ============================================
+           ارزش‌ها با کارت‌های رنگی
+           ============================================ */
+    .value-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.2rem 1.5rem;
+        border-radius: 20px;
+        transition: all 0.4s ease;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(8px);
+    }
+
+        .value-item:nth-child(1) {
+            background: rgba(106, 17, 203, 0.04);
+            border-color: rgba(106, 17, 203, 0.06);
+        }
+
+        .value-item:nth-child(2) {
+            background: rgba(255, 215, 0, 0.04);
+            border-color: rgba(255, 215, 0, 0.06);
+        }
+
+        .value-item:nth-child(3) {
+            background: rgba(37, 117, 252, 0.04);
+            border-color: rgba(37, 117, 252, 0.06);
+        }
+
+        .value-item:nth-child(4) {
+            background: rgba(16, 185, 129, 0.04);
+            border-color: rgba(16, 185, 129, 0.06);
+        }
+
+        .value-item:hover {
+            transform: translateX(-6px) scale(1.01);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        }
+
+        .value-item:nth-child(1):hover {
+            border-color: #6a11cb;
+            background: rgba(106, 17, 203, 0.06);
+        }
+
+        .value-item:nth-child(2):hover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        .value-item:nth-child(3):hover {
+            border-color: #2575fc;
+            background: rgba(37, 117, 252, 0.06);
+        }
+
+        .value-item:nth-child(4):hover {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .value-item .value-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .value-item:nth-child(1) .value-icon {
+            color: #6a11cb;
+        }
+
+        .value-item:nth-child(2) .value-icon {
+            color: #ffd700;
+        }
+
+        .value-item:nth-child(3) .value-icon {
+            color: #2575fc;
+        }
+
+        .value-item:nth-child(4) .value-icon {
+            color: #10b981;
+        }
+
+        .value-item .value-text h6 {
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.1rem;
+            font-size: 0.95rem;
+        }
+
+        .value-item .value-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+    /* ============================================
+           تیم با افکت کارت
+           ============================================ */
+    .team-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 1.8rem 1.2rem 2rem;
+        text-align: center;
+        border: 1px solid rgba(106, 17, 203, 0.04);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6a11cb, #ffd700, #2575fc);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .team-card:hover::before {
+            opacity: 1;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.15);
+            border-color: rgba(106, 17, 203, 0.06);
+        }
+
+    .team-avatar {
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f0ecff, #e8e0ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2.4rem;
+        color: #6a11cb;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 20px rgba(106, 17, 203, 0.08);
+        transition: all 0.5s ease;
+    }
+
+    .team-card:hover .team-avatar {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        transform: scale(1.05) rotate(-5deg);
+        box-shadow: 0 8px 32px rgba(106, 17, 203, 0.2);
+    }
+
+    .team-card h6 {
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.1rem;
+        font-size: 1rem;
+    }
+
+    .team-card .role {
+        font-size: 0.8rem;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .team-card .bio {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+        line-height: 1.6;
+    }
+
+    /* ============================================
+           ریسپانسیو
+           ============================================ */
+    @@media (max-width: 768px) {
+        .page-header-about {
+            padding: 2.5rem 0 3rem;
+            border-radius: 0 0 30px 30px;
+        }
+
+            .page-header-about h1 {
+                font-size: 1.8rem;
+            }
+
+        .about-story {
+            padding: 1.8rem;
+        }
+
+            .about-story .story-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2.5rem;
+            }
+
+        .stat-number {
+            font-size: 2.4rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.6rem;
+        }
+
+        .mission-card {
+            padding: 1.5rem;
+        }
+
+        .value-item {
+            padding: 1rem 1.2rem;
+        }
+
+        .team-avatar {
+            width: 68px;
+            height: 68px;
+            font-size: 1.8rem;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .page-header-about {
+            padding: 1.8rem 0 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+            .page-header-about h1 {
+                font-size: 1.4rem;
+            }
+
+        .about-story {
+            padding: 1.2rem;
+        }
+
+            .about-story .story-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+
+        .stat-number {
+            font-size: 1.8rem;
+        }
+
+        .stat-card {
+            padding: 1.2rem 0.8rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+
+        .value-item {
+            padding: 0.8rem 1rem;
+        }
+
+            .value-item .value-icon {
+                font-size: 1.4rem;
+            }
+
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            font-size: 1.4rem;
+        }
+    }
+</style>
+
+<!-- ============================================
+     هدر با افکت‌های بیشتر
+     ============================================ -->
+<div class="page-header-about">
+    <div class="floating-shapes">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="container header-content">
+        <div class="header-badge">
+            <i class="bi bi-info-circle me-1"></i> درباره ما
+        </div>
+        <h1 class="display-4 fw-bold mb-2">
+            داستان <span style="color: #ffd700;">MyEShop</span>
+        </h1>
+        <p class="lead mb-0">با تیم ما آشنا شوید و ببینید چطور می‌توانیم به شما کمک کنیم</p>
+    </div>
+</div>
+
+<!-- ============================================
+     محتوای اصلی
+     ============================================ -->
+<div class="container pb-5">
+
+    <!-- بخش داستان -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="about-story text-center">
+                <div class="story-icon mx-auto">
+                    <i class="bi bi-shop"></i>
+                </div>
+                <h3>داستان فروشگاه MyEShop</h3>
+                <p>
+                    <strong>MyEShop</strong> با هدف ارائه بهترین تجربه خرید آنلاین و دسترسی آسان به محصولات باکیفیت در سال ۱۴۰۴ آغاز به کار کرد.
+                    ما معتقدیم که خرید اینترنتی باید <span style="color: #6a11cb; font-weight: 600;">ساده، امن و لذت‌بخش</span> باشد.
+                </p>
+                <p>
+                    فروشگاه ما با بهره‌گیری از جدیدترین فناوری‌های وب و با تمرکز بر نیازهای مشتریان، همواره در تلاش است تا
+                    تنوع محصولات را افزایش داده و کیفیت خدمات خود را ارتقا دهد.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- آمار -->
+    <div class="row g-4 mb-5">
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
+                <div class="stat-number">+۱۰۰۰</div>
+                <p class="stat-label">محصول</p>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-people"></i></div>
+                <div class="stat-number">+۵۰۰</div>
+                <p class="stat-label">مشتری</p>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-star"></i></div>
+                <div class="stat-number">۹۸٪</div>
+                <p class="stat-label">رضایت</p>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="bi bi-truck"></i></div>
+                <div class="stat-number">۲۴</div>
+                <p class="stat-label">ساعت ارسال</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- مأموریت و چشم‌انداز -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="icon-box purple"><i class="bi bi-bullseye"></i></div>
+                    <h4>مأموریت ما</h4>
+                </div>
+                <p>
+                    فراهم کردن بستری امن، سریع و لذت‌بخش برای خرید آنلاین کاربران ایرانی و ارائه محصولات باکیفیت
+                    با قیمت‌های رقابتی و پشتیبانی حرفه‌ای.
+                </p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mission-card">
+                <div class="mission-header">
+                    <div class="icon-box golden"><i class="bi bi-eye"></i></div>
+                    <h4>چشم‌انداز ما</h4>
+                </div>
+                <p>
+                    تبدیل شدن به یکی از معتبرترین و محبوب‌ترین فروشگاه‌های اینترنتی ایران با تمرکز بر نوآوری،
+                    کیفیت و تجربه کاربری بی‌نظیر.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ارزش‌های ما -->
+    <div class="mb-5">
+        <h4 class="fw-bold text-center mb-4" style="color: #1a1a2e;">
+            <span style="background: linear-gradient(135deg, #6a11cb, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                <i class="bi bi-heart-fill text-purple" style="-webkit-text-fill-color: #6a11cb;"></i>
+                ارزش‌های ما
+            </span>
+        </h4>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="value-item">
+                    <div class="value-icon"><i class="bi bi-shield-check"></i></div>
+                    <div class="value-text">
+                        <h6>اعتماد و امنیت</h6>
+                        <p>اطلاعات شما برای ما امن است و حریم شخصی‌تان را کاملاً محترم می‌شماریم.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="value-item">
+                    <div class="value-icon"><i class="bi bi-star"></i></div>
+                    <div class="value-text">
+                        <h6>کیفیت و تنوع</h6>
+                        <p>محصولات باکیفیت و متنوع با بهترین قیمت‌ها در اختیار شماست.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="value-item">
+                    <div class="value-icon"><i class="bi bi-headset"></i></div>
+                    <div class="value-text">
+                        <h6>پشتیبانی حرفه‌ای</h6>
+                        <p>تیم پشتیبانی ما همواره آماده پاسخگویی و رفع مشکلات شماست.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="value-item">
+                    <div class="value-icon"><i class="bi bi-gem"></i></div>
+                    <div class="value-text">
+                        <h6>ارزش‌آفرینی</h6>
+                        <p>ما به مشتریان و جامعه‌ای که در آن فعالیت می‌کنیم، ارزش می‌دهیم.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تیم ما -->
+    <div>
+        <h4 class="fw-bold text-center mb-4" style="color: #1a1a2e;">
+            <i class="bi bi-people-fill text-purple me-2" style="color: #6a11cb;"></i>
+            تیم <span style="color: #6a11cb;">ما</span>
+        </h4>
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <div class="team-card">
+                    <div class="team-avatar"><i class="bi bi-person"></i></div>
+                    <h6>محبوبه سادات</h6>
+                    <span class="role">توسعه‌دهنده ارشد</span>
+                    <p class="bio">مدیریت و توسعه پروژه‌های وب با ASP.NET Core</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="team-card">
+                    <div class="team-avatar"><i class="bi bi-person"></i></div>
+                    <h6>سارا محمدی</h6>
+                    <span class="role">طراح UI/UX</span>
+                    <p class="bio">طراحی تجربه کاربری و رابط‌های جذاب فروشگاه</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="team-card">
+                    <div class="team-avatar"><i class="bi bi-person"></i></div>
+                    <h6>علی رضایی</h6>
+                    <span class="role">متخصص دیتابیس</span>
+                    <p class="bio">مدیریت و بهینه‌سازی پایگاه داده فروشگاه</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="team-card">
+                    <div class="team-avatar"><i class="bi bi-person"></i></div>
+                    <h6>نازنین کریمی</h6>
+                    <span class="role">پشتیبانی و محتوا</span>
+                    <p class="bio">ارتباط با مشتریان و تولید محتوای فروشگاه</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -104,6 +104,8 @@
             background: linear-gradient(135deg, var(--purple-main), #2575fc);
             color: #fff;
             transform: scale(1.05);
+            padding-top: 0;
+
         }
 
         .info-card h6 {
@@ -180,6 +182,8 @@
         justify-content: center;
         width: 48px;
         height: 48px;
+        top: 0;
+        bottom : 0;
         border-radius: 50%;
         background: #f5f0ff;
         color: var(--purple-main);
@@ -197,7 +201,7 @@
         }
 
     /* ============================================
-           نقشه (اگر دارید)
+           نقشه 
            ============================================ */
     .map-container {
         border-radius: 24px;
@@ -294,7 +298,7 @@
         <div class="col-md-3 col-6">
             <div class="info-card">
                 <div class="icon-wrapper">
-                    <i class="bi bi-geo-alt"></i>
+                    <i class="bi bi-geo-alt pt-1"></i>
                 </div>
                 <h6>آدرس</h6>
                 <p>تهران، خیابان آزادی</p>
@@ -303,7 +307,7 @@
         <div class="col-md-3 col-6">
             <div class="info-card">
                 <div class="icon-wrapper">
-                    <i class="bi bi-telephone"></i>
+                    <i class="bi bi-telephone pt-1"></i>
                 </div>
                 <h6>تلفن</h6>
                 <p>۰۲۱-۳۳۴۴۵۵۶</p>
@@ -312,7 +316,7 @@
         <div class="col-md-3 col-6">
             <div class="info-card">
                 <div class="icon-wrapper">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-envelope pt-1"></i>
                 </div>
                 <h6>ایمیل</h6>
                 <p>info@myeshop.com</p>
@@ -321,7 +325,7 @@
         <div class="col-md-3 col-6">
             <div class="info-card">
                 <div class="icon-wrapper">
-                    <i class="bi bi-clock"></i>
+                    <i class="bi bi-clock pt-1"></i>
                 </div>
                 <h6>ساعت کاری</h6>
                 <p>۹ صبح تا ۶ عصر</p>
@@ -371,25 +375,25 @@
         <!-- بخش شبکه‌های اجتماعی و اطلاعات -->
         <div class="col-lg-5">
             <!-- شبکه‌های اجتماعی -->
-            <div class="contact-form-card mb-4">
-                <h5 class="fw-bold mb-3">
-                    <i class="bi bi-share me-2 text-purple"></i>
+            <div class="contact-form-card mb-4 ">
+                <h5 class="fw-bold mb-4 ">
+                    <i class="bi bi-share me-2 text-purple text-center"></i>
                     ما را دنبال کنید
                 </h5>
-                <div class="d-flex gap-3 flex-wrap">
-                    <a href="#" class="social-link" aria-label="اینستاگرام"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="social-link" aria-label="تلگرام"><i class="bi bi-telegram"></i></a>
-                    <a href="#" class="social-link" aria-label="واتساپ"><i class="bi bi-whatsapp"></i></a>
-                    <a href="#" class="social-link" aria-label="توییتر"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="social-link" aria-label="آپارات"><i class="bi bi-play-circle"></i></a>
+                <div class="d-flex gap-3 flex-wrap justify-content-center">
+                    <a href="#" class="social-link pt-1" aria-label="اینستاگرام"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-link pt-1" aria-label="تلگرام"><i class="bi bi-telegram"></i></a>
+                    <a href="#" class="social-link pt-1" aria-label="واتساپ"><i class="bi bi-whatsapp"></i></a>
+                    <a href="#" class="social-link pt-1" aria-label="توییتر"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="social-link pt-1" aria-label="آپارات"><i class="bi bi-play-circle"></i></a>
                 </div>
                 <div class="mt-3 pt-2 border-top">
-                    <small class="text-muted d-block">
+                    <small class="text-muted d-block text-center">
                         <i class="bi bi-check-circle-fill text-success me-1"></i>
                         پاسخگویی در شبکه‌های اجتماعی
                     </small>
-                    <small class="text-muted d-block">
-                        <i class="bi bi-clock-history me-1"></i>
+                    <small class="text-muted d-block text-center pt-2">
+                        <i class="bi bi-clock-history me-1 "></i>
                         پاسخگویی کمتر از ۲۴ ساعت
                     </small>
                 </div>
