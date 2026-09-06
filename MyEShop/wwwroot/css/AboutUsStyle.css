@@ -1,0 +1,310 @@
+﻿/*============================================
+استایل‌های اختصاصی با کلاس‌های پروژه
+============================================ */
+
+
+/* ===== هدر ===== */
+.page-header-about {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #6a11cb 100%);
+    background-size: 200% 200%;
+    animation: gradientMove 6s ease-in-out infinite alternate;
+    border-radius: 0 0 50px 50px;
+    box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ===== کارت داستان ===== */
+.about-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease;
+}
+
+    .about-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.2) !important;
+    }
+
+.story-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(106, 17, 203, 0.25);
+    transition: all 0.5s ease;
+}
+
+.about-card:hover .story-icon {
+    transform: rotate(-10deg) scale(1.05);
+    box-shadow: 0 12px 48px rgba(106, 17, 203, 0.35);
+}
+
+.about-card h3::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    margin: 8px auto 0;
+    background: linear-gradient(90deg, #ffd700, #6a11cb);
+    border-radius: 4px;
+}
+
+/* ===== آمار ===== */
+.stat-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+    .stat-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.15) !important;
+    }
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.05) rotate(-5deg);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+}
+
+/* ===== مأموریت ===== */
+.icon-box-purple {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    box-shadow: 0 4px 16px rgba(106, 17, 203, 0.25);
+}
+
+.icon-box-golden {
+    background: linear-gradient(135deg, #ffd700, #f5a623);
+    box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+}
+
+.mission-card {
+    transition: all 0.4s ease;
+    border-top: 4px solid transparent;
+}
+
+    .mission-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 48px -12px rgba(106, 17, 203, 0.12) !important;
+    }
+
+    .mission-card:first-child {
+        border-top-color: #6a11cb;
+    }
+
+    .mission-card:last-child {
+        border-top-color: #ffd700;
+    }
+
+/* ===== ارزش‌ها ===== */
+.value-item {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    border-color: rgba(106, 17, 203, 0.06) !important;
+}
+
+    .value-item:hover {
+        transform: translateX(-6px) scale(1.01);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    }
+
+    .value-item:nth-child(1) {
+        border-color: rgba(106, 17, 203, 0.15) !important;
+    }
+
+    .value-item:nth-child(2) {
+        border-color: rgba(255, 215, 0, 0.2) !important;
+    }
+
+    .value-item:nth-child(3) {
+        border-color: rgba(37, 117, 252, 0.15) !important;
+    }
+
+    .value-item:nth-child(4) {
+        border-color: rgba(32, 201, 151, 0.15) !important;
+    }
+
+/* ===== تیم ===== */
+.team-card {
+    transition: all 0.4s ease;
+    border-top: 3px solid transparent;
+}
+
+    .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px -12px rgba(106, 17, 203, 0.15) !important;
+    }
+
+    .team-card:nth-child(1) {
+        border-top-color: #6a11cb;
+    }
+
+    .team-card:nth-child(2) {
+        border-top-color: #ffd700;
+    }
+
+    .team-card:nth-child(3) {
+        border-top-color: #20c997;
+    }
+
+    .team-card:nth-child(4) {
+        border-top-color: #e83e8c;
+    }
+
+.team-avatar {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.team-card:hover .team-avatar {
+    transform: scale(1.05) rotate(-5deg);
+}
+
+/* ============================================
+               بخش تماس
+     ============================================ */
+.cta-section {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #fff;
+    margin-top: 2rem;
+}
+
+    .cta-section h3 {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .cta-section p {
+        opacity: 0.85;
+        margin-bottom: 1.5rem;
+    }
+
+.btn-cta {
+    background: #fff;
+    color: #6a11cb;
+    border: none;
+    border-radius: 30px;
+    padding: 0.7rem 2.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        color: #6a11cb;
+    }
+
+/* ===== ریسپانسیو ===== */
+@media (max-width: 768px) {
+    .page-header-about {
+        border-radius: 0 0 30px 30px;
+        padding: 2.5rem 0;
+    }
+
+        .page-header-about h1 {
+            font-size: 1.8rem;
+        }
+
+    .about-card {
+        padding: 1.5rem !important;
+    }
+
+    .story-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+        .stat-icon i {
+            font-size: 1.4rem !important;
+        }
+
+    .cta-section {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-header-about {
+        border-radius: 0 0 20px 20px;
+        padding: 1.5rem 0;
+    }
+
+        .page-header-about h1 {
+            font-size: 1.4rem;
+        }
+
+    .story-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+        .story-icon i {
+            font-size: 1.8rem !important;
+        }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-card {
+        padding: 0.8rem !important;
+    }
+
+    .value-item {
+        padding: 0.8rem !important;
+    }
+
+    .team-avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+        .team-avatar i {
+            font-size: 1.6rem !important;
+        }
+
+    .team-card {
+        padding: 1rem !important;
+    }
+}
