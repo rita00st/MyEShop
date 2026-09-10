@@ -245,8 +245,6 @@ namespace MyEShop.Controllers
         [Authorize]
         public async Task<IActionResult> ShowCart()
         {
-            
-
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userIdClaim))
             {

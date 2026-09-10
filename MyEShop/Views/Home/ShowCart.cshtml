@@ -153,6 +153,9 @@
                         <span class="text-golden fw-bold fs-4">
                             @Model.OrderDetails.Sum(od => od.Count * od.Price).ToString("N0") تومان
                         </span>
+                        @* <span class="text-golden fw-bold fs-4">
+                            @Model.OrderDetails.Sum(od => od.Count).ToString()
+                        </span> *@
                     </div>
                 </div>
             </div>
