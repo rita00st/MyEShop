@@ -11,8 +11,8 @@
     <!-- Bootstrap Icons -->
     <link href="~/lib/bootstrap/bootstrap-icons-1.13.1/bootstrap-icons.min.css" rel="stylesheet" asp-append-version="true" />
 
-    <link href="~/css/Admin2.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/main.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/Admin2.css" rel="stylesheet" asp-append-version="true" />
 
 </head>
 <body>
@@ -30,15 +30,31 @@
             </div>
 
             <div class="dropdown">
-                <button class="btn btn-link text-white dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle fs-5"></i>
-                    <span class="d-none d-md-inline">ادمین</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end text-center">
-                    <li><a class="dropdown-item" href="/Admin/Profile"><i class="bi bi-person"></i> پروفایل</a></li>
-                    <li><a class="dropdown-item" href="/Admin/Settings"><i class="bi bi-gear"></i> تنظیمات</a></li>
+                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 text-white " href="#"
+                   id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="user-avatar">
+                        <i class="bi bi-person-circle fs-4"></i>
+                    </div>
+                    <span class="d-none d-lg-inline text-white">@User.Identity.Name</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 text-center rounded-3 py-2 text-black"
+                    aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item" href="/Admin/Profile">
+                            <i class="bi bi-person text-purple  me-2"></i> پروفایل
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/Admin/Settings">
+                            <i class="bi bi-box-seam  text-purple me-2"></i> سفارشات
+                        </a>
+                    </li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="/Account/Logout"><i class="bi bi-box-arrow-right"></i> خروج</a></li>
+                    <li>
+                        <a class="dropdown-item text-danger" asp-area="" asp-controller="Account" asp-action="Logout">
+                            <i class="bi bi-box-arrow-right me-2"></i> خروج
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -65,12 +81,12 @@
                 </div>
                 <ul class="sub-menu">
                     <li>
-                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Index") == true ? "active" : "")" href="/Admin/Products/Index">
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Index") == true ? "active" : "")" href="/Admin/Index">
                             <i class="bi bi-list"></i> لیست محصولات
                         </a>
                     </li>
                     <li>
-                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Add") == true ? "active" : "")" href="/Admin/Products/Add">
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Add") == true ? "active" : "")" href="/Admin/Add">
                             <i class="bi bi-plus-circle"></i> اضافه کردن محصول
                         </a>
                     </li>

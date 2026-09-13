@@ -43,7 +43,7 @@ namespace MyEShop.Pages.Admin
         private string GetImagePath(int productId)
         {
             string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp",".svg" };
 
             foreach (var ext in supportedExtensions)
             {

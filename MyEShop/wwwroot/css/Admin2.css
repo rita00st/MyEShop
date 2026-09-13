@@ -6,10 +6,16 @@
 }
 
 body {
-    font-family: 'Segoe UI', Sahel, Geneva, Verdana, sans-serif;
+    font-family: 'sahel' !important;
     background-color: #f5f7fb;
 }
 
+@font-face {
+    font-family: 'sahel';
+    src: url('../fonts/sahel.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* استایل Navbar */
 .navbar-admin {
     background: linear-gradient(135deg, #6f42c1 0%, #8a2be2 100%);

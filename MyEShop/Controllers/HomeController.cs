@@ -69,6 +69,9 @@ namespace MyEShop.Controllers
             return View(products);
         }
 
+
+       
+
         public async Task<IActionResult> Details(int id)
         {
             if (id == 0) return NotFound();

@@ -73,12 +73,12 @@
                                 aria-labelledby="userDropdown">
                                 <li>
                                     <a class="dropdown-item" href="/Account/Profile">
-                                        <i class="bi bi-person me-2"></i> پروفایل
+                                        <i class="bi bi-person text-purple me-2"></i> پروفایل
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="/Home/ShowCart">
-                                        <i class="bi bi-box-seam me-2"></i> سفارشات
+                                        <i class="bi bi-box-seam text-purple me-2"></i> سفارشات
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
@@ -109,25 +109,33 @@
     </nav>
 </header>
 
+
 <!-- Modal جستجو -->
 <div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content rounded-4">
-            <div class="modal-header">
+            <div class="modal-header border-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
             </div>
-            <div class="modal-body">
-                <div class="text-center align-content-center mb-2">
-                    <h1><i class="bi bi-search"></i> جستجوی زنده</h1>
-                    <p class="text-muted">جستجوی سریع و هوشمند در محصولات</p>
+            <div class="modal-body pb-4">
+                <div class="text-center align-content-center mb-4">
+                    <h2 class="fw-bold">
+                        <i class="bi bi-search text-purple"></i>
+                        جستجوی زنده محصولات
+                    </h2>
+                    <p class="text-muted mb-0">جستجوی سریع و هوشمند در بین محصولات فروشگاه</p>
                 </div>
 
                 <div class="search-box">
                     <div class="search-input-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" placeholder="نام محصول را جستجو کنید..." autocomplete="off">
-                        <button id="clearBtn" class="clear-btn">
-                            <i class="fas fa-times"></i>
+                        <i class="bi bi-search search-icon ms-2"></i>
+                        <input type="text"
+                               id="searchInput"
+                               placeholder="  نام محصول را جستجو کنید..."
+                               autocomplete="off"
+                               autofocus>
+                        <button id="clearBtn" class="clear-btn" type="button">
+                            <i class="bi bi-x-circle-fill"></i>
                         </button>
                     </div>
                     <div class="search-stats">
@@ -137,10 +145,15 @@
 
                 <div id="searchResults" class="search-results">
                     <!-- نتایج جستجو اینجا نمایش داده می‌شود -->
+                    <div class="text-center py-5 text-muted">
+                        <i class="bi bi-search fs-1 opacity-25"></i>
+                        <p class="mt-3 mb-0">شروع به تایپ کنید...</p>
+                        <small>حداقل ۲ کاراکتر وارد کنید</small>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>  
 
 <script src="~/js/searchbar.js" asp-append-version="true"></script>

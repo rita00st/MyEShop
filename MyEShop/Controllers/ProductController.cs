@@ -145,6 +145,41 @@ namespace MyEShop.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> LiveSearch(string term)
+       {
+            //if (string.IsNullOrWhiteSpace(term) || term.Length < 2)
+            //{
+            //    return Json(new { success = false, message = "حداقل ۲ کاراکتر وارد کنید" });
+            //}
+
+            var products = await _context.products
+                .Include(p => p.Item)
+                .Where(p => p.Name.Contains(term))
+                .Take(10)
+                .Select(p => new 
+                {
+                    id = p.Id,
+                    name = p.Name,
+                    price = p.Item != null ? p.Item.Price : 0,
+                    imagePath = p.ImagePath ,
+                    //imagePath = p.ImagePath ?? "/images/no-image.jpg",
+                    //imagePath = GetImagePath(p.Id),
+                    //imagePath = GetImagePath(p.Id) ?? "/images/no-image.jpg",
+                    quantity = p.Item != null ? p.Item.QuantityInStock : 0
+                })
+                .ToListAsync();
+
+
+            //foreach (var product in products)
+            //{
+            //    product.imagePath = GetImagePath(product.id);
+            //}
+
+
+            return Json(new { success = true, data = products, count = products.Count });
+        }
+
         private string GetImagePath(int productId)
         {
             string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");

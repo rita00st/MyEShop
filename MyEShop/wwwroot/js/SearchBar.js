@@ -1,232 +1,132 @@
-// داده‌های نمونه محصولات
-const products = [
-    {
-        id: 1,
-        name: "لپ تاپ اپل مک‌بوک پرو",
-        category: "لپ تاپ",
-        price: "85,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=150&h=150&fit=crop"
+// ============================================
+// جستجوی زنده محصولات
+// ============================================
 
-    },
-    {
-        id: 2,
-        name: "گوشی سامسونگ گلکسی S24",
-        category: "گوشی موبایل",
-        price: "45,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150&h=150&fit=crop"
-    },
-    {
-        id: 3,
-        name: "هدفون سونی WH-1000XM5",
-        category: "هدفون",
-        price: "12,500,000 تومان",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150&h=150&fit=crop"
-    },
-    {
-        id: 4,
-        name: "ساعت هوشمند اپل واچ",
-        category: "ساعت هوشمند",
-        price: "18,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150&h=150&fit=crop"
-    },
-    {
-        id: 5,
-        name: "تبلت آیپد پرو",
-        category: "تبلت",
-        price: "32,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=150&h=150&fit=crop"
-    },
-    {
-        id: 6,
-        name: "دوربین کانن EOS R5",
-        category: "دوربین",
-        price: "95,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=150&h=150&fit=crop"
-    },
-    {
-        id: 7,
-        name: "کنسول بازی پلی استیشن 5",
-        category: "کنسول بازی",
-        price: "28,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=150&h=150&fit=crop"
-    },
-    {
-        id: 8,
-        name: "اسپیکر بلوتوث JBL",
-        category: "اسپیکر",
-        price: "3,500,000 تومان",
-        image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=150&h=150&fit=crop"
-    },
-    {
-        id: 9,
-        name: "کیبورد مکانیکال Razer",
-        category: "کیبورد",
-        price: "8,500,000 تومان",
-        image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=150&h=150&fit=crop"
-    },
-    {
-        id: 10,
-        name: "ماوس گیمینگ Logitech",
-        category: "ماوس",
-        price: "2,800,000 تومان",
-        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=150&h=150&fit=crop"
-    },
-    {
-        id: 11,
-        name: "مانیتور سامسونگ 32 اینچ",
-        category: "مانیتور",
-        price: "15,000,000 تومان",
-        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=150&h=150&fit=crop"
-    },
-    {
-        id: 12,
-        name: "پاوربانک Anker",
-        category: "پاوربانک",
-        price: "1,200,000 تومان",
-        image: "https://images.unsplash.com/photo-1609592806598-04c4d7e5c1a8?w=150&h=150&fit=crop"
-    }
-];
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const clearBtn = document.getElementById('clearBtn');
+    const resultCount = document.getElementById('resultCount');
 
-// عناصر DOM
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
-const resultCount = document.getElementById('resultCount');
-const clearBtn = document.getElementById('clearBtn');
+    let debounceTimer;
 
-let searchTimeout;
+    if (!searchInput) return;
 
-// تابع جستجو
-function performSearch(query) {
-    if (!query.trim()) {
-        showAllProducts();
-        return;
-    }
+    // ✅ رویداد تایپ کردن با تاخیر (Debounce)
+    searchInput.addEventListener('input', function () {
+        const term = this.value.trim();
 
-    // نمایش لودینگ
-    showLoading();
+        // نمایش دکمه پاک کردن
+        if (clearBtn) {
+            clearBtn.style.display = term.length > 0 ? 'block' : 'none';
+        }
 
-    // شبیه‌سازی تاخیر شبکه
-    setTimeout(() => {
-        const filteredProducts = products.filter(product => 
-            product.name.toLowerCase().includes(query.toLowerCase()) ||
-            product.category.toLowerCase().includes(query.toLowerCase())
-        );
+        clearTimeout(debounceTimer);
 
-        displayResults(filteredProducts);
-    }, 500);
-}
+        if (term.length < 1) {
+            searchResults.innerHTML = '';
+            if (resultCount) resultCount.textContent = '0 نتیجه';
+            return;
+        }
 
-// نمایش لودینگ
-function showLoading() {
-    searchResults.innerHTML = `
-        <div class="loading">
-            <i class="fas fa-spinner"></i>
-            <p>در حال جستجو...</p>
-        </div>
-    `;
-    resultCount.textContent = 'جستجو...';
-}
-
-// نمایش همه محصولات
-function showAllProducts() {
-    displayResults(products);
-}
-
-// نمایش نتایج
-function displayResults(results) {
-    resultCount.textContent = `${results.length} نتیجه`;
-    
-    if (results.length === 0) {
+        // نمایش لودینگ
         searchResults.innerHTML = `
-            <div class="no-results">
-                <i class="fas fa-search"></i>
-                <p>نتیجه‌ای یافت نشد</p>
-                <small>لطفاً کلمات کلیدی دیگری امتحان کنید</small>
+            <div class="text-center py-4">
+                <div class="spinner-border text-purple" role="status">
+                    <span class="visually-hidden">در حال جستجو...</span>
+                </div>
+                <p class="text-muted mt-2 small">در حال جستجو...</p>
             </div>
         `;
-        return;
+
+        // ✅ تاخیر ۳۰۰ میلی‌ثانیه برای جلوگیری از درخواست‌های اضافی
+        debounceTimer = setTimeout(() => {
+            performSearch(term);
+        }, 300);
+    });
+
+    // ✅ پاک کردن جستجو
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            if (resultCount) resultCount.textContent = '0 نتیجه';
+            this.style.display = 'none';
+            searchInput.focus();
+        });
     }
 
-    const resultsHTML = results.map(product => `
-        <div class="result-item animate" onclick="selectProduct(${product.id})">
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='/images/no-image.jpg'">
-            <div class="result-info">
-                <div class="result-title">${highlightMatch(product.name, searchInput.value)}</div>
-                <div class="result-category">${product.category}</div>
-            </div>
-            <div class="result-price">${product.price}</div>
-        </div>
-    `).join('');
+    // ✅ تابع اصلی جستجو
+    function performSearch(term) {
+        fetch(`/Product/LiveSearch?term=${encodeURIComponent(term)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    searchResults.innerHTML = `
+                        <div class="alert alert-warning text-center">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            ${data.message}
+                        </div>
+                    `;
+                    return;
+                }
 
-    searchResults.innerHTML = resultsHTML;
-}
+                if (data.count === 0) {
+                    searchResults.innerHTML = `
+                        <div class="text-center py-5">
+                            <i class="bi bi-search fs-1 text-muted opacity-25"></i>
+                            <p class="text-muted mt-3">محصولی با این نام پیدا نشد!</p>
+                            <small class="text-muted">لطفاً کلمه دیگری را امتحان کنید.</small>
+                        </div>
+                    `;
+                    if (resultCount) resultCount.textContent = '0 نتیجه';
+                    return;
+                }
 
-// هایلایت کردن کلمات مطابق
-function highlightMatch(text, query) {
-    if (!query) return text;
-    
-    const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<mark style="background: #667eea; color: white; padding: 2px 4px; border-radius: 3px;">$1</mark>');
-}
+                // ✅ نمایش نتایج
+                let html = '<div class="row g-3">';
+                data.data.forEach(product => {
+                    const isInStock = product.quantity > 0;
+                    const stockBadge = isInStock
+                        ? '<span class="badge bg-success">موجود</span>'
+                        : '<span class="badge bg-danger">ناموجود</span>';
+                    const imagepath = product.imagePath ?? "/images/no-image.jpg";
 
-// انتخاب محصول
-function selectProduct(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        alert(`محصول انتخاب شده: ${product.name}\nقیمت: ${product.price}`);
-    }
-}
+                    html += `
+                        <div class="col-12">
+                            <a href="/Home/Details/${product.id}" 
+                               class="search-result-item d-flex align-items-center gap-3 p-3 rounded-3 border text-decoration-none text-dark">
+                                <img src="${imagepath}" 
+                                     alt="${product.name}" 
+                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 12px;">
+                                    
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">${product.name}</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-purple fw-bold">
+                                            ${product.price.toLocaleString('fa-IR')} تومان
+                                        </span>
+                                        ${stockBadge}
+                                    </div>
+                                </div>
+                                <i class="bi bi-chevron-left text-muted"></i>
+                            </a>
+                        </div>
+                    `;
+                });
+                html += '</div>';
 
-// رویدادهای input
-searchInput.addEventListener('input', (e) => {
-    const query = e.target.value;
-    
-    // نمایش/مخفی کردن دکمه پاک کردن
-    if (query) {
-        clearBtn.classList.add('show');
-    } else {
-        clearBtn.classList.remove('show');
-    }
-    
-    // تاخیر در جستجو برای عملکرد بهتر
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-        performSearch(query);
-    }, 200);
-});
-
-// رویداد focus
-searchInput.addEventListener('focus', () => {
-    if (searchInput.value) {
-        clearBtn.classList.add('show');
-    }
-});
-
-// رویداد blur
-searchInput.addEventListener('blur', () => {
-    setTimeout(() => {
-        clearBtn.classList.remove('show');
-    }, 200);
-});
-
-// دکمه پاک کردن
-clearBtn.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-    clearBtn.classList.remove('show');
-    showAllProducts();
-});
-
-// کلیدهای کیبورد
-searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        searchInput.value = '';
-        clearBtn.classList.remove('show');
-        showAllProducts();
+                searchResults.innerHTML = html;
+                if (resultCount) resultCount.textContent = `${data.count} نتیجه`;
+            })
+            .catch(error => {
+                console.error('خطا در جستجو:', error);
+                searchResults.innerHTML = `
+                    <div class="alert alert-danger text-center">
+                        <i class="bi bi-x-circle"></i>
+                        خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.
+                    </div>
+                `;
+            });
     }
 });
-
-// نمایش همه محصولات در ابتدا
-document.addEventListener('DOMContentLoaded', () => {
-    showAllProducts();
-}); 
