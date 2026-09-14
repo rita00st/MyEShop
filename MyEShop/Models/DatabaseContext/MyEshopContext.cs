@@ -30,10 +30,10 @@ namespace MyEShop.Models.DatabaseContext
             #region Seed Data Category
             modelBuilder.Entity<Category>()
                 .HasData(
-                new Category { Id = 1, Name = "ASP.NET", Description = "آموزش asp.net core" },
-                new Category { Id = 2, Name = "ساعت مچی", Description = "ساعت مچی" },
-                new Category { Id = 3, Name = "لباس ورزش", Description = "لباس ورزش" },
-                new Category { Id = 4, Name = "لوازم منزل", Description = "لوازم منزل" }
+                new Category { Id = 1, Name = "الکترونیک", Description = "الکترونیک" },
+                new Category { Id = 2, Name = "مد و پوشاک", Description = "مد و پوشاک" },
+                new Category { Id = 3, Name = "کتاب و محصولات فرهنگی", Description = "کتاب و محصولات فرهنگی" },
+                new Category { Id = 4, Name = "خانه و آشپزخانه", Description = "خانه و آشپزخانه" }
                 );
             #endregion
 

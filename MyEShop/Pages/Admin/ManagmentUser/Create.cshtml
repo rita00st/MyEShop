@@ -1,59 +1,224 @@
 ﻿@page
 @model MyEShop.Pages.Admin.ManagmentUser.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "افزودن کاربر جدید";
+    Layout = "_AdminLayout";
 }
 
-<h1>Create</h1>
+<link href="~/css/createuser.css" rel="stylesheet" />
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="User.Name" class="control-label"></label>
-                <input asp-for="User.Name" class="form-control" />
-                <span asp-validation-for="User.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.RePassword" class="control-label"></label>
-                <input asp-for="User.RePassword" class="form-control" />
-                <span asp-validation-for="User.RePassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.RejesterDate" class="control-label"></label>
-                <input asp-for="User.RejesterDate" class="form-control" />
-                <span asp-validation-for="User.RejesterDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsAdmin" /> @Html.DisplayNameFor(model => model.User.IsAdmin)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+<!-- ============================================
+     هدر صفحه
+     ============================================ -->
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+        <h1 class="h3 fw-bold text-purple mb-1">
+            <i class="bi bi-person-plus-fill me-2"></i>
+            افزودن کاربر جدید
+        </h1>
+        <p class="text-muted small mb-0">اطلاعات کاربر جدید را وارد کنید</p>
+    </div>
+    <div>
+        <a asp-page="Index" class="btn btn-outline-purple">
+            <i class="bi bi-arrow-right me-1"></i>
+            بازگشت به لیست
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
+<!-- ============================================
+     فرم ایجاد کاربر
+     ============================================ -->
+<div class="row g-4">
+    <!-- ستون فرم -->
+    <div class="col-12 col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-header bg-gradient-purple text-white rounded-top-4 py-3">
+                <h5 class="mb-0 fw-bold">
+                    <i class="bi bi-person-vcard me-2"></i>
+                    اطلاعات کاربر
+                </h5>
+            </div>
+            <div class="card-body p-3 p-md-4">
+                <form method="post" id="createForm" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <!-- نام -->
+                    <div class="mb-3">
+                        <label asp-for="User.Name" class="form-label fw-semibold">
+                            <i class="bi bi-person-fill text-purple me-1"></i>
+                            نام کاربر
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-purple-soft border-purple-soft">
+                                <i class="bi bi-person text-purple"></i>
+                            </span>
+                            <input asp-for="User.Name" class="form-control" placeholder="نام کاربر را وارد کنید (اختیاری)" />
+                        </div>
+                        <span asp-validation-for="User.Name" class="text-danger small"></span>
+                        <small class="text-muted">در صورت خالی بودن، "بدون نام" نمایش داده می‌شود</small>
+                    </div>
+
+                    <!-- ایمیل -->
+                    <div class="mb-3">
+                        <label asp-for="User.Email" class="form-label fw-semibold">
+                            <i class="bi bi-envelope-fill text-purple me-1"></i>
+                            ایمیل <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-purple-soft border-purple-soft">
+                                <i class="bi bi-envelope text-purple"></i>
+                            </span>
+                            <input asp-for="User.Email" class="form-control" placeholder="example@email.com" dir="ltr" />
+                        </div>
+                        <span asp-validation-for="User.Email" class="text-danger small"></span>
+                    </div>
+
+                    <!-- رمز عبور -->
+                    <div class="mb-3">
+                        <label asp-for="User.Password" class="form-label fw-semibold">
+                            <i class="bi bi-lock-fill text-purple me-1"></i>
+                            رمز عبور <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-purple-soft border-purple-soft">
+                                <i class="bi bi-lock text-purple"></i>
+                            </span>
+                            <input asp-for="User.Password" type="password" class="form-control" placeholder="حداقل ۶ کاراکتر" id="password" />
+                            <button type="button" class="btn border-silver-light" onclick="togglePassword('password')" >
+                                <i class="bi bi-eye" id="password-icon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="User.Password" class="text-danger small"></span>
+                    </div>
+
+                    <!-- تکرار رمز عبور -->
+                    <div class="mb-3">
+                        <label asp-for="User.RePassword" class="form-label fw-semibold">
+                            <i class="bi bi-lock-fill text-purple me-1"></i>
+                            تکرار رمز عبور <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-purple-soft border-purple-soft">
+                                <i class="bi bi-shield-lock text-purple"></i>
+                            </span>
+                            <input asp-for="User.RePassword" type="password" class="form-control" placeholder="رمز عبور را دوباره وارد کنید" id="repassword" />
+                            <button type="button" class="btn border-silver-light" onclick="togglePassword('repassword')">
+                                <i class="bi bi-eye" id="repassword-icon"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="User.RePassword" class="text-danger small"></span>
+                    </div>
+
+                    <!-- نقش کاربر -->
+                    <div class="mb-4">
+                        <label asp-for="User.IsAdmin" class="form-label fw-semibold">
+                            <i class="bi bi-shield-fill text-purple me-1"></i>
+                            نقش کاربر
+                        </label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="User.IsAdmin" id="role-user" value="false" checked>
+                                <label class="btn btn-outline-purple w-100 py-3" for="role-user">
+                                    <i class="bi bi-person-fill fs-4 d-block mb-1"></i>
+                                    <span class="fw-bold">کاربر عادی</span>
+                                    <small class="d-block text-muted">دسترسی محدود</small>
+                                </label>
+                            </div>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="User.IsAdmin" id="role-admin" value="true">
+                                <label class="btn btn-outline-golden-dark w-100 py-3" for="role-admin">
+                                    <i class="bi bi-shield-check fs-4 d-block mb-1"></i>
+                                    <span class="fw-bold">مدیر سیستم</span>
+                                    <small class="d-block text-muted">دسترسی کامل</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- دکمه‌های عملیات -->
+                    <div class="d-flex flex-wrap gap-2 justify-content-end pt-3 border-top">
+                        <a asp-page="Index" class="btn btn-light">
+                            <i class="bi bi-x-circle me-1"></i>
+                            انصراف
+                        </a>
+                        <button type="submit" class="btn btn-golden px-4">
+                            <i class="bi bi-check2-circle me-1"></i>
+                            ثبت کاربر
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ستون راهنما -->
+    <div class="col-12 col-lg-4">
+        <!-- کارت راهنما -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-3 p-md-4">
+                <div class="text-center mb-3">
+                    <div class="avatar-circle-sm bg-gradient-purple text-white mx-auto mb-2">
+                        <i class="bi bi-lightbulb fs-4"></i>
+                    </div>
+                    <h6 class="fw-bold text-purple mb-1">راهنمای ایجاد کاربر</h6>
+                    <p class="text-muted small mb-0">نکات مهم برای ثبت کاربر جدید</p>
+                </div>
+                <hr>
+                <div class="d-flex align-items-start gap-2 mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                    <div>
+                        <h6 class="small fw-bold mb-0">ایمیل یکتا</h6>
+                        <small class="text-muted">هر ایمیل فقط یک بار می‌تواند ثبت شود.</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-start gap-2 mb-3">
+                    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                    <div>
+                        <h6 class="small fw-bold mb-0">رمز عبور امن</h6>
+                        <small class="text-muted">رمز عبور باید حداقل ۶ کاراکتر داشته باشد.</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                    <div>
+                        <h6 class="small fw-bold mb-0">نام اختیاری</h6>
+                        <small class="text-muted">در صورت خالی بودن، "بدون نام" نمایش داده می‌شود.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- کارت آمار سریع -->
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-3 p-md-4">
+                <h6 class="fw-bold text-purple mb-3">
+                    <i class="bi bi-bar-chart-fill me-2"></i>
+                    آمار سریع
+                </h6>
+                <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-purple-25 rounded-3">
+                    <span class="small text-muted">کل کاربران</span>
+                    <span class="fw-bold text-purple" id="totalUsers">-</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-golden-soft rounded-3">
+                    <span class="small text-muted">مدیران</span>
+                    <span class="fw-bold text-golden-dark" id="adminCount">-</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center p-2 bg-teal-10 rounded-3">
+                    <span class="small text-muted">کاربران عادی</span>
+                    <span class="fw-bold text-teal" id="normalCount">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/createuser.js"></script>
+
 }

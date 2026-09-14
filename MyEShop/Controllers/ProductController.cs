@@ -35,58 +35,6 @@ namespace MyEShop.Controllers
         }
 
 
-        //[HttpGet]
-        //public async Task<IActionResult> ShowAllProducts(
-        //    decimal? minPrice,
-        //    decimal? maxPrice,
-        //    int page = 1,
-        //    int pageSize = 12)
-        //{
-        //    // دریافت همه محصولات با قیمت
-        //    var query = _context.products
-        //        .Include(p => p.Item)
-        //        .AsNoTracking();
-
-        //    // 🔥 فیلتر قیمت - این بخش حتماً باید اجرا شود
-        //    if (minPrice.HasValue && minPrice.Value > 0)
-        //        query = query.Where(p => p.Item.Price >= minPrice.Value);
-
-        //    if (maxPrice.HasValue && maxPrice.Value > 0)
-        //        query = query.Where(p => p.Item.Price <= maxPrice.Value);
-
-        //    // محاسبه تعداد کل
-        //    int totalItems = await query.CountAsync();
-        //    int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-        //    // دریافت محصولات با صفحه‌بندی
-        //    var products = await query
-        //        .OrderByDescending(p => p.Id)
-        //        .Skip((page - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToListAsync();
-
-        //    // دریافت محدوده قیمت برای اسلایدر
-        //    var allPrices = await _context.items.Select(i => i.Price).ToListAsync();
-        //    var minPriceAll = allPrices.Any() ? allPrices.Min() : 0;
-        //    var maxPriceAll = allPrices.Any() ? allPrices.Max() : 10000000;
-
-        //    var viewModel = new ProductListViewModel
-        //    {
-        //        Products = products,
-        //        MinPrice = minPriceAll,
-        //        MaxPrice = maxPriceAll,
-        //        SelectedMinPrice = minPrice ?? minPriceAll,
-        //        SelectedMaxPrice = maxPrice ?? maxPriceAll,
-        //        PageNumber = page,
-        //        TotalPages = totalPages,
-        //        PageSize = pageSize,
-        //        TotalItems = totalItems
-        //    };
-
-        //    return View(viewModel);
-        //}
-
-
         [Route("Product/ShowAllProduct")]
         public async Task<IActionResult> ShowAllProduct(ProductListViewModel filter)
         {
@@ -164,18 +112,9 @@ namespace MyEShop.Controllers
                     price = p.Item != null ? p.Item.Price : 0,
                     imagePath = p.ImagePath ,
                     //imagePath = p.ImagePath ?? "/images/no-image.jpg",
-                    //imagePath = GetImagePath(p.Id),
-                    //imagePath = GetImagePath(p.Id) ?? "/images/no-image.jpg",
                     quantity = p.Item != null ? p.Item.QuantityInStock : 0
                 })
                 .ToListAsync();
-
-
-            //foreach (var product in products)
-            //{
-            //    product.imagePath = GetImagePath(product.id);
-            //}
-
 
             return Json(new { success = true, data = products, count = products.Count });
         }
