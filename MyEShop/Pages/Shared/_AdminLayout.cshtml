@@ -106,10 +106,30 @@
                 </a>
             </li>
             <li>
-                <a class="menu-item" href="/Admin/ManagmentUser">
+                @* <a class="menu-item" href="/Admin/ManagmentUser">
                     <i class="bi bi-people"></i>
                     <span>کاربران</span>
-                </a>
+                </a> *@
+
+                <div class="menu-item-dropdown" onclick="toggleSubMenu(this)">
+                    <span>
+                        <i class="bi bi-people"></i>
+                        <span>کاربران</span>
+                    </span>
+                    <i class="bi bi-chevron-down arrow"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li>
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Index") == true ? "active" : "")" href="/Admin/ManagmentUser">
+                            <i class="bi bi-list"></i> لیست کاربران
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Add") == true ? "active" : "")" href="/Admin/ManagmentUser/Create">
+                            <i class="bi bi-plus-circle"></i> اضافه کردن کاربر
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a class="menu-item" href="/Admin/Comments">

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
 
-namespace MyEShop.Pages.Admin.ManagmentUser
+namespace MyEShop.Pages.Admin.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace MyEShop.Pages.Admin.ManagmentUser
             _context = context;
         }
 
-        public User User { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,15 @@ namespace MyEShop.Pages.Admin.ManagmentUser
                 return NotFound();
             }
 
-            User = await _context.users
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (User == null)
+            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
-
+            else
+            {
+                Category = category;
+            }
             return Page();
         }
     }
