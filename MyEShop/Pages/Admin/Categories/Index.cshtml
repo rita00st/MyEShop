@@ -1,70 +1,4 @@
-﻿@* @page
-@model MyEShop.Pages.Admin.Categories.IndexModel
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<div class="col-md-4 my-3">
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Category.Name" class="control-label"></label>
-            <input asp-for="Category.Name" class="form-control" />
-            <span asp-validation-for="Category.Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Category.Description" class="control-label"></label>
-            <input asp-for="Category.Description" class="form-control" />
-            <span asp-validation-for="Category.Description" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
-    </form>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorys[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorys[0].Description)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Categorys) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table> *@
-
-
-
-
-@page
+﻿@page
 @model MyEShop.Pages.Admin.Categories.IndexModel
 @{
     ViewData["Title"] = "مدیریت دسته‌بندی‌ها";
@@ -84,10 +18,17 @@
     </div>
 </div>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
 <div class="row g-4">
-    <!-- ============================================
-         ستون فرم افزودن (سمت راست در RTL)
-         ============================================ -->
+    <!-- ستون فرم افزودن -->
     <div class="col-12 col-lg-4">
         <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 90px;">
             <div class="card-header bg-gradient-purple text-white rounded-top-4 py-3">
@@ -100,7 +41,6 @@
                 <form method="post" asp-page-handler="AddCategory">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                    <!-- نام دسته‌بندی -->
                     <div class="mb-3">
                         <label asp-for="NewCategory.Name" class="form-label fw-semibold">
                             <i class="bi bi-tag-fill text-purple me-1"></i>
@@ -118,7 +58,6 @@
                         <span asp-validation-for="NewCategory.Name" class="text-danger small"></span>
                     </div>
 
-                    <!-- توضیحات -->
                     <div class="mb-3">
                         <label asp-for="NewCategory.Description" class="form-label fw-semibold">
                             <i class="bi bi-card-text text-purple me-1"></i>
@@ -131,7 +70,6 @@
                         <span asp-validation-for="NewCategory.Description" class="text-danger small"></span>
                     </div>
 
-                    <!-- دکمه ثبت -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-golden">
                             <i class="bi bi-check2-circle me-1"></i>
@@ -143,9 +81,7 @@
         </div>
     </div>
 
-    <!-- ============================================
-         ستون لیست دسته‌بندی‌ها (سمت چپ در RTL)
-         ============================================ -->
+    <!-- ستون لیست دسته‌بندی‌ها -->
     <div class="col-12 col-lg-8">
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-header bg-gradient-purple text-white rounded-top-4 py-3">
@@ -161,7 +97,7 @@
             <div class="card-body p-0">
                 @if (Model.Categories != null && Model.Categories.Any())
                 {
-                    <!-- ✅ جدول دسکتاپ و تبلت -->
+                    <!-- جدول دسکتاپ و تبلت -->
                     <div class="table-responsive d-none d-md-block">
                         <table class="table table-hover align-middle mb-0">
                             <thead class="bg-light">
@@ -186,7 +122,10 @@
                                                 @* <div class="category-icon-sm bg-purple-soft rounded-circle">
                                                     <i class="bi bi-tag-fill text-purple"></i>
                                                 </div> *@
-                                                <span class="fw-bold">@category.Name</span>
+                                                <div>
+                                                    <h6 class="fw-bold">@category.Name</h6>
+                                                    <small class="text-muted">#@category.Id</small>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="text-center d-none d-lg-table-cell">
@@ -205,11 +144,16 @@
                                                    class="btn btn-golden btn-sm rounded-5" title="ویرایش">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </a>
-                                                <a asp-page="Delete" asp-route-id="@category.Id"
-                                                   class="btn btn-danger btn-sm rounded-5" title="حذف"
-                                                   onclick="return confirm('آیا از حذف دسته‌بندی @category.Name مطمئن هستید؟')">
+                                                <!-- ✅ دکمه حذف با Modal -->
+                                                <button type="button"
+                                                        class="btn btn-danger btn-sm rounded-5"
+                                                        title="حذف"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal"
+                                                        data-category-id="@category.Id"
+                                                        data-category-name="@category.Name">
                                                     <i class="bi bi-trash-fill"></i>
-                                                </a>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -219,7 +163,7 @@
                         </table>
                     </div>
 
-                    <!-- ✅ کارت‌های موبایل -->
+                    <!-- کارت‌های موبایل -->
                     <div class="d-md-none p-3">
                         <div class="row g-3">
                             @foreach (var category in Model.Categories)
@@ -227,7 +171,6 @@
                                 <div class="col-12">
                                     <div class="card border-0 shadow-sm rounded-3 category-card-mobile">
                                         <div class="card-body p-3">
-                                            <!-- هدر کارت -->
                                             <div class="d-flex align-items-center justify-content-between mb-3">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="category-icon-md bg-purple-soft rounded-circle">
@@ -243,7 +186,6 @@
                                                 </span>
                                             </div>
 
-                                            <!-- توضیحات -->
                                             @if (!string.IsNullOrWhiteSpace(category.Description))
                                             {
                                                 <div class="bg-light rounded-3 p-2 mb-3">
@@ -254,17 +196,20 @@
                                                 </div>
                                             }
 
-                                            <!-- دکمه‌ها -->
                                             <div class="d-flex gap-2">
                                                 <a asp-page="Edit" asp-route-id="@category.Id"
                                                    class="btn btn-golden btn-sm flex-grow-1">
                                                     <i class="bi bi-pencil-fill me-1"></i> ویرایش
                                                 </a>
-                                                <a asp-page="Delete" asp-route-id="@category.Id"
-                                                   class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('آیا از حذف دسته‌بندی @category.Name مطمئن هستید؟')">
+                                                <!-- ✅ دکمه حذف با Modal -->
+                                                <button type="button"
+                                                        class="btn btn-danger btn-sm "
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal"
+                                                        data-category-id="@category.Id"
+                                                        data-category-name="@category.Name">
                                                     <i class="bi bi-trash-fill"></i>
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -275,7 +220,6 @@
                 }
                 else
                 {
-                    <!-- حالت خالی -->
                     <div class="text-center py-5">
                         <i class="bi bi-tags fs-1 text-muted opacity-25"></i>
                         <h5 class="mt-3 text-muted">هیچ دسته‌بندی وجود ندارد!</h5>
@@ -288,10 +232,56 @@
 </div>
 
 <!-- ============================================
+     ✅ Modal تأیید حذف
+     ============================================ -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+            <!-- هدر Modal -->
+            <div class="modal-header bg-danger text-white rounded-top-4 border-0">
+                <button type="button" class="btn-close btn-close-white mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fw-bold text-center mx-auto" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    تأیید حذف
+                </h5>
+            </div>
+
+            <!-- بدنه Modal -->
+            <div class="modal-body p-4 text-center">
+                <div class="delete-icon-wrapper mb-3">
+                    <i class="bi bi-trash-fill text-danger"></i>
+                </div>
+                <h5 class="fw-bold mb-2">آیا از حذف این دسته‌بندی مطمئن هستید؟</h5>
+                <p class="text-muted mb-1">دسته‌بندی:</p>
+                <h6 class="fw-bold text-purple mb-3" id="deleteCategoryName">-</h6>
+                <div class="alert alert-warning rounded-3 mb-0 small">
+                    <i class="bi bi-info-circle-fill me-1"></i>
+                    این عمل قابل بازگشت نیست و محصولات مرتبط بدون دسته‌بندی خواهند شد.
+                </div>
+            </div>
+
+            <!-- فوتر Modal -->
+            <div class="modal-footer border-0 justify-content-center gap-2">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    انصراف
+                </button>
+                <form method="post" asp-page-handler="DeleteCategory" id="deleteForm" class="d-inline">
+                    <input type="hidden" name="id" id="deleteCategoryId" value="" />
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="bi bi-trash-fill me-1"></i>
+                        بله، حذف شود
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
      استایل‌های اختصاصی
      ============================================ -->
 <style>
-    /* آیکون دسته‌بندی - سایز کوچک (جدول) */
     .category-icon-sm {
         width: 36px;
         height: 36px;
@@ -301,7 +291,6 @@
         flex-shrink: 0;
     }
 
-    /* آیکون دسته‌بندی - سایز متوسط (کارت موبایل) */
     .category-icon-md {
         width: 44px;
         height: 44px;
@@ -311,14 +300,6 @@
         flex-shrink: 0;
     }
 
-    .bg-gradient-purple {
-        background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
-        background-color: transparent !important;
-        color: #fff;
-        box-shadow: 0 4px 20px rgba(106, 17, 203, 0.25);
-    }
-
-    /* کارت موبایل */
     .category-card-mobile {
         transition: all 0.3s ease;
     }
@@ -328,7 +309,6 @@
             box-shadow: 0 8px 24px rgba(106, 17, 203, 0.1) !important;
         }
 
-    /* جدول */
     .table thead th {
         font-weight: 600;
         color: #495057;
@@ -344,9 +324,8 @@
             background-color: rgba(106, 17, 203, 0.03);
         }
 
-    /* دکمه حذف */
     .btn-danger {
-        @* border-radius: 10px; *@
+        border-radius: 10px;
         transition: all 0.3s;
     }
 
@@ -355,7 +334,6 @@
             box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
         }
 
-    /* فرم */
     .form-control, textarea.form-control {
         border-radius: 10px;
         border: 1.5px solid #e8e0f0;
@@ -373,7 +351,37 @@
         border-right: none;
     }
 
-    /* ریسپانسیو */
+    /* ✅ استایل Modal */
+    #deleteModal .modal-content {
+        overflow: hidden;
+    }
+
+    .delete-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(220, 53, 69, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+        .delete-icon-wrapper i {
+            font-size: 2.5rem;
+        }
+
+    @@keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
     @@media (max-width: 991.98px) {
         .sticky-top {
             position: relative !important;
@@ -398,5 +406,41 @@
         .btn {
             font-size: 0.85rem;
         }
+
+        .delete-icon-wrapper {
+            width: 60px;
+            height: 60px;
+        }
+
+            .delete-icon-wrapper i {
+                font-size: 1.8rem;
+            }
     }
 </style>
+
+<!-- ============================================
+     اسکریپت Modal
+     ============================================ -->
+@section Scripts {
+    <script>
+        // ✅ وقتی Modal باز می‌شه، اطلاعات دسته‌بندی رو پر کن
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteModal = document.getElementById('deleteModal');
+
+            if (deleteModal) {
+                deleteModal.addEventListener('show.bs.modal', function (event) {
+                    // دکمه‌ای که Modal رو باز کرده
+                    const button = event.relatedTarget;
+
+                    // دریافت اطلاعات از data attributes
+                    const categoryId = button.getAttribute('data-category-id');
+                    const categoryName = button.getAttribute('data-category-name');
+
+                    // پر کردن فیلدهای Modal
+                    document.getElementById('deleteCategoryId').value = categoryId;
+                    document.getElementById('deleteCategoryName').textContent = categoryName;
+                });
+            }
+        });
+    </script>
+}

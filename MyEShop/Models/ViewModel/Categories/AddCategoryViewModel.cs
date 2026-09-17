@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyEShop.Models.ViewModels
+namespace MyEShop.Models.ViewModel.Categories
 {
     public class AddCategoryViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "نام دسته‌بندی الزامی است")]
         [StringLength(100, ErrorMessage = "نام دسته‌بندی نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد")]
         [Display(Name = "نام دسته‌بندی")]

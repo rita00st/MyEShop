@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using System.Threading.Tasks;
 
 namespace MyEShop.Pages.Admin.Categories
 {
     public class EditModel : PageModel
     {
-        private readonly MyEShop.Models.DatabaseContext.MyEshopContext _context;
+        private readonly MyEshopContext _context;
 
-        public EditModel(MyEShop.Models.DatabaseContext.MyEshopContext context)
+        public EditModel(MyEshopContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Category Category { get; set; } = default!;
+        public Category Category { get; set; } = new();
 
+        // ============================================
+        // نمایش صفحه با اطلاعات دسته‌بندی
+        // ============================================
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -30,17 +29,21 @@ namespace MyEShop.Pages.Admin.Categories
                 return NotFound();
             }
 
-            var category =  await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (category == null)
             {
                 return NotFound();
             }
+
             Category = category;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        // ============================================
+        // ذخیره تغییرات
+        // ============================================
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,30 +51,34 @@ namespace MyEShop.Pages.Admin.Categories
                 return Page();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
+            // پیدا کردن دسته‌بندی
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == Category.Id);
 
-            try
+            if (category == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(Category.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return RedirectToPage("./Index");
-        }
+            // بررسی تکراری نبودن نام (به جز خودش)
+            var exists = await _context.Categories
+                .AnyAsync(c => c.Name == Category.Name && c.Id != Category.Id);
 
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
+            if (exists)
+            {
+                ModelState.AddModelError("Category.Name", "دسته‌بندی با این نام قبلاً وجود دارد");
+                return Page();
+            }
+
+            // به‌روزرسانی
+            category.Name = Category.Name;
+            category.Description = Category.Description;
+
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"دسته‌بندی «{category.Name}» با موفقیت ویرایش شد";
+            return RedirectToPage("Index");
         }
     }
 }

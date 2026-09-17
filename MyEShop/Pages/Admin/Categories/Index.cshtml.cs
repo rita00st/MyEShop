@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.ViewModel.Categories;
 using MyEShop.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +20,18 @@ namespace MyEShop.Pages.Admin.Categories
             _context = context;
         }
 
-        // لیست دسته‌بندی‌ها
         public List<Category> Categories { get; set; } = new();
 
-        // ✅ ViewModel به جای Entity
         [BindProperty]
         public AddCategoryViewModel NewCategory { get; set; } = new();
 
-        // ============================================
         // نمایش صفحه
-        // ============================================
         public async Task OnGetAsync()
         {
             await LoadCategoriesAsync();
         }
 
-        // ============================================
-        // افزودن دسته‌بندی جدید
-        // ============================================
+        // افزودن دسته‌بندی
         public async Task<IActionResult> OnPostAddCategoryAsync()
         {
             if (!ModelState.IsValid)
@@ -45,7 +40,6 @@ namespace MyEShop.Pages.Admin.Categories
                 return Page();
             }
 
-            // بررسی تکراری نبودن نام
             var exists = await _context.Categories
                 .AnyAsync(c => c.Name == NewCategory.Name);
 
@@ -56,7 +50,6 @@ namespace MyEShop.Pages.Admin.Categories
                 return Page();
             }
 
-            // ✅ تبدیل ViewModel به Entity
             var category = new Category
             {
                 Name = NewCategory.Name,
@@ -70,9 +63,41 @@ namespace MyEShop.Pages.Admin.Categories
             return RedirectToPage("Index");
         }
 
-        // ============================================
-        // بارگذاری لیست دسته‌بندی‌ها
-        // ============================================
+        // ✅ حذف دسته‌بندی
+        public async Task<IActionResult> OnPostDeleteCategoryAsync(int id)
+        {
+            var category = await _context.Categories
+                .Include(c => c.CategoryToProduct)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null)
+            {
+                TempData["Error"] = "دسته‌بندی مورد نظر یافت نشد";
+                return RedirectToPage("Index");
+            }
+
+            try
+            {
+                // اگه دسته‌بندی محصولات مرتبط داره، ارتباط‌ها رو حذف کن
+                if (category.CategoryToProduct != null && category.CategoryToProduct.Any())
+                {
+                    _context.CategoryToProducts.RemoveRange(category.CategoryToProduct);
+                }
+
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = $"دسته‌بندی «{category.Name}» با موفقیت حذف شد";
+            }
+            catch (System.Exception)
+            {
+                TempData["Error"] = "خطا در حذف دسته‌بندی. لطفاً دوباره تلاش کنید.";
+            }
+
+            return RedirectToPage("Index");
+        }
+
+        // بارگذاری لیست
         private async Task LoadCategoriesAsync()
         {
             Categories = await _context.Categories
