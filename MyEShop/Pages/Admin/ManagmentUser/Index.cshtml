@@ -154,11 +154,16 @@
                                            class="btn btn-golden btn-sm" title="ویرایش">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
-                                        <a asp-page="Delete" asp-route-id="@user.Id"
-                                           class="btn btn-danger btn-sm" title="حذف"
-                                           onclick="return confirm('آیا از حذف کاربر @displayName مطمئن هستید؟')">
+                                        
+                                        <button type="button"
+                                                class="btn btn-danger btn-sm rounded-5"
+                                                title="حذف"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal"
+                                                data-User-id="@user.Id"
+                                                data-User-name="@user.Name">
                                             <i class="bi bi-trash-fill"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -260,11 +265,20 @@
                                    class="btn btn-golden btn-sm flex-grow-1">
                                     <i class="bi bi-pencil-fill"></i> ویرایش
                                 </a>
-                                <a asp-page="Delete" asp-route-id="@user.Id"
+                                @* <a asp-page="Delete" asp-route-id="@user.Id"
                                    class="btn btn-danger btn-sm"
                                    onclick="return confirm('آیا از حذف کاربر @displayName مطمئن هستید؟')">
                                     <i class="bi bi-trash-fill"></i>
-                                </a>
+                                </a> *@
+                                <button type="button"
+                                        class="btn btn-danger btn-sm rounded-5"
+                                        title="حذف"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        data-User-id="@user.Id"
+                                        data-User-name="@user.Name">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -282,6 +296,53 @@
             </a>
         </div>
     }
+</div>
+
+<!-- ============================================
+     ✅ Modal تأیید حذف
+     ============================================ -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+            <!-- هدر Modal -->
+            <div class="modal-header bg-danger text-white rounded-top-4 border-0">
+                <button type="button" class="btn-close btn-close-white mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fw-bold text-center mx-auto" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    تأیید حذف
+                </h5>
+            </div>
+
+            <!-- بدنه Modal -->
+            <div class="modal-body p-4 text-center">
+                <div class="delete-icon-wrapper mb-3">
+                    <i class="bi bi-trash-fill text-danger"></i>
+                </div>
+                <h5 class="fw-bold mb-2">آیا از حذف این کاربر مطمئن هستید؟</h5>
+                <p class="text-muted mb-1">نام کاربر:</p>
+                <h6 class="fw-bold text-purple mb-3" id="deleteUserName">-</h6>
+                <div class="alert alert-warning rounded-3 mb-0 small">
+                    <i class="bi bi-info-circle-fill me-1"></i>
+                    این عمل قابل بازگشت نیست و کاربر برای همیشه پاک خواهد شد.
+                </div>
+            </div>
+
+            <!-- فوتر Modal -->
+            <div class="modal-footer border-0 justify-content-center gap-2">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    انصراف
+                </button>
+                <form method="post" asp-page-handler="DeleteUser" id="deleteForm" class="d-inline">
+                    <input type="hidden" name="id" id="deleteUserId" value="" />
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="bi bi-trash-fill me-1"></i>
+                        بله، حذف شود
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- ============================================
@@ -482,3 +543,25 @@
         }
     }
 </style>
+
+<script>
+    // ✅ وقتی Modal باز می‌شه، اطلاعات دسته‌بندی رو پر کن
+       document.addEventListener('DOMContentLoaded', function () {
+           const deleteModal = document.getElementById('deleteModal');
+
+           if (deleteModal) {
+               deleteModal.addEventListener('show.bs.modal', function (event) {
+                   // دکمه‌ای که Modal رو باز کرده
+                   const button = event.relatedTarget;
+
+                   // دریافت اطلاعات از data attributes
+                   const userId = button.getAttribute('data-User-id');
+                   const UserName = button.getAttribute('data-User-name');
+
+                   // پر کردن فیلدهای Modal
+                   document.getElementById('deleteUserId').value = userId;
+                   document.getElementById('deleteUserName').textContent = UserName;
+               });
+           }
+       });
+</script>

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
 using MyEShop.Models.ViewModel.Categories;
-using MyEShop.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

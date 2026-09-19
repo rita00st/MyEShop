@@ -1,60 +1,465 @@
 ﻿@page
 @model MyEShop.Pages.Admin.ManagmentUser.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ویرایش کاربر";
+    Layout = "_AdminLayout";
+    var displayName = string.IsNullOrWhiteSpace(Model.User?.Name) ? "بدون نام" : Model.User.Name;
 }
 
-<h1>Edit</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="User.Id" />
-            <div class="form-group">
-                <label asp-for="User.Name" class="control-label"></label>
-                <input asp-for="User.Name" class="form-control" />
-                <span asp-validation-for="User.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Password" class="control-label"></label>
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.RePassword" class="control-label"></label>
-                <input asp-for="User.RePassword" class="form-control" />
-                <span asp-validation-for="User.RePassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.RejesterDate" class="control-label"></label>
-                <input asp-for="User.RejesterDate" class="form-control" />
-                <span asp-validation-for="User.RejesterDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsAdmin" /> @Html.DisplayNameFor(model => model.User.IsAdmin)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<!-- ============================================
+     هدر صفحه
+     ============================================ -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div>
+        <h1 class="h3 fw-bold text-purple mb-1">
+            <i class="bi bi-pencil-square me-2"></i>
+            ویرایش کاربر
+        </h1>
+        <p class="text-muted small mb-0">
+            ویرایش اطلاعات کاربر: <span class="fw-bold text-purple">@displayName</span>
+        </p>
+    </div>
+    <div class="d-flex flex-column flex-sm-row gap-2">
+        <a asp-page="Details" asp-route-id="@Model.User?.Id" class="btn btn-outline-purple">
+            <i class="bi bi-eye me-1"></i>
+            مشاهده جزئیات
+        </a>
+        <a asp-page="Index" class="btn btn-outline-purple">
+            <i class="bi bi-arrow-right me-1"></i>
+            بازگشت به لیست
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (Model.User != null)
+{
+    <div class="row g-3 g-md-4">
+        <!-- ============================================
+             فرم ویرایش
+             ============================================ -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-gradient-purple text-white rounded-top-4 py-3">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-person-vcard me-2"></i>
+                        اطلاعات کاربر
+                    </h5>
+                </div>
+                <div class="card-body p-3 p-md-4">
+                    <form method="post" id="editForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- فیلد مخفی ID -->
+                        <input type="hidden" asp-for="User.Id" />
+                        <input type="hidden" asp-for="User.RejesterDate" />
+                        <input type="hidden" asp-for="User.Password" />
+
+                        <!-- نام -->
+                        <div class="mb-3">
+                            <label asp-for="User.Name" class="form-label fw-semibold">
+                                <i class="bi bi-person-fill text-purple me-1"></i>
+                                نام کاربر
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-purple-soft border-purple-soft">
+                                    <i class="bi bi-person text-purple"></i>
+                                </span>
+                                <input asp-for="User.Name"
+                                       class="form-control"
+                                       placeholder="نام کاربر (اختیاری)"
+                                       autocomplete="off" />
+                            </div>
+                            <span asp-validation-for="User.Name" class="text-danger small"></span>
+                            <small class="text-muted">در صورت خالی بودن، "بدون نام" نمایش داده می‌شود</small>
+                        </div>
+
+                        <!-- ایمیل -->
+                        <div class="mb-3">
+                            <label asp-for="User.Email" class="form-label fw-semibold">
+                                <i class="bi bi-envelope-fill text-purple me-1"></i>
+                                ایمیل <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-purple-soft border-purple-soft">
+                                    <i class="bi bi-envelope text-purple"></i>
+                                </span>
+                                <input asp-for="User.Email"
+                                       class="form-control"
+                                       placeholder="example@email.com"
+                                       dir="ltr"
+                                       autocomplete="off" />
+                            </div>
+                            <span asp-validation-for="User.Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- رمز عبور جدید (اختیاری) -->
+                        <div class="mb-3">
+                            <label asp-for="NewPassword" class="form-label fw-semibold">
+                                <i class="bi bi-lock-fill text-purple me-1"></i>
+                                رمز عبور جدید (اختیاری)
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-purple-soft border-purple-soft">
+                                    <i class="bi bi-lock text-purple"></i>
+                                </span>
+                                <input asp-for="NewPassword"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="در صورت تمایل به تغییر، وارد کنید"
+                                       id="newPassword"
+                                       autocomplete="new-password" />
+                                <button type="button" class="btn border-silver-light" onclick="togglePassword('newPassword', 'newPassword-icon')">
+                                    <i class="bi bi-eye" id="newPassword-icon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="NewPassword" class="text-danger small"></span>
+                            <small class="text-muted">اگر نمی‌خواهید رمز عبور را تغییر دهید، این فیلد را خالی بگذارید.</small>
+                        </div>
+
+                        <!-- تکرار رمز عبور جدید -->
+                        <div class="mb-3">
+                            <label asp-for="User.RePassword" class="form-label fw-semibold">
+                                <i class="bi bi-lock-fill text-purple me-1"></i>
+                                تکرار رمز عبور جدید
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-purple-soft border-purple-soft">
+                                    <i class="bi bi-shield-lock text-purple"></i>
+                                </span>
+                                <input asp-for="User.RePassword"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="رمز جدید را دوباره وارد کنید"
+                                       id="confirmPassword"
+                                       autocomplete="new-password" />
+                                <button type="button" class="btn border-silver-light" onclick="togglePassword('confirmPassword', 'confirmPassword-icon')">
+                                    <i class="bi bi-eye" id="confirmPassword-icon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="User.RePassword" class="text-danger small"></span>
+                        </div>
+
+                        <!-- نقش کاربر -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                <i class="bi bi-shield-fill text-purple me-1"></i>
+                                نقش کاربر
+                            </label>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <input type="radio"
+                                           class="btn-check"
+                                           asp-for="User.IsAdmin"
+                                           id="role-user"
+                                           value="false" />
+                                    <label class="btn btn-outline-purple w-100 py-3" for="role-user">
+                                        <i class="bi bi-person-fill fs-4 d-block mb-1"></i>
+                                        <span class="fw-bold">کاربر عادی</span>
+                                        <small class="d-block text-muted">دسترسی محدود</small>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="radio"
+                                           class="btn-check"
+                                           asp-for="User.IsAdmin"
+                                           id="role-admin"
+                                           value="true" />
+                                    <label class="btn btn-outline-golden-dark w-100 py-3" for="role-admin">
+                                        <i class="bi bi-shield-check fs-4 d-block mb-1"></i>
+                                        <span class="fw-bold">مدیر سیستم</span>
+                                        <small class="d-block text-muted">دسترسی کامل</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- دکمه‌های عملیات -->
+                        <div class="d-flex flex-column flex-sm-row flex-wrap gap-2 justify-content-sm-end pt-3 border-top">
+                            <button type="submit" class="btn btn-golden order-1 order-sm-3 px-4">
+                                <i class="bi bi-check2-circle me-1"></i>
+                                ذخیره تغییرات
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             سایدبار اطلاعات
+             ============================================ -->
+        <div class="col-12 col-lg-4">
+            <!-- کارت پروفایل -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                <div class="bg-gradient-purple text-center py-4">
+                    <div class="avatar-circle-md bg-white text-purple mx-auto mb-3">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1 px-2 @(string.IsNullOrWhiteSpace(Model.User.Name) ? "fst-italic opacity-75" : "")">
+                        @displayName
+                    </h5>
+                    <small class="text-white-50">#@Model.User.Id</small>
+                </div>
+                <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small text-muted">تاریخ ثبت‌نام:</span>
+                        <span class="small fw-bold">@Model.User.RejesterDate.ToString("yyyy/MM/dd")</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small text-muted">نقش فعلی:</span>
+                        @if (Model.User.IsAdmin)
+                        {
+                            <span class="badge bg-golden-soft text-golden-dark">
+                                <i class="bi bi-shield-check me-1"></i> مدیر
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-purple-soft text-purple">
+                                <i class="bi bi-person me-1"></i> کاربر
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت راهنما -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-3 p-md-4">
+                    <div class="text-center mb-3">
+                        <div class="icon-wrapper-md bg-purple-soft rounded-circle mx-auto mb-2">
+                            <i class="bi bi-lightbulb text-purple fs-4"></i>
+                        </div>
+                        <h6 class="fw-bold text-purple mb-1">راهنمای ویرایش</h6>
+                        <p class="text-muted small mb-0">نکات مهم هنگام ویرایش</p>
+                    </div>
+                    <hr>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        <div>
+                            <h6 class="small fw-bold mb-0">ایمیل یکتا</h6>
+                            <small class="text-muted">ایمیل نمی‌تواند تکراری باشد.</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-2 mb-3">
+                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        <div>
+                            <h6 class="small fw-bold mb-0">رمز عبور اختیاری</h6>
+                            <small class="text-muted">اگر خالی بماند، رمز فعلی حفظ می‌شود.</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        <div>
+                            <h6 class="small fw-bold mb-0">تغییر نقش</h6>
+                            <small class="text-muted">با دقت تغییر دهید، دسترسی‌ها تغییر می‌کند.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-person-x fs-1 text-muted opacity-25"></i>
+            <h5 class="mt-3 text-muted">کاربر مورد نظر یافت نشد!</h5>
+            <a asp-page="Index" class="btn btn-golden mt-3">
+                <i class="bi bi-arrow-right me-1"></i>
+                بازگشت به لیست کاربران
+            </a>
+        </div>
+    </div>
+}
+
+<!-- ============================================
+     استایل‌های اختصاصی
+     ============================================ -->
+<style>
+    /* آواتار متوسط */
+    .avatar-circle-md {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    /* آیکون راهنما */
+    .icon-wrapper-md {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* دکمه‌های نقش */
+    .btn-check:checked + .btn-outline-purple {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        border-color: transparent;
+    }
+
+    .btn-check:checked + .btn-outline-golden-dark {
+        background: linear-gradient(135deg, #ffd700, #daa520);
+        color: #333;
+        border-color: transparent;
+    }
+
+    .btn-outline-golden-dark {
+        border: 1.5px solid #daa520;
+        color: #daa520;
+        background: transparent;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.3s;
+    }
+
+        .btn-outline-golden-dark:hover {
+            background: #daa520;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+    /* دکمه حذف ملایم */
+    .btn-outline-danger {
+        border: 1.5px solid #dc3545;
+        color: #dc3545;
+        background: transparent;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.3s;
+    }
+
+        .btn-outline-danger:hover {
+            background: #dc3545;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+    /* فرم */
+    .form-control, textarea.form-control {
+        border-radius: 10px;
+        border: 1.5px solid #e8e0f0;
+        padding: 0.65rem 1rem;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.08);
+        }
+
+    .input-group-text {
+        border-radius: 10px 0 0 10px;
+        border-right: none;
+    }
+
+    /* ریسپانسیو */
+    @@media (max-width: 991.98px) {
+        .avatar-circle-md {
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .avatar-circle-md {
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+        }
+
+        .icon-wrapper-md {
+            width: 50px;
+            height: 50px;
+        }
+
+        h1.h3 {
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            font-size: 0.85rem;
+        }
+
+        .btn-check + .btn {
+            padding: 0.5rem !important;
+        }
+
+            .btn-check + .btn i {
+                font-size: 1.2rem !important;
+            }
+
+            .btn-check + .btn .fw-bold {
+                font-size: 0.85rem;
+            }
+
+            .btn-check + .btn small {
+                font-size: 0.7rem;
+            }
+    }
+</style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // نمایش/مخفی کردن رمز عبور
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        }
+
+        // بررسی تطابق رمز عبور
+        document.addEventListener('DOMContentLoaded', function () {
+            const newPassword = document.getElementById('newPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+
+            if (newPassword && confirmPassword) {
+                confirmPassword.addEventListener('input', function () {
+                    if (this.value && this.value !== newPassword.value) {
+                        this.setCustomValidity('رمز عبور یکسان نیست');
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                });
+
+                newPassword.addEventListener('input', function () {
+                    if (confirmPassword.value && confirmPassword.value !== this.value) {
+                        confirmPassword.setCustomValidity('رمز عبور یکسان نیست');
+                    } else {
+                        confirmPassword.setCustomValidity('');
+                    }
+                });
+            }
+        });
+    </script>
 }
