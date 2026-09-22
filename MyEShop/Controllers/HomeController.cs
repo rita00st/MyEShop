@@ -352,7 +352,29 @@ namespace MyEShop.Controllers
         }
 
 
+        public async Task<IActionResult> Categories()
+        {
+            var categories = await _context.Categories
+                .Include(c => c.CategoryToProduct)
+                .OrderBy(c => c.Name)
+                .ToListAsync();
 
+            // آمار
+            ViewBag.TotalCategories = categories.Count;
+            ViewBag.TotalProducts = await _context.products.CountAsync();
+
+            var mostPopular = categories
+                .OrderByDescending(c => c.CategoryToProduct?.Count ?? 0)
+                .FirstOrDefault();
+            ViewBag.MostPopularCategory = mostPopular?.Name ?? "-";
+
+            var newest = categories
+                .OrderByDescending(c => c.Id)
+                .FirstOrDefault();
+            ViewBag.NewestCategory = newest?.Name ?? "-";
+
+            return View(categories);
+        }
 
         private string GetImagePath(int productId)
         {
