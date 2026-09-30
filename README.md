@@ -254,7 +254,7 @@ If you find this project useful, please give it a **star (⭐)** on GitHub!
   </p>
 </div>
 </details>
----
+
 
 <details>
 <summary><b>🇮🇷 فارسی (Persian) – کلیک کنید</b></summary>
@@ -479,4 +479,4 @@ MyEShop/
 
 </div>
 </details>
-```
+
