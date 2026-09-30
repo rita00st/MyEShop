@@ -5,6 +5,8 @@
     Layout = "_AdminLayout";
 }
 
+<link href="~/css/categorystyle.css" rel="stylesheet" />
+
 <!-- ============================================
      هدر صفحه
      ============================================ -->
@@ -90,38 +92,6 @@
         </div>
     </div>
 </div>
-
-<!-- ============================================
-     استایل‌های اختصاصی
-     ============================================ -->
-<style>
-    .form-control, textarea.form-control {
-        border-radius: 10px;
-        border: 1.5px solid #e8e0f0;
-        padding: 0.65rem 1rem;
-        transition: all 0.3s;
-    }
-
-        .form-control:focus {
-            border-color: #6a11cb;
-            box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.08);
-        }
-
-    .input-group-text {
-        border-radius: 10px 0 0 10px;
-        border-right: none;
-    }
-
-    @@media (max-width: 575.98px) {
-        h1.h3 {
-            font-size: 1.2rem;
-        }
-
-        .btn {
-            font-size: 0.85rem;
-        }
-    }
-</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
