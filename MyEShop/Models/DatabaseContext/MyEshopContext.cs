@@ -100,6 +100,6 @@ namespace MyEShop.Models.DatabaseContext
             modelBuilder.Entity<Cart>()
                 .HasKey(c=>c.OrderId);
         }
-        public DbSet<MyEShop.Pages.Admin.ProductViewModel> ProductViewModel { get; set; } = default!;
+        //public DbSet<MyEShop.Pages.Admin.ProductViewModel> ProductViewModel { get; set; } = default!;
     }   
 }

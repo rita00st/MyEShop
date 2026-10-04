@@ -56,13 +56,101 @@
                             <span class="d-none d-sm-inline ms-1">جزئیات</span>
                         </a>
 
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-pink btn-sm" title="حذف">
+                        @* <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-pink btn-sm" title="حذف">
                             <i class="bi bi-trash-fill"></i>
                             <span class="d-none d-sm-inline ms-1">حذف</span>
-                        </a>
+                        </a> *@
+                        <!-- ✅ دکمه حذف با Modal -->
+                        <button type="button"
+                                class="btn btn-outline-pink btn-sm"
+                                title="حذف"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteModal"
+                                data-product-id="@item.Id"
+                                data-product-name="@item.Name">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+<!-- ============================================
+     ✅ Modal تأیید حذف
+     ============================================ -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+            <!-- هدر Modal -->
+            <div class="modal-header bg-danger text-white rounded-top-4 border-0">
+                <button type="button" class="btn-close btn-close-white mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title fw-bold text-center mx-auto" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    تأیید حذف
+                </h5>
+            </div>
+
+            <!-- بدنه Modal -->
+            <div class="modal-body p-4 text-center">
+                <div class="delete-icon-wrapper mb-3">
+                    <i class="bi bi-trash-fill text-danger"></i>
+                </div>
+                <h5 class="fw-bold mb-2">آیا از حذف این محصول مطمئن هستید؟</h5>
+                <p class="text-muted mb-1">‌نام محصول:</p>
+                <h6 class="fw-bold text-purple mb-3" id="deleteProductName">-</h6>
+                <div class="alert alert-warning rounded-3 mb-0 small">
+                    <i class="bi bi-info-circle-fill me-1"></i>
+                    این عمل قابل بازگشت نیست و این محصولات برای همیشه پاک خواهد شد .
+                </div>
+            </div>
+
+            <!-- فوتر Modal -->
+            <div class="modal-footer border-0 justify-content-center gap-2">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    انصراف
+                </button>
+                <form method="post" asp-page-handler="DeleteProduct" id="deleteForm" class="d-inline">
+                    <input type="hidden" name="id" id="deleteProductId" value="" />
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="bi bi-trash-fill me-1"></i>
+                        بله، حذف شود
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ============================================
+     اسکریپت Modal
+     ============================================ -->
+@section Scripts {
+    <script>
+        // ✅ وقتی Modal باز می‌شه، اطلاعات دسته‌بندی رو پر کن
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteModal = document.getElementById('deleteModal');
+
+            if (deleteModal) {
+                deleteModal.addEventListener('show.bs.modal', function (event) {
+                    // دکمه‌ای که Modal رو باز کرده
+                    const button = event.relatedTarget;
+
+                    // دریافت اطلاعات از data attributes
+                    const productId = button.getAttribute('data-product-id');
+                    const productName = button.getAttribute('data-product-name');
+
+                    // پر کردن فیلدهای Modal
+                    document.getElementById('deleteProductId').value = productId;
+                    document.getElementById('deleteProductName').textContent = productName;
+                });
+            }
+        });
+    </script>
+}
