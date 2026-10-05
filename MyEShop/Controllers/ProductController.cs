@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.Services.Interface;
+using MyEShop.Models.Services.Service;
 using MyEShop.Models.ViewModel;
 using System.Threading.Tasks;
 
@@ -12,12 +14,13 @@ namespace MyEShop.Controllers
     public class ProductController : Controller
     {
         private MyEshopContext _context;
-        private IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-        public ProductController(MyEshopContext context, IWebHostEnvironment webHostEnvironment)
+
+        public ProductController(MyEshopContext context, IImageService imageService)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
 
         [Route("Group/{id}/{name}")]
@@ -68,25 +71,24 @@ namespace MyEShop.Controllers
                                         (p.Description != null && p.Description.Contains(filter.SearchTerm)));
             }
 
-            // 3. ✅ اجرای کوئری و دریافت لیست فیلتر شده (فقط یک بار)
+            //  اجرای کوئری و دریافت لیست فیلتر شده (فقط یک بار)
             var filteredProducts = await query.ToListAsync();
 
-            // 4. ✅ تنظیم مسیر تصویر برای محصولات فیلتر شده
+            //   تنظیم مسیر تصویر برای محصولات فیلتر شده
             foreach (var product in filteredProducts)
             {
-                product.ImagePath = GetImagePath(product.Id);
+                product.ImagePath = _imageService.GetImagePath(product.Id);
             }
 
-            // 5. ساخت ViewModel نهایی
+            //  ساخت ViewModel نهایی
             var viewModel = new ProductListViewModel
             {
-                Products = filteredProducts,  // ✅ از همان لیست استفاده می‌کنیم
+                Products = filteredProducts,  // از همان لیست استفاده می‌کنیم
                 Categories = await _context.Categories.ToListAsync(),
                 MinPrice = filter.MinPrice,
                 MaxPrice = filter.MaxPrice,
                 CategoryId = filter.CategoryId,
                 SearchTerm = filter.SearchTerm,
-                // ❌ این خط حذف شد: ImagePath = GetImagePath(product.Id)
             };
 
             return View(viewModel);
@@ -111,31 +113,12 @@ namespace MyEShop.Controllers
                     name = p.Name,
                     price = p.Item != null ? p.Item.Price : 0,
                     imagePath = p.ImagePath ,
-                    //imagePath = p.ImagePath ?? "/images/no-image.jpg",
                     quantity = p.Item != null ? p.Item.QuantityInStock : 0
                 })
                 .ToListAsync();
 
             return Json(new { success = true, data = products, count = products.Count });
         }
-
-        private string GetImagePath(int productId)
-        {
-            string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-
-            System.Diagnostics.Debug.WriteLine($"🔍 Searching for product ID: {productId} in folder: {imagesFolder}");
-            foreach (var ext in supportedExtensions)
-            {
-                string filePath = Path.Combine(imagesFolder, productId + ext);
-                if (System.IO.File.Exists(filePath))
-                {
-                    return $"/images/{productId}{ext}";
-                }
-            }
-            return "/images/no-image.jpg";
-        }
     }
-
 }
 

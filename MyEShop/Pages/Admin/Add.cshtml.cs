@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.Services.Interface;
 using MyEShop.Models.ViewModel;
 using System.Threading.Tasks;
 
@@ -12,13 +13,14 @@ namespace MyEShop.Pages.Admin
     public class AddModel : PageModel
     {
         private MyEshopContext _contex;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ILogger<AddModel> _logger;  
+        private readonly ILogger<AddModel> _logger;
+        private readonly IImageService _imageService;
 
-        public AddModel(MyEshopContext contex, IWebHostEnvironment webHostEnvironment, ILogger<AddModel> logger)  
+
+        public AddModel(MyEshopContext contex, IImageService imageService, ILogger<AddModel> logger)  
         {
             _contex = contex;
-            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
             _logger = logger;
         }
 
@@ -47,7 +49,7 @@ namespace MyEShop.Pages.Admin
                     return Page();
                 }
 
-                // ✅ بررسی انتخاب عکس
+                //  بررسی انتخاب عکس
                 if (Product.Picture == null)
                 {
                     ModelState.AddModelError("Product.Picture", "لطفاً یک عکس برای محصول انتخاب کنید");
@@ -55,7 +57,7 @@ namespace MyEShop.Pages.Admin
                     return Page();
                 }
 
-                // ✅ بررسی انتخاب دسته‌بندی
+                //  بررسی انتخاب دسته‌بندی
                 if (selectedGroups == null || !selectedGroups.Any())
                 {
                     ModelState.AddModelError("", "حداقل یک دسته‌بندی را انتخاب کنید");
@@ -85,8 +87,8 @@ namespace MyEShop.Pages.Admin
                 // ذخیره عکس
                 if (Product.Picture != null && Product.Picture.Length > 0)
                 {
-                    product.ImagePath = await SaveImageAsync(Product.Picture, product.Id);
-                    await _contex.SaveChangesAsync();  // ✅ ذخیره مسیر عکس
+                    product.ImagePath = await _imageService.SaveImageAsync(Product.Picture, product.Id);
+                    await _contex.SaveChangesAsync();  //  ذخیره مسیر عکس
                 }
 
                 // ذخیره دسته‌بندی‌ها
@@ -120,32 +122,6 @@ namespace MyEShop.Pages.Admin
                 Product.Categories = _contex.Categories.ToList();
                 return Page();
             }
-        }
-
-        public async Task<string> SaveImageAsync(IFormFile image, int productId)
-        {
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            string extension = Path.GetExtension(image.FileName);
-            string fileName = productId + extension;
-            string filePath = Path.Combine(uploadsFolder, fileName);
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await image.CopyToAsync(fileStream);
-            }
-
-            return "/images/" + fileName;
         }
     }
 }

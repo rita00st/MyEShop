@@ -20,6 +20,7 @@ builder.Services.AddHttpClient<ZarinpalService>();
 #region IOC
 builder.Services.AddScoped<IGroupProductService, GroupProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 #endregion
 
 #region Authentication

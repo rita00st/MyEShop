@@ -11,6 +11,7 @@ using MyEShop.Models;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.DTO;
 using MyEShop.Models.Entities;
+using MyEShop.Models.Services.Interface;
 using MyEShop.Models.ViewModel.Cart;
 using MyEShop.Models.ViewModel.ListProduct;
 using MyEShop.Pages.Admin;
@@ -21,6 +22,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ZarinPal.Class;
 
+
 namespace MyEShop.Controllers
 {
     public class HomeController : Controller
@@ -29,16 +31,16 @@ namespace MyEShop.Controllers
         private readonly MyEshopContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-
-        public HomeController(ILogger<HomeController> logger, MyEshopContext context, IMapper mapper, IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        public HomeController(ILogger<HomeController> logger, MyEshopContext context, IMapper mapper,
+            IConfiguration configuration,  IImageService imageService)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
-            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
 
         public async Task<IActionResult> Index()
@@ -63,7 +65,7 @@ namespace MyEShop.Controllers
 
             foreach (var product in products)
             {
-                product.ImagePath = GetImagePath(product.Id);
+                product.ImagePath = _imageService.GetImagePath(product.Id);
             }
 
             return View(products);
@@ -376,20 +378,20 @@ namespace MyEShop.Controllers
             return View(categories);
         }
 
-        private string GetImagePath(int productId)
-        {
-            string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+        //private string GetImagePath(int productId)
+        //{
+        //    string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+        //    string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
 
-            foreach (var ext in supportedExtensions)
-            {
-                string filePath = Path.Combine(imagesFolder, productId + ext);
-                if (System.IO.File.Exists(filePath))
-                {
-                    return $"/images/{productId}{ext}";
-                }
-            }
-            return "/images/no-image.jpg";
-        }
+        //    foreach (var ext in supportedExtensions)
+        //    {
+        //        string filePath = Path.Combine(imagesFolder, productId + ext);
+        //        if (System.IO.File.Exists(filePath))
+        //        {
+        //            return $"/images/{productId}{ext}";
+        //        }
+        //    }
+        //    return "/images/no-image.jpg";
+        //}
     }
 }

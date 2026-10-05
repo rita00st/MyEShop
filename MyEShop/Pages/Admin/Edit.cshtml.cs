@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.Services.Interface;
 using MyEShop.Models.ViewModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,13 +14,14 @@ namespace MyEShop.Pages.Admin
     public class EditModel : PageModel
     {
         private readonly MyEshopContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<EditModel> _logger;
+        private readonly IImageService _imageService;
 
-        public EditModel(MyEshopContext context, IWebHostEnvironment webHostEnvironment, ILogger<EditModel> logger)
+
+        public EditModel(MyEshopContext context, IImageService imageService, ILogger<EditModel> logger)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
             _logger = logger;
         }
 
@@ -112,7 +114,7 @@ namespace MyEShop.Pages.Admin
                 // ذخیره عکس جدید (اگر آپلود شده باشد)
                 if (Product.Picture != null && Product.Picture.Length > 0)
                 {
-                    await SaveImageAsync(Product.Picture, product.Id);
+                    await _imageService.SaveImageAsync(Product.Picture, product.Id);
                 }
 
                 // حذف دسته‌بندی‌های قدیمی
@@ -153,40 +155,6 @@ namespace MyEShop.Pages.Admin
                 _logger.LogError(ex, "خطای غیرمنتظره در ویرایش محصول");
                 TempData["Error"] = "خطایی رخ داده است. لطفاً دوباره تلاش کنید";
                 return RedirectToPage("./Index");
-            }
-        }
-
-        // متد ذخیره عکس
-        private async Task SaveImageAsync(IFormFile image, int productId)
-        {
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
-
-            string extension = Path.GetExtension(image.FileName);
-            string fileName = productId + extension;
-            string filePath = Path.Combine(uploadsFolder, fileName);
-
-            // حذف فایل قبلی اگر وجود دارد
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await image.CopyToAsync(fileStream);
-            }
-
-            // به‌روزرسانی مسیر عکس در دیتابیس
-            var product = await _context.products.FindAsync(productId);
-            if (product != null)
-            {
-                product.ImagePath = "/images/" + fileName;
-                await _context.SaveChangesAsync();
             }
         }
     }

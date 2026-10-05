@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.Services.Interface;
 using MyEShop.Models.ViewModel;
 using System.Collections.Generic;
 using System.IO;
@@ -15,12 +16,13 @@ namespace MyEShop.Pages.Admin
     public class IndexModel : PageModel
     {
         private readonly MyEshopContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageService _imageService;
 
-        public IndexModel(MyEshopContext context, IWebHostEnvironment webHostEnvironment)
+
+        public IndexModel(MyEshopContext context, IImageService imageService)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            _imageService = imageService;
         }
 
         public List<ProductViewModel> Products { get; set; } = new();
@@ -31,7 +33,7 @@ namespace MyEShop.Pages.Admin
         }
 
 
-        // ✅ حذف دسته‌بندی
+        //  حذف دسته‌بندی
         public async Task<IActionResult> OnPostDeleteProductAsync(int id)
         {
             var product = await _context.products
@@ -76,27 +78,8 @@ namespace MyEShop.Pages.Admin
                 Description = p.Description,
                 Price = p.Item?.Price ?? 0,
                 QuntityInStack = p.Item.QuantityInStock,
-                ImagePath = GetImagePath(p.Id)
+                ImagePath = _imageService.GetImagePath(p.Id)
             }).ToList();
-        }
-
-
-
-        private string GetImagePath(int productId)
-        {
-            string imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-            string[] supportedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp",".svg" };
-
-            foreach (var ext in supportedExtensions)
-            {
-                string filePath = Path.Combine(imagesFolder, productId + ext);
-                if (System.IO.File.Exists(filePath))
-                {
-                    return $"/images/{productId}{ext}";
-                }
-            }
-            return "/images/no-image.jpg";
-        }
+        } 
     }
-
 }
