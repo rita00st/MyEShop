@@ -23,18 +23,49 @@ namespace MyEShop.Controllers
             _imageService = imageService;
         }
 
+        //public IActionResult ShowProductByGroupId(int id,string name)
+        //{
+        //    ViewData["GroupName"] = name;
+
+        //    var product = _context.CategoryToProducts
+        //        .Where(c=>c.CategoryId == id)
+        //        .Include(p=>p.Product)
+        //        .Select(p=>p.Product)
+        //        .ToList();
+
+        //    return View(product);
+        //}
         [Route("Group/{id}/{name}")]
-        public IActionResult ShowProductByGroupId(int id,string name)
+        public async Task<IActionResult> ShowProductByGroupId(int id, string name)
         {
             ViewData["GroupName"] = name;
+            // دریافت نام دسته‌بندی
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-            var product = _context.CategoryToProducts
-                .Where(c=>c.CategoryId == id)
-                .Include(p=>p.Product)
-                .Select(p=>p.Product)
-                .ToList();
+            if (category == null)
+            {
+                return NotFound();
+            }
 
-            return View(product);
+            ViewBag.CategoryName = category.Name;
+
+            // دریافت محصولات این دسته
+            var products = await _context.products
+                .Include(p => p.Item)
+                .Include(p => p.CategoryToProduct)
+                .Where(p => p.CategoryToProduct.Any(cp => cp.CategoryId == id))
+                .Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Item != null ? p.Item.Price : 0,
+                    QuntityInStack = p.Item != null ? p.Item.QuantityInStock : 0,
+                    ImagePath = _imageService.GetImagePath(p.Id)
+                })
+                .ToListAsync();
+
+            return View(products);
         }
 
 
