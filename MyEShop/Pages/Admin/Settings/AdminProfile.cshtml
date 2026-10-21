@@ -1,5 +1,234 @@
 ﻿@page
 @model MyEShop.Pages.Admin.Settings.AdminProfileModel
 @{
+    ViewData["Title"] = "پروفایل مدیر";
+    Layout = "_AdminLayout";
+
+    var initial = string.IsNullOrWhiteSpace(Model.AdminName) ? "م" : Model.AdminName.Substring(0, 1).ToUpper();
 }
-<h1>صفحه ی پروفایل ادمین</h1>
+
+@section Styles {
+    <style>
+        .profile-avatar-lg {
+            width: 96px;
+            height: 96px;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .nav-pills .nav-link {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+            .nav-pills .nav-link.active {
+                background-color: #8a2be2;
+            }
+    </style>
+}
+
+<div class="container-fluid py-4">
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+            <i class="bi bi-check-circle me-1"></i> @Model.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show rounded-3" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i> @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h3 fw-bold mb-1">پروفایل مدیر</h1>
+            <p class="text-muted mb-0">مدیریت اطلاعات شخصی، امنیت و فعالیت‌های حساب</p>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/Admin" class="text-decoration-none text-purple">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="/Admin/Settings" class="text-decoration-none text-purple">تنظیمات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">پروفایل</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="bg-purple p-4 p-md-5 text-white">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                <div class="profile-avatar-lg bg-white text-purple fw-bold d-flex align-items-center justify-content-center rounded-circle shadow">
+                    @initial
+                </div>
+                <div class="text-center text-md-start">
+                    <h2 class="h3 fw-bold mb-2">@Model.AdminName</h2>
+                    <span class="badge bg-white text-purple px-3 py-2 rounded-pill">
+                        <i class="bi bi-shield-check me-1"></i> مدیر ارشد
+                    </span>
+                    <p class="mb-0 mt-2 opacity-75">
+                        <i class="bi bi-envelope me-1"></i> @Model.UserEmail
+                    </p>
+                </div>
+                <div class="ms-md-auto">
+                    <button type="button" class="btn btn-light text-purple fw-semibold rounded-pill px-4">
+                        <i class="bi bi-camera me-1"></i> تغییر تصویر
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h3 class="h6 fw-bold text-purple mb-3"><i class="bi bi-person-lines-fill me-1"></i> اطلاعات تماس</h3>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex align-items-center gap-2 mb-3">
+                            <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-envelope"></i></span>
+                            <div>
+                                <small class="text-muted d-block">ایمیل</small>
+                                <span class="fw-semibold">@Model.UserEmail</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center gap-2 mb-3">
+                            <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-phone"></i></span>
+                            <div>
+                                <small class="text-muted d-block">تلفن</small>
+                                <span class="fw-semibold">@(string.IsNullOrEmpty(Model.UserPhone) ? "ثبت نشده" : Model.UserPhone)</span>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-calendar-check"></i></span>
+                            <div>
+                                <small class="text-muted d-block">تاریخ عضویت</small>
+                                <span class="fw-semibold">@Model.CreatedAt.ToString("yyyy/MM/dd")</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="h6 fw-bold text-purple mb-3"><i class="bi bi-bar-chart-fill me-1"></i> آمار حساب</h3>
+                    <div class="row g-3 text-center">
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۱۲۴</h4><small class="text-muted">محصول</small></div></div>
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۵۶</h4><small class="text-muted">سفارش</small></div></div>
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۸</h4><small class="text-muted">دسته</small></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+
+                    <ul class="nav nav-pills flex-column flex-sm-row gap-2 mb-4" id="profileTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active rounded-pill px-4" id="personal-tab" data-bs-toggle="pill" data-bs-target="#personal" type="button" role="tab"><i class="bi bi-person me-1"></i> اطلاعات شخصی</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link rounded-pill px-4" id="security-tab" data-bs-toggle="pill" data-bs-target="#security" type="button" role="tab"><i class="bi bi-shield-lock me-1"></i> امنیت</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link rounded-pill px-4" id="activity-tab" data-bs-toggle="pill" data-bs-target="#activity" type="button" role="tab"><i class="bi bi-clock-history me-1"></i> فعالیت‌ها</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="profileTabsContent">
+
+                        <div class="tab-pane fade show active" id="personal" role="tabpanel">
+                            <form method="post" asp-page-handler="UpdateProfile">
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label asp-for="FullName" class="form-label fw-semibold">نام و نام خانوادگی</label>
+                                        <input asp-for="FullName" class="form-control rounded-3" placeholder="نام کامل خود را وارد کنید" />
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label asp-for="Email" class="form-label fw-semibold">ایمیل</label>
+                                        <input asp-for="Email" type="email" class="form-control rounded-3" placeholder="example@mail.com" />
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label asp-for="Phone" class="form-label fw-semibold">شماره تماس</label>
+                                        <input asp-for="Phone" type="tel" class="form-control rounded-3" placeholder="۰۹۱۲ ۱۲۳ ۴۵۶۷" />
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label fw-semibold">نقش</label>
+                                        <input type="text" class="form-control rounded-3" value="مدیر ارشد" disabled />
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="Bio" class="form-label fw-semibold">درباره من</label>
+                                        <textarea asp-for="Bio" class="form-control rounded-3" rows="3" placeholder="توضیح کوتاهی درباره خودتان بنویسید..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="submit" class="btn btn-golden rounded-pill px-4"><i class="bi bi-check2-circle me-1"></i> ذخیره تغییرات</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="security" role="tabpanel">
+                            <form method="post" asp-page-handler="ChangePassword">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label asp-for="CurrentPassword" class="form-label fw-semibold">رمز عبور فعلی</label>
+                                        <input asp-for="CurrentPassword" type="password" class="form-control rounded-3" placeholder="••••••••" />
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label asp-for="NewPassword" class="form-label fw-semibold">رمز عبور جدید</label>
+                                        <input asp-for="NewPassword" type="password" class="form-control rounded-3" placeholder="••••••••" />
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label asp-for="ConfirmPassword" class="form-label fw-semibold">تکرار رمز عبور جدید</label>
+                                        <input asp-for="ConfirmPassword" type="password" class="form-control rounded-3" placeholder="••••••••" />
+                                    </div>
+                                </div>
+                                <div class="alert bg-purple-10 border-0 rounded-3 mt-4 mb-0 small text-muted">
+                                    <i class="bi bi-info-circle text-purple me-1"></i>
+                                    رمز عبور باید حداقل ۸ کاراکتر و شامل حروف بزرگ، کوچک و عدد باشد.
+                                </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="submit" class="btn btn-golden rounded-pill px-4"><i class="bi bi-shield-check me-1"></i> تغییر رمز عبور</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="activity" role="tabpanel">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item px-0 py-3 d-flex gap-3 align-items-start">
+                                    <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-box-seam"></i></span>
+                                    <div><p class="mb-1 fw-semibold">محصول جدید «هدفون بی‌سیم» اضافه شد</p><small class="text-muted">۲ ساعت پیش</small></div>
+                                </div>
+                                <div class="list-group-item px-0 py-3 d-flex gap-3 align-items-start">
+                                    <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-pencil-square"></i></span>
+                                    <div><p class="mb-1 fw-semibold">دسته‌بندی «لوازم جانبی» ویرایش شد</p><small class="text-muted">دیروز</small></div>
+                                </div>
+                                <div class="list-group-item px-0 py-3 d-flex gap-3 align-items-start">
+                                    <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-person-check"></i></span>
+                                    <div><p class="mb-1 fw-semibold">کاربر جدید «سارا احمدی» ثبت‌نام کرد</p><small class="text-muted">۲ روز پیش</small></div>
+                                </div>
+                                <div class="list-group-item px-0 py-3 d-flex gap-3 align-items-start">
+                                    <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-cart-check"></i></span>
+                                    <div><p class="mb-1 fw-semibold">سفارش #۱۰۲۴ با موفقیت ثبت شد</p><small class="text-muted">۳ روز پیش</small></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
