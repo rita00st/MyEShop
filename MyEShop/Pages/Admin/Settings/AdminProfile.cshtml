@@ -3,28 +3,7 @@
 @{
     ViewData["Title"] = "پروفایل مدیر";
     Layout = "_AdminLayout";
-
     var initial = string.IsNullOrWhiteSpace(Model.AdminName) ? "م" : Model.AdminName.Substring(0, 1).ToUpper();
-}
-
-@section Styles {
-    <style>
-        .profile-avatar-lg {
-            width: 96px;
-            height: 96px;
-            font-size: 2.5rem;
-            flex-shrink: 0;
-        }
-
-        .nav-pills .nav-link {
-            color: #6c757d;
-            font-weight: 500;
-        }
-
-            .nav-pills .nav-link.active {
-                background-color: #8a2be2;
-            }
-    </style>
 }
 
 <div class="container-fluid py-4">
@@ -61,7 +40,8 @@
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
         <div class="bg-purple p-4 p-md-5 text-white">
             <div class="d-flex flex-column flex-md-row align-items-center gap-4">
-                <div class="profile-avatar-lg bg-white text-purple fw-bold d-flex align-items-center justify-content-center rounded-circle shadow">
+                <div class="rounded-circle bg-white text-purple fw-bold d-flex align-items-center justify-content-center shadow"
+                     style="width:96px;height:96px;font-size:2.5rem;">
                     @initial
                 </div>
                 <div class="text-center text-md-start">
@@ -97,10 +77,10 @@
                             </div>
                         </li>
                         <li class="d-flex align-items-center gap-2 mb-3">
-                            <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-phone"></i></span>
+                            <span class="bg-purple-10 text-purple rounded-circle p-2 d-inline-flex"><i class="bi bi-telephone"></i></span>
                             <div>
                                 <small class="text-muted d-block">تلفن</small>
-                                <span class="fw-semibold">@(string.IsNullOrEmpty(Model.UserPhone) ? "ثبت نشده" : Model.UserPhone)</span>
+                                <span class="fw-semibold">ثبت نشده</span>
                             </div>
                         </li>
                         <li class="d-flex align-items-center gap-2">
@@ -118,9 +98,9 @@
                 <div class="card-body p-4">
                     <h3 class="h6 fw-bold text-purple mb-3"><i class="bi bi-bar-chart-fill me-1"></i> آمار حساب</h3>
                     <div class="row g-3 text-center">
-                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۱۲۴</h4><small class="text-muted">محصول</small></div></div>
-                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۵۶</h4><small class="text-muted">سفارش</small></div></div>
-                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">۸</h4><small class="text-muted">دسته</small></div></div>
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">@Model.ProductCount</h4><small class="text-muted">محصول</small></div></div>
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">@Model.OrderCount</h4><small class="text-muted">سفارش</small></div></div>
+                        <div class="col-4"><div class="bg-purple-10 rounded-3 py-3"><h4 class="fw-bold text-purple mb-0">@Model.CategoryCount</h4><small class="text-muted">دسته</small></div></div>
                     </div>
                 </div>
             </div>
@@ -130,17 +110,23 @@
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-body p-4">
 
-                    <ul class="nav nav-pills flex-column flex-sm-row gap-2 mb-4" id="profileTabs" role="tablist">
+                    <ul class="nav nav-tabs flex-column flex-sm-row gap-2 mb-4" id="profileTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active rounded-pill px-4" id="personal-tab" data-bs-toggle="pill" data-bs-target="#personal" type="button" role="tab"><i class="bi bi-person me-1"></i> اطلاعات شخصی</button>
+                            <button class="nav-link active bg-purple text-white px-4" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button" role="tab">
+                                <i class="bi bi-person me-1"></i> اطلاعات شخصی
+                            </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link rounded-pill px-4" id="security-tab" data-bs-toggle="pill" data-bs-target="#security" type="button" role="tab"><i class="bi bi-shield-lock me-1"></i> امنیت</button>
+                            <button class="nav-link px-4" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                                <i class="bi bi-shield-lock me-1"></i> امنیت
+                            </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link rounded-pill px-4" id="activity-tab" data-bs-toggle="pill" data-bs-target="#activity" type="button" role="tab"><i class="bi bi-clock-history me-1"></i> فعالیت‌ها</button>
+                            <button class="nav-link px-4" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab">
+                                <i class="bi bi-clock-history me-1"></i> فعالیت‌ها
+                            </button>
                         </li>
-                    </ul>
+                    </ul>                  
 
                     <div class="tab-content" id="profileTabsContent">
 
@@ -156,16 +142,8 @@
                                         <input asp-for="Email" type="email" class="form-control rounded-3" placeholder="example@mail.com" />
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <label asp-for="Phone" class="form-label fw-semibold">شماره تماس</label>
-                                        <input asp-for="Phone" type="tel" class="form-control rounded-3" placeholder="۰۹۱۲ ۱۲۳ ۴۵۶۷" />
-                                    </div>
-                                    <div class="col-12 col-md-6">
                                         <label class="form-label fw-semibold">نقش</label>
                                         <input type="text" class="form-control rounded-3" value="مدیر ارشد" disabled />
-                                    </div>
-                                    <div class="col-12">
-                                        <label asp-for="Bio" class="form-label fw-semibold">درباره من</label>
-                                        <textarea asp-for="Bio" class="form-control rounded-3" rows="3" placeholder="توضیح کوتاهی درباره خودتان بنویسید..."></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end mt-4">
@@ -192,7 +170,7 @@
                                 </div>
                                 <div class="alert bg-purple-10 border-0 rounded-3 mt-4 mb-0 small text-muted">
                                     <i class="bi bi-info-circle text-purple me-1"></i>
-                                    رمز عبور باید حداقل ۸ کاراکتر و شامل حروف بزرگ، کوچک و عدد باشد.
+                                    رمز عبور باید حداقل ۸ کاراکتر باشد.
                                 </div>
                                 <div class="d-flex justify-content-end mt-4">
                                     <button type="submit" class="btn btn-golden rounded-pill px-4"><i class="bi bi-shield-check me-1"></i> تغییر رمز عبور</button>
@@ -228,7 +206,21 @@
 
     </div>
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var tabButtons = document.querySelectorAll('#profileTabs [data-bs-toggle="tab"]');
+            tabButtons.forEach(function (btn) {
+                btn.addEventListener('shown.bs.tab', function (e) {
+                    tabButtons.forEach(function (b) {
+                        b.classList.remove('bg-purple', 'text-white');
+                        b.classList.add('text-purple');
+                    });
+                    e.target.classList.remove('text-purple');
+                    e.target.classList.add('bg-purple', 'text-white');
+                });
+            });
+        })();
+    </script>
 }
