@@ -81,12 +81,12 @@
                 </div>
                 <ul class="sub-menu">
                     <li>
-                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Index") == true ? "active" : "")" href="/Admin/Index">
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Index") == true ? "active" : "")" href="/Admin/Products/Index">
                             <i class="bi bi-list"></i> لیست محصولات
                         </a>
                     </li>
                     <li>
-                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Add") == true ? "active" : "")" href="/Admin/Add">
+                        <a class="ms-3 @(ViewContext.RouteData.Values["Page"]?.ToString()?.Contains("Add") == true ? "active" : "")" href="/Admin/Products/Add">
                             <i class="bi bi-plus-circle"></i> اضافه کردن محصول
                         </a>
                     </li>
