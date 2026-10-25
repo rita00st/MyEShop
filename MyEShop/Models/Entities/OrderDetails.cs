@@ -19,6 +19,6 @@ namespace MyEShop.Models.Entities
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
 
-        //public int totalPrice { get; set; }
+        public int totalPrice { get; set; }
     }
 }
