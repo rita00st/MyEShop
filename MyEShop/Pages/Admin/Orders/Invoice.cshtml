@@ -1,0 +1,169 @@
+﻿@page "{id:int}"
+@model MyEShop.Pages.Admin.Orders.InvoiceModel
+@{
+    ViewData["Title"] = $"فاکتور سفارش #{Model.Order.OrderId}";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- دکمه‌های عملیات (در چاپ مخفی می‌شوند) -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 no-print">
+        <div>
+            <h1 class="h3 fw-bold mb-1">فاکتور سفارش</h1>
+            <p class="text-muted mb-0 d-none d-sm-block">پیش‌نمایش فاکتور قابل چاپ</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/Admin/Orders/Details/@Model.Order.OrderId" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-right me-1"></i> بازگشت
+            </a>
+            <button type="button" onclick="window.print()" class="btn btn-golden rounded-pill px-4">
+                <i class="bi bi-printer me-1"></i> چاپ فاکتور
+            </button>
+        </div>
+    </div>
+
+    <!-- فاکتور -->
+    <div class="card border-0 shadow-sm rounded-4" id="invoice">
+        <div class="card-body p-4 p-md-5">
+
+            <!-- هدر فاکتور -->
+            <div class="row align-items-center g-3 mb-4 pb-4 border-bottom">
+                <div class="col-12 col-md-6 text-center text-md-start">
+                    <div class="d-flex align-items-center gap-3 justify-content-center justify-content-md-start">
+                        <span class="bg-purple text-white rounded-3 p-3 fs-3 d-inline-flex flex-shrink-0">
+                            <i class="bi bi-shop"></i>
+                        </span>
+                        <div>
+                            <h3 class="fw-bold mb-1">فروشگاه من</h3>
+                            <small class="text-muted d-block">My E-Shop</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-end">
+                    <h4 class="fw-bold text-purple mb-1">فاکتور فروش</h4>
+                    <div class="small text-muted">
+                        <div>شماره: <span class="fw-semibold text-dark">#@Model.Order.OrderId</span></div>
+                        <div>تاریخ: <span class="fw-semibold text-dark">@Model.Order.CreateDate.ToString("yyyy/MM/dd HH:mm")</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشخصات مشتری -->
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <div class="bg-purple-10 rounded-3 p-3 h-100">
+                        <small class="text-purple fw-semibold d-block mb-2">
+                            <i class="bi bi-person me-1"></i>مشخصات خریدار
+                        </small>
+                        <div class="fw-semibold">@Model.CustomerName</div>
+                        <small class="text-muted d-block">@Model.CustomerEmail</small>
+                        <small class="text-muted d-block">شناسه کاربر: #@Model.Order.UserId</small>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="bg-purple-10 rounded-3 p-3 h-100">
+                        <small class="text-purple fw-semibold d-block mb-2">
+                            <i class="bi bi-credit-card me-1"></i>وضعیت پرداخت
+                        </small>
+                        @if (Model.Order.Finaly)
+                        {
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
+                                <i class="bi bi-check2-circle me-1"></i>پرداخت شده
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3 py-2">
+                                <i class="bi bi-hourglass me-1"></i>در انتظار پرداخت
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- جدول اقلام -->
+            <div class="table-responsive mb-4">
+                <table class="table table-bordered align-middle mb-0">
+                    <thead class="bg-purple text-white">
+                        <tr>
+                            <th class="px-3 py-3 text-center" style="width:60px;">#</th>
+                            <th class="px-3 py-3">نام محصول</th>
+                            <th class="px-3 py-3 text-center">تعداد</th>
+                            <th class="px-3 py-3 text-end">قیمت واحد</th>
+                            <th class="px-3 py-3 text-end">جمع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int row = 1;
+                        }
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="px-3 py-3 text-center">@row</td>
+                                <td class="px-3 py-3">
+                                    <div class="fw-semibold">@item.ProductName</div>
+                                    <small class="text-muted">کد: #@item.ProductId</small>
+                                </td>
+                                <td class="px-3 py-3 text-center">@item.Count</td>
+                                <td class="px-3 py-3 text-end text-nowrap">@item.Price.ToString("N0")</td>
+                                <td class="px-3 py-3 text-end text-nowrap fw-semibold">@item.LineTotal.ToString("N0")</td>
+                            </tr>
+                            row++;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-purple-10">
+                            <td colspan="4" class="px-3 py-3 text-end fw-semibold">جمع کل:</td>
+                            <td class="px-3 py-3 text-end fw-bold text-purple fs-5 text-nowrap">
+                                @Model.TotalPrice.ToString("N0") <small>تومان</small>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- پانوشت -->
+            <div class="text-center text-muted small pt-4 border-top">
+                <p class="mb-1">
+                    <i class="bi bi-heart-fill text-danger me-1"></i>
+                    از خرید شما سپاسگزاریم
+                </p>
+                <p class="mb-0">این فاکتور به‌صورت الکترونیکی صادر شده و بدون مهر و امضا معتبر است.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+    @@media print {
+        .no-print, .sidebar, .navbar, footer, .footer {
+            display: none !important;
+        }
+
+        body {
+            background: #fff !important;
+        }
+
+        #invoice {
+            box-shadow: none !important;
+            border: 0 !important;
+            margin: 0 !important;
+        }
+
+            #invoice .card-body {
+                padding: 0 !important;
+            }
+
+        .card {
+            break-inside: avoid;
+        }
+
+        @@page {
+            margin: 1cm;
+        }
+    }
+</style>

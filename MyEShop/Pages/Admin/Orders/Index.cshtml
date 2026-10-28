@@ -1,0 +1,307 @@
+﻿@page
+@model MyEShop.Pages.Admin.Orders.IndexModel
+@{
+    ViewData["Title"] = "مدیریت سفارشات";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- هدر -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h3 fw-bold mb-1">مدیریت سفارشات</h1>
+            <p class="text-muted mb-0 d-none d-sm-block">مشاهده، فیلتر و پیگیری تمام سفارشات فروشگاه</p>
+        </div>
+        <a href="/Admin/Orders" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-clockwise me-1"></i> بازخوانی
+        </a>
+    </div>
+
+    <!-- کارت‌های آمار -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bg-purple-10 text-purple rounded-3 p-3 fs-4 d-inline-flex flex-shrink-0">
+                        <i class="bi bi-receipt"></i>
+                    </span>
+                    <div class="flex-grow-1" style="min-width:0;">
+                        <small class="text-muted d-block">کل سفارشات</small>
+                        <h4 class="fw-bold mb-0 text-truncate">@Model.TotalOrders.ToString("N0")</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bg-success bg-opacity-10 text-success rounded-3 p-3 fs-4 d-inline-flex flex-shrink-0">
+                        <i class="bi bi-check2-circle"></i>
+                    </span>
+                    <div class="flex-grow-1" style="min-width:0;">
+                        <small class="text-muted d-block">پرداخت شده</small>
+                        <h4 class="fw-bold mb-0 text-truncate">@Model.PaidOrders.ToString("N0")</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bg-warning bg-opacity-10 text-warning rounded-3 p-3 fs-4 d-inline-flex flex-shrink-0">
+                        <i class="bi bi-hourglass-split"></i>
+                    </span>
+                    <div class="flex-grow-1" style="min-width:0;">
+                        <small class="text-muted d-block">در انتظار پرداخت</small>
+                        <h4 class="fw-bold mb-0 text-truncate">@Model.PendingOrders.ToString("N0")</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bg-purple text-white rounded-3 p-3 fs-4 d-inline-flex flex-shrink-0">
+                        <i class="bi bi-cash-stack"></i>
+                    </span>
+                    <div class="flex-grow-1" style="min-width:0;">
+                        <small class="text-muted d-block">درآمد کل (تومان)</small>
+                        <h5 class="fw-bold mb-0 text-truncate" title="@Model.TotalRevenue.ToString("N0")">
+                            @Model.TotalRevenue.ToString("N0")
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- پیام‌ها -->
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show rounded-3">
+            <i class="bi bi-check-circle me-1"></i>@Model.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show rounded-3">
+            <i class="bi bi-exclamation-triangle me-1"></i>@Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- کارت اصلی -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <!-- نوار فیلتر -->
+        <div class="card-body border-bottom">
+            <form method="get" class="row g-2">
+                <div class="col-12 col-lg-4">
+                    <input type="search" name="search" value="@Model.SearchTerm"
+                           class="form-control rounded-pill"
+                           placeholder="جستجو با شماره سفارش یا نام مشتری..." />
+                </div>
+                <div class="col-6 col-lg-3">
+                    <select name="status" class="form-select rounded-pill">
+                        <option value="">همه وضعیت‌ها</option>
+                        <option value="paid" selected="@(Model.Status == "paid" ? "selected" : null)">پرداخت شده</option>
+                        <option value="pending" selected="@(Model.Status == "pending" ? "selected" : null)">در انتظار پرداخت</option>
+                    </select>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <select name="sortBy" class="form-select rounded-pill">
+                        <option value="newest" selected="@(Model.SortBy == "newest" ? "selected" : null)">جدیدترین</option>
+                        <option value="oldest" selected="@(Model.SortBy == "oldest" ? "selected" : null)">قدیمی‌ترین</option>
+                        <option value="amount-desc" selected="@(Model.SortBy == "amount-desc" ? "selected" : null)">بیشترین مبلغ</option>
+                        <option value="amount-asc" selected="@(Model.SortBy == "amount-asc" ? "selected" : null)">کمترین مبلغ</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-golden rounded-pill flex-grow-1">
+                        <i class="bi bi-funnel me-1"></i> اعمال
+                    </button>
+                    <a href="/Admin/Orders" class="btn btn-outline-secondary rounded-pill px-3" title="پاک‌سازی">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        @if (Model.Orders.Any())
+        {
+            <!-- جدول دسکتاپ -->
+            <div class="table-responsive d-none d-md-block">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-purple-10">
+                        <tr>
+                            <th class="px-3 py-3 text-purple fw-semibold">شماره سفارش</th>
+                            <th class="px-3 py-3 text-purple fw-semibold">مشتری</th>
+                            <th class="px-3 py-3 text-purple fw-semibold">مبلغ کل</th>
+                            <th class="px-3 py-3 text-purple fw-semibold">وضعیت</th>
+                            <th class="px-3 py-3 text-purple fw-semibold">تاریخ ثبت</th>
+                            <th class="px-3 py-3 text-purple fw-semibold text-end">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td class="px-3 fw-semibold">#@order.OrderId</td>
+                                <td class="px-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="bg-purple-10 text-purple rounded-circle d-inline-flex align-items-center justify-content-center fw-bold"
+                                              style="width:36px;height:36px;font-size:0.9rem;">
+                                            @if (order.CustomerName == "بدون نام")
+                                            {
+                                                <i class="bi bi-person"></i>
+                                            }
+                                            else
+                                            {
+                                                @order.CustomerName.Substring(0, 1)
+                                            }
+                                        </span>
+                                        <span class="text-truncate" style="max-width:180px;">@order.CustomerName</span>
+                                    </div>
+                                </td>
+                                <td class="px-3 fw-semibold text-nowrap">
+                                    @order.TotalPrice.ToString("N0") <small class="text-muted">تومان</small>
+                                </td>
+                                <td class="px-3 text-nowrap">
+                                    @if (order.Finaly)
+                                    {
+                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">
+                                            <i class="bi bi-check2-circle me-1"></i>پرداخت شده
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">
+                                            <i class="bi bi-hourglass me-1"></i>در انتظار
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-3 text-nowrap text-muted small">@order.CreateDate.ToString("yyyy/MM/dd HH:mm")</td>
+                                <td class="px-3 text-end text-nowrap">
+                                    <div class="d-inline-flex align-items-center gap-1">
+                                        <a href="/Admin/Orders/Details/@order.OrderId"
+                                           class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1" title="جزئیات">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        @if (order.Finaly)
+                                        {
+                                            <a href="/Admin/Orders/Invoice/@order.OrderId"
+                                               class="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1" title="فاکتور">
+                                                <i class="bi bi-receipt"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- کارت موبایل -->
+            <div class="d-md-none p-3">
+                @foreach (var order in Model.Orders)
+                {
+                    <div class="card border-0 shadow-sm rounded-4 mb-3 bg-purple-10">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="fw-bold text-purple">#@order.OrderId</span>
+                                @if (order.Finaly)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3">پرداخت شده</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">در انتظار</span>
+                                }
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="bg-white text-purple rounded-circle d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0"
+                                      style="width:32px;height:32px;font-size:0.85rem;">
+                                    @if (order.CustomerName == "بدون نام")
+                                    {
+                                        <i class="bi bi-person"></i>
+                                    }
+                                    else
+                                    {
+                                        @order.CustomerName.Substring(0, 1)
+                                    }
+                                </span>
+                                <span class="text-truncate">@order.CustomerName</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top flex-wrap gap-2">
+                                <span class="fw-bold">@order.TotalPrice.ToString("N0") <small class="text-muted">تومان</small></span>
+                                <small class="text-muted">@order.CreateDate.ToString("yyyy/MM/dd")</small>
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <a href="/Admin/Orders/Details/@order.OrderId"
+                                   class="btn btn-sm btn-outline-primary rounded-pill flex-fill">
+                                    <i class="bi bi-eye"></i><span class="d-none d-sm-inline ms-1">جزئیات</span>
+                                </a>
+                                @if (order.Finaly)
+                                {
+                                    <a href="/Admin/Orders/Invoice/@order.OrderId"
+                                       class="btn btn-sm btn-outline-secondary rounded-pill flex-fill">
+                                        <i class="bi bi-receipt"></i><span class="d-none d-sm-inline ms-1">فاکتور</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- پجینیشن -->
+            <div class="card-footer bg-white border-top-0 py-3">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <small class="text-muted">
+                        نمایش @Model.Orders.Count سفارش از @Model.TotalOrders — صفحه @Model.CurrentPage از @Model.TotalPages
+                    </small>
+                    @if (Model.TotalPages > 1)
+                    {
+                        <ul class="pagination pagination-sm mb-0 flex-wrap">
+                            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                                <a class="page-link rounded-pill px-3" href="@Model.BuildPageUrl(Model.CurrentPage - 1)">قبلی</a>
+                            </li>
+                            @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.TotalPages, Model.CurrentPage + 2); i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                    <a class="page-link rounded-pill px-3 @(i == Model.CurrentPage ? "bg-purple text-white border-0" : "")"
+                                       href="@Model.BuildPageUrl(i)">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link rounded-pill px-3" href="@Model.BuildPageUrl(Model.CurrentPage + 1)">بعدی</a>
+                            </li>
+                        </ul>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card-body text-center py-5">
+                <span class="bg-purple-10 text-purple rounded-circle d-inline-flex p-4 mb-3">
+                    <i class="bi bi-receipt display-4"></i>
+                </span>
+                <h4 class="fw-bold mb-2">هیچ سفارشی یافت نشد</h4>
+                <p class="text-muted mb-0">
+                    @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) || !string.IsNullOrWhiteSpace(Model.Status))
+                    {
+                        <text>نتیجه‌ای برای فیلتر فعلی پیدا نشد. فیلترها را تغییر دهید.</text>
+                    }
+                    else
+                    {
+                        <text>هنوز سفارشی در سیستم ثبت نشده است.</text>
+                    }
+                </p>
+            </div>
+        }
+    </div>
+</div>
