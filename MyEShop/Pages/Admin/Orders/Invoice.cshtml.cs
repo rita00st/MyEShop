@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.ViewModel.Order;
 
 namespace MyEShop.Pages.Admin.Orders
 {
@@ -54,15 +55,6 @@ namespace MyEShop.Pages.Admin.Orders
             TotalPrice = Items.Sum(i => i.LineTotal);
 
             return Page();
-        }
-
-        public class InvoiceItemVm
-        {
-            public int ProductId { get; set; }
-            public string ProductName { get; set; } = string.Empty;
-            public decimal Price { get; set; }
-            public int Count { get; set; }
-            public decimal LineTotal { get; set; }
         }
     }
 }

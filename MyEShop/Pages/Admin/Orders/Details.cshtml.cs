@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Models.DatabaseContext;
 using MyEShop.Models.Entities;
+using MyEShop.Models.ViewModel.Order;
 
 namespace MyEShop.Pages.Admin.Orders
 {
@@ -72,16 +73,6 @@ namespace MyEShop.Pages.Admin.Orders
             }
 
             return RedirectToPage(new { id });
-        }
-
-        public class OrderItemVm
-        {
-            public int ProductId { get; set; }
-            public string ProductName { get; set; } = string.Empty;
-            public string? ImagePath { get; set; }
-            public decimal Price { get; set; }
-            public int Count { get; set; }
-            public decimal LineTotal { get; set; }
         }
     }
 }

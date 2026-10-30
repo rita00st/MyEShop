@@ -33,6 +33,7 @@ namespace MyEShop.Pages.Admin
 
         public List<int>? GroupsProduct { get; set; }
 
+        //[Route("/Admin/Edit/${id}")]
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
