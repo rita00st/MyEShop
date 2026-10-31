@@ -32,12 +32,12 @@ namespace MyEShop.Pages.Admin.Products
         [TempData] public string? SuccessMessage { get; set; }
         [TempData] public string? ErrorMessage { get; set; }
 
-        public async Task OnGetAsync(string? search, int? categoryId, string? sortBy, int page = 1)
+        public async Task OnGetAsync(string? search, int? categoryId, string? sortBy, int pageNumber = 1)
         {
             SearchTerm = search;
             CategoryId = categoryId;
             SortBy = string.IsNullOrWhiteSpace(sortBy) ? "newest" : sortBy;
-            CurrentPage = Math.Max(1, page);
+            CurrentPage = Math.Max(1, pageNumber);
 
             // آمار کلی
             TotalProducts = await _context.products.CountAsync();
@@ -78,11 +78,12 @@ namespace MyEShop.Pages.Admin.Products
                 .Take(PageSize)
                 .ToListAsync();
         }
-
+        //صفحه بندی
         public string BuildPageUrl(int page)
         {
             page = Math.Clamp(page, 1, TotalPages);
-            var q = new List<string> { $"page={page}" };
+            // از نام پارامتر جدید استفاده کنید
+            var q = new List<string> { $"pageNumber={page}" };
             if (!string.IsNullOrWhiteSpace(SearchTerm)) q.Add($"search={Uri.EscapeDataString(SearchTerm)}");
             if (CategoryId.HasValue) q.Add($"categoryId={CategoryId}");
             if (!string.IsNullOrWhiteSpace(SortBy)) q.Add($"sortBy={SortBy}");
