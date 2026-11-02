@@ -162,4 +162,117 @@
         </div>
     }
 
+
+    @{
+        var comments = ViewBag.Comments as List<MyEShop.Models.Entities.Comment> ?? new List<MyEShop.Models.Entities.Comment>();
+    }
+
+    <!-- بخش نظرات -->
+    <div class="card border-0 shadow-sm rounded-4 mt-4">
+        <div class="card-body p-4">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+                <h4 class="h5 fw-bold mb-0">
+                    <i class="bi bi-chat-dots me-2 text-purple"></i>
+                    نظرات کاربران
+                    <span class="badge bg-purple-10 text-purple rounded-pill px-3 ms-2">@comments.Count</span>
+                </h4>
+            </div>
+
+            <!-- پیام‌ها -->
+            @if (TempData["CommentSuccess"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show rounded-3">
+                    <i class="bi bi-check-circle me-1"></i>@TempData["CommentSuccess"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["CommentError"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show rounded-3">
+                    <i class="bi bi-exclamation-triangle me-1"></i>@TempData["CommentError"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- فرم ثبت نظر -->
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <form method="post" asp-controller="Home" asp-action="AddComment" class="mb-4">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@Model.Product?.Id" />
+
+                    <label class="form-label fw-semibold">نظر خود را بنویسید</label>
+                    <textarea name="text" class="form-control rounded-3 mb-2" rows="3"
+                          placeholder="تجربه خود از این محصول را بنویسید..." maxlength="1000" required></textarea>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn bg-purple text-white rounded-pill px-4">
+                            <i class="bi bi-send me-1"></i> ثبت نظر
+                        </button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="alert bg-purple-10 border-0 rounded-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <span class="text-muted small">
+                        <i class="bi bi-info-circle text-purple me-1"></i>
+                        برای ثبت نظر ابتدا وارد حساب کاربری خود شوید.
+                    </span>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-sm bg-purple text-white rounded-pill px-3">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> ورود
+                    </a>
+                </div>
+            }
+
+            <hr />
+
+            <!-- لیست نظرات -->
+            @if (comments.Any())
+            {
+                <div class="d-flex flex-column gap-3">
+                    @foreach (var comment in comments)
+                    {
+                        var name = string.IsNullOrWhiteSpace(comment.User?.Name) ? "کاربر" : comment.User!.Name!;
+                        <div class="bg-purple-10 rounded-4 p-3">
+                            <div class="d-flex gap-3">
+
+                                <!-- آواتار -->
+                                <span class="bg-purple text-white rounded-circle d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0"
+                                      style="width:44px;height:44px;">
+                                    @if (string.IsNullOrWhiteSpace(comment.User?.Name))
+                                    {
+                                        <i class="bi bi-person"></i>
+                                    }
+                                    else
+                                    {
+                                        @comment.User.Name.Substring(0, 1)
+                                    }
+                                </span>
+
+                                <!-- محتوای نظر -->
+                                <div class="flex-grow-1" style="min-width:0;">
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-1 mb-1">
+                                        <span class="fw-semibold text-purple">@name</span>
+                                        <small class="text-muted">@comment.CreatedDate.ToString("yyyy/MM/dd HH:mm")</small>
+                                    </div>
+                                    <p class="mb-0 text-muted" style="white-space: pre-line;">@comment.Text</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <i class="bi bi-chat-square-text display-6 text-muted"></i>
+                    <p class="text-muted mt-2 mb-0">هنوز نظری برای این محصول ثبت نشده است. اولین نفر باشید!</p>
+                </div>
+            }
+
+        </div>
+    </div>
 </div>

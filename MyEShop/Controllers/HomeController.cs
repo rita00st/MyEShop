@@ -72,7 +72,7 @@ namespace MyEShop.Controllers
         }
 
 
-       
+
 
         public async Task<IActionResult> Details(int id)
         {
@@ -83,6 +83,17 @@ namespace MyEShop.Controllers
                 .AsNoTracking()
                 .ProjectTo<DetailsViewModel>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
+
+            if (productVM == null)
+                return NotFound();
+
+            // 👇 اضافه شود: گرفتن نظرات تأییدشده این محصول
+            ViewBag.Comments = await _context.Comments
+                .Include(c => c.User)
+                .Where(c => c.ProductId == id && c.IsApproved)
+                .OrderByDescending(c => c.CreatedDate)
+                .AsNoTracking()
+                .ToListAsync();
 
             return View(productVM);
         }
@@ -300,6 +311,46 @@ namespace MyEShop.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(int productId, string text)
+        {
+            if (productId == 0)
+                return NotFound();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                TempData["CommentError"] = "متن نظر نمی‌تواند خالی باشد.";
+                return RedirectToAction(nameof(Details), new { id = productId });
+            }
+
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim))
+                return RedirectToAction("Login", "Account");
+
+            var userId = int.Parse(userIdClaim);
+
+            var comment = new Comment
+            {
+                ProductId = productId,
+                UserId = userId,
+                Text = text.Trim(),
+                CreatedDate = DateTime.Now,
+                IsApproved = true // اگر تأیید مدیر می‌خواهی، false بگذار
+            };
+
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+
+            TempData["CommentSuccess"] = "نظر شما با موفقیت ثبت شد.";
+            return RedirectToAction(nameof(Details), new { id = productId });
+        }
+
+
+
+
 
         [Authorize]
         public async Task<IActionResult> Pay()

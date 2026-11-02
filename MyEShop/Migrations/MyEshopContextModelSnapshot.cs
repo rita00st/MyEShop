@@ -183,6 +183,40 @@ namespace MyEShop.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MyEShop.Models.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("MyEShop.Models.Entities.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -399,6 +433,25 @@ namespace MyEShop.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("MyEShop.Models.Entities.Comment", b =>
+                {
+                    b.HasOne("MyEShop.Models.Entities.Product", "Product")
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyEShop.Models.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MyEShop.Models.Entities.Item", b =>
                 {
                     b.HasOne("MyEShop.Models.Entities.Product", "Product")
@@ -458,6 +511,8 @@ namespace MyEShop.Migrations
             modelBuilder.Entity("MyEShop.Models.Entities.Product", b =>
                 {
                     b.Navigation("CategoryToProduct");
+
+                    b.Navigation("Comments");
 
                     b.Navigation("Item");
 

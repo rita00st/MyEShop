@@ -19,6 +19,7 @@ namespace MyEShop.Models.DatabaseContext
         public DbSet<User> users { get; set; }
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderDetails> orderDetails { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -99,7 +100,25 @@ namespace MyEShop.Models.DatabaseContext
                  
             modelBuilder.Entity<Cart>()
                 .HasKey(c=>c.OrderId);
+
+
+            #region Comment
+            // رابطه Comment با Product
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Product)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // رابطه Comment با User (بدون حذف آبشاری کاربر)
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            #endregion
+
         }
-        //public DbSet<MyEShop.Pages.Admin.ProductViewModel> ProductViewModel { get; set; } = default!;
+        
     }   
 }

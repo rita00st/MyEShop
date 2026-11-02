@@ -14,7 +14,7 @@
         public Item? Item { get; set; }
 
         public ICollection<OrderDetails>OrderDetails { get; set; }
-
+        public ICollection<Comment>? Comments { get; set; }
         public string? ImagePath { get; set; }
 
     }
