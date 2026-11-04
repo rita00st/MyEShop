@@ -23,10 +23,9 @@
     <img src="https://img.shields.io/badge/ZarinPal-API-00BFA5?style=flat-square&logo=zarinpal&logoColor=white" alt="ZarinPal">
   </p>
 
-  <hr>
+  <br>
 </div>
 
----
 <details> <summary><b> English –  Click to expand</b></summary>
   
 ## 📖 About the Project
