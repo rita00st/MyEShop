@@ -29,6 +29,7 @@ jobs:
         run: |
           $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
           
+          # استفاده از نام سایت برای contentPath
           $dest = "contentPath='${{ secrets.WEBSITE_NAME }}',computerName='${{ secrets.SERVER_COMPUTER_NAME }}',userName='${{ secrets.SERVER_USERNAME }}',password='${{ secrets.SERVER_PASSWORD }}',authType='Basic'"
           
           $args = @(
@@ -36,8 +37,9 @@ jobs:
             "-source:contentPath='./publish'",
             "-dest:$dest",
             "-allowUntrusted",
-            "-enableRule:AppOffline",
-            "-retryAttempts:3"
+            "-disableLink:AppPoolExtension",
+            "-disableLink:ContentExtension",
+            "-disableLink:CertificateExtension"
           )
           
           & $msdeploy $args
