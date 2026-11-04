@@ -1,8 +1,11 @@
-name: Build, publish and deploy to MonsterASP.NET
-on: [push]
+name: Deploy to MonsterASP.NET
+on:
+  push:
+    branches:
+      - master 
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -10,25 +13,23 @@ jobs:
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0' # اگر نسخه پروژه‌ات ۹ است، این را به 9.0 تغییر بده
+          dotnet-version: '8.0'
 
-      - name: Install dependencies
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish --runtime win-x86
+        run: dotnet publish --configuration Release --output ./publish
 
-      # اگر تست دارید، این مرحله را نگه دارید؛ در غیر این صورت می‌توانید حذفش کنید
-      - name: Test with .NET
-        run: dotnet test
-
-      - name: Deploy to MonsterASP.NET via WebDeploy
-        uses: rasmusbuchholdt/simply-web-deploy@2.1.0
-        with:
-          website-name: ${{ secrets.WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
-          server-username: ${{ secrets.SERVER_USERNAME }}
-          server-password: ${{ secrets.SERVER_PASSWORD }}
+      - name: Deploy to MonsterASP via WebDeploy
+        run: |
+          $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          & $msdeploy `
+            -verb:sync `
+            -source:contentPath="./publish" `
+            -dest:contentPath="${{ secrets.WEBSITE_NAME }}",computerName="${{ secrets.SERVER_COMPUTER_NAME }}",userName="${{ secrets.SERVER_USERNAME }}",password="${{ secrets.SERVER_PASSWORD }}",authtype='basic' `
+            -enableRule:AppOffline `
+            -retryAttempts:3
