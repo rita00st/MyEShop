@@ -2,7 +2,7 @@ name: Deploy to MonsterASP.NET
 on:
   push:
     branches:
-      - master 
+      - master
 
 jobs:
   deploy:
@@ -25,11 +25,24 @@ jobs:
         run: dotnet publish --configuration Release --output ./publish
 
       - name: Deploy to MonsterASP via WebDeploy
+        shell: pwsh
         run: |
           $msdeploy = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
-          & $msdeploy `
-            -verb:sync `
-            -source:contentPath="./publish" `
-            -dest:contentPath="${{ secrets.WEBSITE_NAME }}",computerName="${{ secrets.SERVER_COMPUTER_NAME }}",userName="${{ secrets.SERVER_USERNAME }}",password="${{ secrets.SERVER_PASSWORD }}",authtype='basic' `
-            -enableRule:AppOffline `
-            -retryAttempts:3
+          
+          $dest = "contentPath='${{ secrets.WEBSITE_NAME }}',computerName='${{ secrets.SERVER_COMPUTER_NAME }}',userName='${{ secrets.SERVER_USERNAME }}',password='${{ secrets.SERVER_PASSWORD }}',authType='Basic'"
+          
+          $args = @(
+            "-verb:sync",
+            "-source:contentPath='./publish'",
+            "-dest:$dest",
+            "-allowUntrusted",
+            "-enableRule:AppOffline",
+            "-retryAttempts:3"
+          )
+          
+          & $msdeploy $args
+          
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Deployment failed with exit code $LASTEXITCODE"
+            exit $LASTEXITCODE
+          }
