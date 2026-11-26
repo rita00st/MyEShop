@@ -12,6 +12,7 @@ namespace MyEShop.Models.Entities
         [Required]
         public int ProductId { get; set; }
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         [Required]
         public int Count { get; set; }

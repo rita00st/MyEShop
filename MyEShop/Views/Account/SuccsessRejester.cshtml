@@ -1,16 +1,61 @@
 ﻿@using MyEShop.Models.ViewModel
 @model RejesterViewModel
 @{
-    ViewData["Title"] = "SuccsessRejester";
+    ViewData["Title"] = "ثبت‌نام موفق";
 }
 
-<h1>ثبت نام شما انجام شد</h1>
-<hr />
-<div class="">
-    <div class="alert alert-success" role="alert">
-        <h4 class="alert-heading">شما عضو سایت هستی!</h4>
-        <p>کاربر عزیز با ایمیل @Model.Email ممنون از ثبت نام شما از طریق دکمه زیر میتوانید وارد سایت شوید</p>
-        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-success">ورود به سایت</a>
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+
+            <!-- کارت اصلی -->
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <!-- نوار بالای کارت با رنگ بنفش -->
+                <div class="bg-purple py-3"></div>
+
+                <div class="card-body p-4 p-md-5 text-center">
+
+                    <!-- آیکون موفقیت با افکت -->
+                    <div class="mb-4 d-inline-flex align-items-center justify-content-center bg-purple-10 rounded-circle"
+                         style="width: 100px; height: 100px;">
+                        <i class="bi bi-check-circle-fill text-purple display-4"></i>
+                    </div>
+
+                    <h2 class="fw-bold mb-3">ثبت‌نام با موفقیت انجام شد!</h2>
+
+                    <p class="text-muted mb-4" style="line-height: 1.8;">
+                        کاربر عزیز، خوش آمدید. حساب شما با ایمیل زیر با موفقیت ساخته شد.
+                        حالا می‌توانید وارد شوید و از خرید خود لذت ببرید.
+                    </p>
+
+                    <!-- نمایش ایمیل به صورت برجسته -->
+                    <div class="bg-purple-10 rounded-pill py-2 px-4 d-inline-block mb-4">
+                        <span class="text-purple fw-bold dir-ltr">
+                            <i class="bi bi-envelope-at me-1"></i> @Model.Email
+                        </span>
+                    </div>
+
+                    <!-- دکمه‌های عملیات -->
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-golden btn-lg rounded-pill fw-bold shadow-sm">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> ورود به حساب کاربری
+                        </a>
+                        <a href="/" class="btn btn-outline-secondary btn-lg rounded-pill mt-2">
+                            بازگشت به صفحه اصلی
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- متن راهنما زیر کارت -->
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    <i class="bi bi-shield-check text-success me-1"></i>
+                    اطلاعات شما به صورت امن در سیستم ما ذخیره شده است.
+                </small>
+            </div>
+
+        </div>
     </div>
 </div>
-

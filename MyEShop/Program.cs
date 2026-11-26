@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using MyEShop.Mappings;
 using MyEShop.Models.DatabaseContext;
@@ -43,7 +44,26 @@ builder.Services.AddAuthentication(options =>
 });
 #endregion
 
+//builder.Services.AddDataProtection()
+//    .PersistKeysToFileSystem(new DirectoryInfo(@"D:\Sites\site104860\wwwroot\App_Data\keys"));
+
 var app = builder.Build();
+
+// این کد باعث می‌شود هنگام اجرای برنامه روی هاست، مایگریشن‌ها به صورت خودکار روی دیتابیس اعمال شوند
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    try
+//    {
+//        var context = services.GetRequiredService<MyEshopContext>();
+//        context.Database.Migrate(); // این خط جادو می‌کند!
+//    }
+//    catch (Exception ex)
+//    {
+//        var logger = services.GetRequiredService<ILogger<Program>>();
+//        logger.LogError(ex, "An error occurred while migrating the database.");
+//    }
+//}
 
 app.UseStatusCodePagesWithReExecute("/Home/Error404", "?statusCode={0}");
 

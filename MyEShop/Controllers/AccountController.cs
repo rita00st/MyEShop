@@ -95,7 +95,6 @@ namespace MyEShop.Controllers
 
                 var properties = new AuthenticationProperties
                 {
-                    //IsPersistent = loginVM.RememberMe
                     IsPersistent = loginVM.RememberMe
                 };
 
